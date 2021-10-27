@@ -10,5 +10,13 @@ package com.proyectoVeterinaria.Proyecto_Veterinaria;
  * @author pc
  */
 public class cuco {
+    /*   COMENTARIOS INTERNOSSSSSSSSSSS
     
+    
+    
+    
+    
+    
+    
+    */
 }
