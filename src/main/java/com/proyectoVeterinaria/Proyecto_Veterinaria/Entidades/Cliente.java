@@ -9,6 +9,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import org.hibernate.annotations.GenericGenerator;
 
 /**
@@ -24,16 +25,27 @@ public class Cliente {
    @GeneratedValue(generator = "uuid")
    @GenericGenerator(name = "uuid", strategy = "uuid2")
     private String id;
+    @OneToOne
+    private Usuario idUsuario;
     private String nombre;
     private String apellido;
     private String direccion;
     private Long telefono;
-    private String mail;
+    
+    
     
     @ManyToOne
     private Mascota mascota;
 
     public Cliente() {
+    }
+
+    public Usuario getIdUsuario() {
+        return idUsuario;
+    }
+
+    public void setIdUsuario(Usuario idUsuario) {
+        this.idUsuario = idUsuario;
     }
 
     public String getId() {
@@ -74,14 +86,6 @@ public class Cliente {
 
     public void setTelefono(Long telefono) {
         this.telefono = telefono;
-    }
-
-    public String getMail() {
-        return mail;
-    }
-
-    public void setMail(String mail) {
-        this.mail = mail;
     }
 
     public Mascota getMascota() {
