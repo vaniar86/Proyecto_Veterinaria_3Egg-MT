@@ -5,6 +5,8 @@
  */
 package com.proyectoVeterinaria.Proyecto_Veterinaria.Entidades;
 
+import com.proyectoVeterinaria.Proyecto_Veterinaria.Enumeraciones.EnumAtencionPuntual;
+import com.proyectoVeterinaria.Proyecto_Veterinaria.Enumeraciones.EnumTipoAtencion;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -24,9 +26,9 @@ public class Atencion {
    @GenericGenerator(name = "uuid", strategy = "uuid2")
     private String id;
    @Enumerated(EnumType.STRING)
-   private TipoAtencion tipoAtencion;
+   private EnumTipoAtencion tipoAtencion;
    @Enumerated(EnumType.STRING)
-   private AtencionPuntual atencionPuntual;
+   private EnumAtencionPuntual atencionPuntual;
    private String descripcion;
    private String prescripcion;
    
