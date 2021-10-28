@@ -45,21 +45,23 @@ public class Atencion {
         this.id = id;
     }
 
-    public TipoAtencion getTipoAtencion() {
+    public EnumTipoAtencion getTipoAtencion() {
         return tipoAtencion;
     }
 
-    public void setTipoAtencion(TipoAtencion tipoAtencion) {
+    public void setTipoAtencion(EnumTipoAtencion tipoAtencion) {
         this.tipoAtencion = tipoAtencion;
     }
 
-    public AtencionPuntual getAtencionPuntual() {
+    public EnumAtencionPuntual getAtencionPuntual() {
         return atencionPuntual;
     }
 
-    public void setAtencionPuntual(AtencionPuntual atencionPuntual) {
+    public void setAtencionPuntual(EnumAtencionPuntual atencionPuntual) {
         this.atencionPuntual = atencionPuntual;
     }
+
+
 
     public String getDescripcion() {
         return descripcion;

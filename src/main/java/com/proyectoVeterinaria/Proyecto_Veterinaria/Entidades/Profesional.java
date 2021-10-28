@@ -5,6 +5,7 @@
  */
 package com.proyectoVeterinaria.Proyecto_Veterinaria.Entidades;
 
+import com.proyectoVeterinaria.Proyecto_Veterinaria.Enumeraciones.EnumRol;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -30,7 +31,7 @@ public class Profesional {
     private String apellido;
     private Long telefono;
     @Enumerated(EnumType.STRING)
-    private Rol rol;
+    private EnumRol rol;
 
     public Profesional() {
     }
@@ -75,13 +76,15 @@ public class Profesional {
         this.telefono = telefono;
     }
 
-    public Rol getRol() {
+    public EnumRol getRol() {
         return rol;
     }
 
-    public void setRol(Rol rol) {
+    public void setRol(EnumRol rol) {
         this.rol = rol;
     }
+
+    
     
     
 }
