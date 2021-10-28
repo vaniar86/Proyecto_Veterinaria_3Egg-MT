@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 public class AtencionServicio {
 
     @Transactional
-    public void registrarAtencion() {
+    public void registrarAtencion(EnumAtencionPuntual) {
     }
 
     public String tipoAtencion() {
@@ -33,7 +33,7 @@ public class AtencionServicio {
     }
 
     @Transactional
-    public void eliminar() {
+    public void eliminar(String id) {
     }
 
 }

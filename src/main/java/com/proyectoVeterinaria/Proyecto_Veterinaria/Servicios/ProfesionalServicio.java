@@ -21,7 +21,7 @@ public class ProfesionalServicio {
     }
 
     @Transactional
-    public void eliminar() {
+    public void eliminar(String id) {
     }
 
 }
