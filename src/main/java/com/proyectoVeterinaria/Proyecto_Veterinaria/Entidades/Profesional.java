@@ -6,34 +6,30 @@
 package com.proyectoVeterinaria.Proyecto_Veterinaria.Entidades;
 
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
 import org.hibernate.annotations.GenericGenerator;
 
 /**
  *
- * @author pc
+ * @author Yoel
  */
 
 @Entity
-public class Cliente {
-    
-    
-   @Id
-   @GeneratedValue(generator = "uuid")
-   @GenericGenerator(name = "uuid", strategy = "uuid2")
+public class Profesional {
+    @Id
+    @GeneratedValue(generator = "uuid")
+    @GenericGenerator(name = "uuid", strategy = "uuid2")
     private String id;
     private String nombre;
     private String apellido;
-    private String direccion;
     private Long telefono;
-    private String mail;
-    
-    @ManyToOne
-    private Mascota mascota;
+    @Enumerated(EnumType.STRING)
+    private Rol rol;
 
-    public Cliente() {
+    public Profesional() {
     }
 
     public String getId() {
@@ -60,14 +56,6 @@ public class Cliente {
         this.apellido = apellido;
     }
 
-    public String getDireccion() {
-        return direccion;
-    }
-
-    public void setDireccion(String direccion) {
-        this.direccion = direccion;
-    }
-
     public Long getTelefono() {
         return telefono;
     }
@@ -76,20 +64,12 @@ public class Cliente {
         this.telefono = telefono;
     }
 
-    public String getMail() {
-        return mail;
+    public Rol getRol() {
+        return rol;
     }
 
-    public void setMail(String mail) {
-        this.mail = mail;
-    }
-
-    public Mascota getMascota() {
-        return mascota;
-    }
-
-    public void setMascota(Mascota mascota) {
-        this.mascota = mascota;
+    public void setRol(Rol rol) {
+        this.rol = rol;
     }
     
     

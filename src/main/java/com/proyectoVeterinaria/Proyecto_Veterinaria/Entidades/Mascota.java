@@ -5,6 +5,9 @@
  */
 package com.proyectoVeterinaria.Proyecto_Veterinaria.Entidades;
 
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
@@ -23,7 +26,9 @@ public class Mascota {
    @GenericGenerator(name = "uuid", strategy = "uuid2")
     private String id;
     private String nombre;
+    @Enumerated(EnumType.STRING)
     private Especie especie;
+    @Enumerated(EnumType.STRING)
     private Raza raza;
     private int edad;
     private int status;
@@ -34,4 +39,84 @@ public class Mascota {
     private Atencion atencion;
     @ManyToMany
     private Turno turno;
+
+    public Mascota() {
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public Especie getEspecie() {
+        return especie;
+    }
+
+    public void setEspecie(Especie especie) {
+        this.especie = especie;
+    }
+
+    public Raza getRaza() {
+        return raza;
+    }
+
+    public void setRaza(Raza raza) {
+        this.raza = raza;
+    }
+
+    public int getEdad() {
+        return edad;
+    }
+
+    public void setEdad(int edad) {
+        this.edad = edad;
+    }
+
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
+    }
+
+    public Cliente getCliente() {
+        return cliente;
+    }
+
+    public void setCliente(Cliente cliente) {
+        this.cliente = cliente;
+    }
+
+    public Atencion getAtencion() {
+        return atencion;
+    }
+
+    public void setAtencion(Atencion atencion) {
+        this.atencion = atencion;
+    }
+
+    public Turno getTurno() {
+        return turno;
+    }
+
+    public void setTurno(Turno turno) {
+        this.turno = turno;
+    }
+    
+    
+    
+    
+    
 }
