@@ -7,7 +7,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 @Service
-public class ClienteServicio implements UserDetailsService{
+public class ClienteServicio{
     
     @Transactional
     public void registrar(String nombre, String apellido, String direccion, Long telefono, String mail, String password, String password2) {
@@ -25,14 +25,4 @@ public class ClienteServicio implements UserDetailsService{
     public void eliminar(String id) {
     }
 
-    public 
-    //listar nombres (usamos el metodo mostrar cliente y mostramos muchos)
-    //buscar por id (usamos el metodo buscar por id, dentro de los demas metodos que hay en clienteservicio)
-    //mostrar cliente por id (visualiza perfil)
-    
-    
-    @Override
-    public UserDetails loadUserByUsername(String mail) throws UsernameNotFoundException {
-        
-    }
 }
