@@ -1,5 +1,6 @@
 package com.proyectoVeterinaria.Proyecto_Veterinaria.Servicios;
 
+import com.proyectoVeterinaria.Proyecto_Veterinaria.Enumeraciones.EnumAtencionPuntual;
 import javax.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
@@ -7,7 +8,7 @@ import org.springframework.stereotype.Service;
 public class AtencionServicio {
 
     @Transactional
-    public void registrarAtencion(EnumAtencionPuntual) {
+    public void registrarAtencion(EnumAtencionPuntual enumAtencionPuntual) {
     }
 
     public String tipoAtencion() {
