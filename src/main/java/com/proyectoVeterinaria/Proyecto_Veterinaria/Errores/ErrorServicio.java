@@ -3,12 +3,16 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.proyectoVeterinaria.Proyecto_Veterinaria.Controladores;
+package com.proyectoVeterinaria.Proyecto_Veterinaria.Errores;
 
 /**
  *
- * @author pc
+ * @author Vanina
  */
-public class BORRAR {
+public class ErrorServicio  extends Exception{
     
+    public ErrorServicio(String msj){
+        super(msj);
+    }
 }
+
