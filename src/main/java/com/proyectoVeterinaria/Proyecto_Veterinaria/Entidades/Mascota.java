@@ -5,6 +5,8 @@
  */
 package com.proyectoVeterinaria.Proyecto_Veterinaria.Entidades;
 
+import com.proyectoVeterinaria.Proyecto_Veterinaria.Enumeraciones.EnumEspecie;
+import com.proyectoVeterinaria.Proyecto_Veterinaria.Enumeraciones.EnumRaza;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -27,9 +29,9 @@ public class Mascota {
     private String id;
     private String nombre;
     @Enumerated(EnumType.STRING)
-    private Especie especie;
+    private EnumEspecie especie;
     @Enumerated(EnumType.STRING)
-    private Raza raza;
+    private EnumRaza raza;
     private int edad;
     private int status;
     
@@ -59,19 +61,19 @@ public class Mascota {
         this.nombre = nombre;
     }
 
-    public Especie getEspecie() {
+    public EnumEspecie getEspecie() {
         return especie;
     }
 
-    public void setEspecie(Especie especie) {
+    public void setEspecie(EnumEspecie especie) {
         this.especie = especie;
     }
 
-    public Raza getRaza() {
+    public EnumRaza getRaza() {
         return raza;
     }
 
-    public void setRaza(Raza raza) {
+    public void setRaza(EnumRaza raza) {
         this.raza = raza;
     }
 
