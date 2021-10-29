@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="es" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro</title>
+    <link rel="stylesheet" href="registro.css">
+</head>
+<body>
+    <h4>Registro</h4>
+    <form action="/registrar" method="POST">
+        
+         <p th:if="${error != null}" th:text="${error}" style="color:red;"></p>
+         
+        <label for="name">Nombre</label>
+        <input type="text" name="nombre" placeholder="Ingrese Nombre" th:value="${nombre}"><br>
+
+        <label for="username">Apellido</label>
+        <input type="text" name="apellido" placeholder="Ingrese Apellido" th:value="${apellido}"><br>
+
+        <label for="phone">Telefono</label>
+        <input type="text"  name="telefono"placeholder="Ingrese Telefono" th:value="${telefono}"><br>
+
+        <label for="adress">Direccion</label>
+        <input type="text" name="direccion" placeholder="Calle" th:value="${direccion}">
+
+        <label for="email">Email</label>
+        <input type="text"  name="email" placeholder="Ingrese su Email" th:value="${email}"><br>
+
+        <label for="password">Contraseña</label>
+        <input type="password" name="pass" placeholder="Ingrese Contraseña" th:value="${pass}"><br>
+
+        <label for="password">Confirmar Contraseña</label>
+        <input type="password"  name="pass2" placeholder="Confirmar contraseña" th:value="${pass2}">
+
+        <input type="submit" value="Registrarme">
+    </form>
+</body>
+</html>
