@@ -2,6 +2,7 @@ package com.proyectoVeterinaria.Proyecto_Veterinaria.Servicios;
 
 import com.proyectoVeterinaria.Proyecto_Veterinaria.Entidades.Cliente;
 import com.proyectoVeterinaria.Proyecto_Veterinaria.Entidades.Usuario;
+import com.proyectoVeterinaria.Proyecto_Veterinaria.Errores.ErrorServicio;
 import javax.transaction.Transactional;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -13,7 +14,6 @@ public class ClienteServicio implements UserDetailsService {
 
     @Transactional
     public void registrar(String nombre, String apellido, String direccion, Long telefono, String mail, String password, String password2) throws ErrorServicio {
-        //FALTA la clase ErrorServicio en package Errores,
         if (nombre == null || nombre.isEmpty()) {
             throw new Exception("El nombre del usuario no puede ser nulo");
         }
@@ -24,7 +24,7 @@ public class ClienteServicio implements UserDetailsService {
             throw new Exception("La direccion del usuario no puede ser nulo");
         }
         if (telefono == null) {
-            throw new Exception("El número del usuario no puede ser nulo");
+            throw new Exception("El número del telefono no puede ser nulo");
         }
         if (mail == null || mail.isEmpty()) {
             throw new Exception("El mail es un requisito para el registro");
