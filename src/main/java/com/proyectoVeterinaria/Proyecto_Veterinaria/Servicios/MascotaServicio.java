@@ -13,7 +13,7 @@ public class MascotaServicio {
     @Transactional
     public void agregarMascota(String nombre, EnumEspecie especie, EnumRaza raza, int edad, int status) throws ErrorServicio {
         if (nombre == null || nombre.isEmpty()) {
-            throw new Exception("Ingrese el nombre del perro");
+            throw new ErrorServicio("Ingrese el nombre del perro");
         }
         
         Mascota mascota = new Mascota();

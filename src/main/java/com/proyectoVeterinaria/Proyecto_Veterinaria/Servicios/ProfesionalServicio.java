@@ -13,13 +13,13 @@ public class ProfesionalServicio {
     @Transactional
     public void registrar(String nombre, String apellido, Long telefono, EnumRol rol)throws ErrorServicio {
         if (nombre == null || nombre.isEmpty()) {
-            throw new Exception("El nombre del usuario no puede ser nulo");
+            throw new ErrorServicio("El nombre del usuario no puede ser nulo");
         }
         if (apellido == null || apellido.isEmpty()) {
-            throw new Exception("El apellido del usuario no puede ser nulo");
+            throw new ErrorServicio("El apellido del usuario no puede ser nulo");
         }
         if (telefono == null) {
-            throw new Exception("El número del telefono no puede ser nulo");
+            throw new ErrorServicio("El número del telefono no puede ser nulo");
         }
         
         Profesional profesional = new Profesional();

@@ -9,36 +9,31 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-@Service
-<<<<<<< HEAD
-public class ClienteServicio{
-    
-=======
-public class ClienteServicio implements UserDetailsService {
+@Service 
+public class ClienteServicio {
 
->>>>>>> martin_quiroz
     @Transactional
     public void registrar(String nombre, String apellido, String direccion, Long telefono, String mail, String password, String password2) throws ErrorServicio {
         if (nombre == null || nombre.isEmpty()) {
-            throw new Exception("El nombre del usuario no puede ser nulo");
+            throw new ErrorServicio("El nombre del usuario no puede ser nulo");
         }
         if (apellido == null || apellido.isEmpty()) {
-            throw new Exception("El apellido del usuario no puede ser nulo");
+            throw new ErrorServicio("El apellido del usuario no puede ser nulo");
         }
         if (direccion == null || direccion.isEmpty()) {
-            throw new Exception("La direccion del usuario no puede ser nulo");
+            throw new ErrorServicio("La direccion del usuario no puede ser nulo");
         }
         if (telefono == null) {
-            throw new Exception("El número del telefono no puede ser nulo");
+            throw new ErrorServicio("El número del telefono no puede ser nulo");
         }
         if (mail == null || mail.isEmpty()) {
-            throw new Exception("El mail es un requisito para el registro");
+            throw new ErrorServicio("El mail es un requisito para el registro");
         }
         if (password == null || password.isEmpty()) {
-            throw new Exception("El password es un requisito para el registro");
+            throw new ErrorServicio("El password es un requisito para el registro");
         }
         if (password2 == null || password2.isEmpty()) {
-            throw new Exception("Confirme su contraseña");
+            throw new ErrorServicio("Confirme su contraseña");
         }
 
         Cliente cliente = new Cliente();
@@ -67,14 +62,4 @@ public class ClienteServicio implements UserDetailsService {
     public void eliminar(String id) {
     }
 
-<<<<<<< HEAD
-=======
-    public //listar nombres (usamos el metodo mostrar cliente y mostramos muchos)
-    //buscar por id (usamos el metodo buscar por id, dentro de los demas metodos que hay en clienteservicio)
-    //mostrar cliente por id (visualiza perfil)
-    @Override
-    public UserDetails loadUserByUsername(String mail) throws UsernameNotFoundException {
-
-    }
->>>>>>> martin_quiroz
 }
