@@ -7,6 +7,7 @@ package com.proyectoVeterinaria.Proyecto_Veterinaria.Entidades;
 
 import com.proyectoVeterinaria.Proyecto_Veterinaria.Enumeraciones.EnumEspecie;
 import com.proyectoVeterinaria.Proyecto_Veterinaria.Enumeraciones.EnumRaza;
+import com.proyectoVeterinaria.Proyecto_Veterinaria.Enumeraciones.EnumStatusMascota;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -33,7 +34,8 @@ public class Mascota {
     @Enumerated(EnumType.STRING)
     private EnumRaza raza;
     private int edad;
-    private int status;
+    private EnumStatusMascota status;
+    
     
     @OneToOne
     private Cliente cliente;
@@ -41,6 +43,9 @@ public class Mascota {
     private Atencion atencion;
     @ManyToMany
     private Turno turno;
+    
+    @OneToOne
+    private Foto foto;
 
     public Mascota() {
     }
@@ -85,11 +90,11 @@ public class Mascota {
         this.edad = edad;
     }
 
-    public int getStatus() {
+    public EnumStatusMascota getStatus() {
         return status;
     }
 
-    public void setStatus(int status) {
+    public void setStatus(EnumStatusMascota status) {
         this.status = status;
     }
 
@@ -115,6 +120,14 @@ public class Mascota {
 
     public void setTurno(Turno turno) {
         this.turno = turno;
+    }
+
+    public Foto getFoto() {
+        return foto;
+    }
+
+    public void setFoto(Foto foto) {
+        this.foto = foto;
     }
     
     
