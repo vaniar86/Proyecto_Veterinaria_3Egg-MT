@@ -4,14 +4,21 @@ import com.proyectoVeterinaria.Proyecto_Veterinaria.Entidades.Cliente;
 import com.proyectoVeterinaria.Proyecto_Veterinaria.Entidades.Usuario;
 import com.proyectoVeterinaria.Proyecto_Veterinaria.Enumeraciones.EnumRol;
 import com.proyectoVeterinaria.Proyecto_Veterinaria.Errores.ErrorServicio;
+import com.proyectoVeterinaria.Proyecto_Veterinaria.Repositorio.ClienteRepositorio;
+import java.util.ArrayList;
+import java.util.Optional;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.transaction.Transactional;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-@Service 
+@Service
 public class ClienteServicio {
+
+    @Autowired
+    private ClienteRepositorio clienteRepositorio;
 
     @Transactional
     public void registrar(String nombre, String apellido, String direccion, Long telefono, String mail, String password, String password2) throws ErrorServicio {
@@ -46,13 +53,36 @@ public class ClienteServicio {
         Usuario usuario = new Usuario();
         usuario.setRol(EnumRol.CLIENTE);
         usuario.setMail(mail);
-        usuario.setPass(password);
+        String passCripto = new BCryptPasswordEncoder().encode(password);
+        usuario.setPass(passCripto);
 
         cliente.setIdUsuario(usuario);
+
+        clienteRepositorio.save(cliente);
+        //notificar por mail "bienvenido usuario" ????
     }
 
     @Transactional
     public void modificar(String id, String nombre, String apellido, String direccion, Long telefono, String mail, String password, String password2) {
+        Optional<Cliente> respuesta = clienteRepositorio.findById(id);
+
+        Cliente cliente = respuesta.get();
+        cliente.setNombre(nombre);
+        cliente.setApellido(apellido);
+        cliente.setDireccion(direccion);
+        cliente.setTelefono(telefono);
+
+        Usuario usuario = new Usuario();
+        usuario.setRol(0);
+        usuario.setMail(mail);
+        String passCripto = new BCryptPasswordEncoder().encode(password);
+        usuario.setPass(passCripto);
+
+        cliente.setIdUsuario(usuario);
+
+        clienteRepositorio.save(cliente);
+        /*mandar notificacion por mail "se han modificado sus datos" "fue usted?, si fue usted rechaze este mail, sino
+            contactese urgente" ..... solo si tenemos ganas de notificar */
     }
 
     //metodo interno de Registrar, que verifica al momento de registrar, que ese mail no este en uso 
@@ -60,7 +90,34 @@ public class ClienteServicio {
     }
 
     @Transactional
-    public void eliminar(String id) {
+        public void eliminar(String idUsuario, String idCliente) throws ErrorServicio {
+        Optional<Cliente> respuesta = clienteRepositorio.findById(idCliente);
+        if (respuesta.isPresent()) {
+            Cliente cliente = respuesta.get();
+            if (cliente.getIdUsuario().equals(idUsuario)) {
+                clienteRepositorio.deleteById(idCliente);
+            } else {
+                throw new ErrorServicio("No existe ese cliente");
+            }
+        }
     }
 
+    public Cliente buscarPorId(String id) throws ErrorServicio {
+        Optional<Cliente> respuesta = clienteRepositorio.findById(id);
+        if (respuesta.isPresent()) {
+            return clienteRepositorio.buscarClientePorId(id);
+        } else {
+            throw new ErrorServicio("El cliente solicitado no existe.");
+        }
+
+    }
+
+    public Cliente mostrarPorId(String id) {
+        return null;
+    }
+
+    public ArrayList<Cliente> listarTodos(String id) {
+        ArrayList <Cliente> clientes = new ArrayList(clienteRepositorio.findAll());
+        return clientes;
+    }
 }
