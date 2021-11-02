@@ -5,6 +5,8 @@
  */
 package com.proyectoVeterinaria.Proyecto_Veterinaria.Entidades;
 
+import com.proyectoVeterinaria.Proyecto_Veterinaria.Enumeraciones.EnumRol;
+import java.util.Date;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 
@@ -18,7 +20,8 @@ public class Usuario {
     @Id
     private String mail;
     private String pass;
-    private int rol;
+    private EnumRol rol;
+    private Date fechaAlta;
 
     public Usuario() {
     }
@@ -39,13 +42,23 @@ public class Usuario {
         this.pass = pass;
     }
 
-    public int getRol() {
+    public EnumRol getRol() {
         return rol;
     }
 
-    public void setRol(int rol) {
+    public void setRol(EnumRol rol) {
         this.rol = rol;
     }
+
+    public Date getFechaAlta() {
+        return fechaAlta;
+    }
+
+    public void setFechaAlta(Date fechaAlta) {
+        this.fechaAlta = fechaAlta;
+    }
+
+    
     
     
     

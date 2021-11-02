@@ -2,6 +2,7 @@ package com.proyectoVeterinaria.Proyecto_Veterinaria.Servicios;
 
 import com.proyectoVeterinaria.Proyecto_Veterinaria.Entidades.Cliente;
 import com.proyectoVeterinaria.Proyecto_Veterinaria.Entidades.Usuario;
+import com.proyectoVeterinaria.Proyecto_Veterinaria.Enumeraciones.EnumRol;
 import com.proyectoVeterinaria.Proyecto_Veterinaria.Errores.ErrorServicio;
 import javax.transaction.Transactional;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -43,7 +44,7 @@ public class ClienteServicio {
         cliente.setTelefono(telefono);
 
         Usuario usuario = new Usuario();
-        usuario.setRol(0);
+        usuario.setRol(EnumRol.CLIENTE);
         usuario.setMail(mail);
         usuario.setPass(password);
 
