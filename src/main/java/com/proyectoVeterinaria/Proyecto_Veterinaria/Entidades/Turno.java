@@ -5,6 +5,7 @@
  */
 package com.proyectoVeterinaria.Proyecto_Veterinaria.Entidades;
 
+import com.proyectoVeterinaria.Proyecto_Veterinaria.Enumeraciones.EnumStatusTurno;
 import java.util.Date;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -33,7 +34,7 @@ public class Turno {
    @Temporal(TemporalType.TIMESTAMP)
    private Date fecha;
    @Enumerated(EnumType.STRING)
-   private int status;
+   private EnumStatusTurno status;
    @OneToOne
    private Mascota mascota;
    @OneToOne
@@ -58,13 +59,14 @@ public class Turno {
         this.fecha = fecha;
     }
 
-    public int getStatus() {
+    public EnumStatusTurno getStatus() {
         return status;
     }
 
-    public void setStatus(int status) {
+    public void setStatus(EnumStatusTurno status) {
         this.status = status;
     }
+
 
     public Mascota getMascota() {
         return mascota;

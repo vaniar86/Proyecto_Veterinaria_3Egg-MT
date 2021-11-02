@@ -11,19 +11,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface ClienteRepositorio extends JpaRepository<Cliente, String>{
     
-    @Query()
-    public void registrar(@Param("id") String id);
-    
-    @Query()
-    public void modificar(@Param("id") String id);
-    
-    @Query()
-    public void eliminar(@Param("id") String id);
-    
-    @Query()
-    public Cliente buscarClientePorId(@Param("id") String id);
-    
-    @Query()
-    public ArrayList <Cliente> listarClientes();
     
 }

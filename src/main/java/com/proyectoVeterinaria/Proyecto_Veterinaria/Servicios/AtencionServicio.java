@@ -16,7 +16,12 @@ import org.springframework.web.multipart.MultipartFile;
 @Service
 public class AtencionServicio {
 
+    public AtencionServicio() {
+    }
 
+
+    
+    
     public String tipoAtencion() {
         return null;
     }

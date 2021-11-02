@@ -105,15 +105,24 @@ public class ClienteServicio {
     public Cliente buscarPorId(String id) throws ErrorServicio {
         Optional<Cliente> respuesta = clienteRepositorio.findById(id);
         if (respuesta.isPresent()) {
-            return clienteRepositorio.buscarClientePorId(id);
+            //return clienteRepositorio.buscarClientePorId(id);
+            return null;
         } else {
             throw new ErrorServicio("El cliente solicitado no existe.");
         }
 
     }
 
-    public Cliente mostrarPorId(String id) {
-        return null;
+    public Cliente mostrarPorId(String id) throws ErrorServicio {
+        Optional<Cliente> respuesta = clienteRepositorio.findById(id);
+        if (respuesta.isPresent()) {
+            //return clienteRepositorio.buscarClientePorId(id);
+            return null;
+        } else {
+            throw new ErrorServicio("El cliente solicitado no existe.");
+        }
+        /*  AGREGAR UN TO STRING*/
+        
     }
 
     public ArrayList<Cliente> listarTodos(String id) {
