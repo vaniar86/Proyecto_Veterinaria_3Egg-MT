@@ -73,7 +73,7 @@ public class ClienteServicio {
         cliente.setTelefono(telefono);
 
         Usuario usuario = new Usuario();
-        usuario.setRol(0);
+        usuario.setRol(EnumRol.CLIENTE);
         usuario.setMail(mail);
         String passCripto = new BCryptPasswordEncoder().encode(password);
         usuario.setPass(passCripto);

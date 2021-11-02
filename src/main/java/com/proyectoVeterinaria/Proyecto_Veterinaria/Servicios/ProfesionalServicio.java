@@ -43,7 +43,7 @@ public class ProfesionalServicio {
     }
 
     @Transactional
-    public void modificar(String id, String nombre, String apellido, Long telefono, EnumRol rol, Usuario usuario) {
+    public void modificar(String id, String nombre, String apellido, Long telefono, EnumRol rol, Usuario usuario) throws ErrorServicio {
         Optional<Profesional> respuesta = profesionalRepositorio.findById(id);
         if (respuesta.isPresent()) {
             Profesional profesional = respuesta.get();
@@ -70,7 +70,7 @@ public class ProfesionalServicio {
     }
 
     @Transactional
-    public void eliminar(String id) {
+    public void eliminar(String id) throws ErrorServicio {
         Optional<Profesional> respuesta = profesionalRepositorio.findById(id);
         if (respuesta.isPresent()) {
             Profesional profesional = respuesta.get();
