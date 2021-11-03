@@ -26,7 +26,7 @@ public class TurnoServicio {
         turno.setFecha(new Date());
         turno.setMascota(mascota);
         turno.setProfesional(profesional);
-        turno.setStatus(status.ordinal());
+        turno.setStatus(status);
 
         turnoRepositorio.save(turno);
     }
@@ -40,7 +40,7 @@ public class TurnoServicio {
             turno.setFecha(fecha);
             turno.setMascota(mascota);
             turno.setProfesional(profesional);
-            turno.setStatus(status.ordinal());
+            turno.setStatus(status);
 
             turnoRepositorio.save(turno);
         }else{
@@ -68,7 +68,7 @@ public class TurnoServicio {
     public void eliminar(String id) throws ErrorServicio {
         Optional<Turno> respuesta = turnoRepositorio.findById(id);
         if (respuesta.isPresent()) {
-            respuesta.get().setStatus(0);
+            respuesta.get().setStatus(EnumStatusTurno.DISPONIBLE);
             respuesta.get().setFecha(new Date());
             respuesta.get().setMascota(null);
             respuesta.get().setProfesional(null);
