@@ -8,12 +8,14 @@ package com.proyectoVeterinaria.Proyecto_Veterinaria.Entidades;
 import com.proyectoVeterinaria.Proyecto_Veterinaria.Enumeraciones.EnumEspecie;
 import com.proyectoVeterinaria.Proyecto_Veterinaria.Enumeraciones.EnumRaza;
 import com.proyectoVeterinaria.Proyecto_Veterinaria.Enumeraciones.EnumStatusMascota;
+import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import org.hibernate.annotations.GenericGenerator;
 
@@ -39,10 +41,10 @@ public class Mascota {
     
     @OneToOne
     private Cliente cliente;
-    @ManyToMany
-    private Atencion atencion;
-    @ManyToMany
-    private Turno turno;
+    @OneToMany
+    private List<Atencion> atencion;
+    @OneToMany
+    private List<Turno> turno;
     
     @OneToOne
     private Foto foto;
@@ -106,19 +108,19 @@ public class Mascota {
         this.cliente = cliente;
     }
 
-    public Atencion getAtencion() {
+    public List<Atencion> getAtencion() {
         return atencion;
     }
 
-    public void setAtencion(Atencion atencion) {
+    public void setAtencion(List<Atencion> atencion) {
         this.atencion = atencion;
     }
 
-    public Turno getTurno() {
+    public List<Turno> getTurno() {
         return turno;
     }
 
-    public void setTurno(Turno turno) {
+    public void setTurno(List<Turno> turno) {
         this.turno = turno;
     }
 

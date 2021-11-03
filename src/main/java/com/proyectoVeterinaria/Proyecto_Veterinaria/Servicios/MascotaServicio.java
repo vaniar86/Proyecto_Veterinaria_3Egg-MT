@@ -19,8 +19,9 @@ import org.springframework.web.multipart.MultipartFile;
 public class MascotaServicio {
     
     @Autowired
-    MascotaRepositorio mascotaRepositorio;
-    FotoServicio fotoServicio;
+    private MascotaRepositorio mascotaRepositorio;
+    @Autowired
+    private FotoServicio fotoServicio;
 
     @Transactional
     public void agregarMascota(String nombre, Cliente cliente, EnumEspecie especie, EnumRaza raza, int edad, int status, MultipartFile archivo) throws ErrorServicio {
