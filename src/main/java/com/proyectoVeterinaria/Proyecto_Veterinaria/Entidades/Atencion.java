@@ -7,11 +7,14 @@ package com.proyectoVeterinaria.Proyecto_Veterinaria.Entidades;
 
 import com.proyectoVeterinaria.Proyecto_Veterinaria.Enumeraciones.EnumAtencionPuntual;
 import com.proyectoVeterinaria.Proyecto_Veterinaria.Enumeraciones.EnumTipoAtencion;
+import java.util.Date;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import org.hibernate.annotations.GenericGenerator;
 
 /**
@@ -31,6 +34,8 @@ public class Atencion {
    private EnumAtencionPuntual atencionPuntual;
    private String descripcion;
    private String prescripcion;
+   @Temporal(TemporalType.TIMESTAMP)
+   private Date fechaAtencion;
    
    
 
@@ -61,8 +66,15 @@ public class Atencion {
         this.atencionPuntual = atencionPuntual;
     }
 
+    public Date getFechaAtencion() {
+        return fechaAtencion;
+    }
 
+    public void setFechaAtencion(Date fechaAtencion) {
+        this.fechaAtencion = fechaAtencion;
+    }
 
+    
     public String getDescripcion() {
         return descripcion;
     }

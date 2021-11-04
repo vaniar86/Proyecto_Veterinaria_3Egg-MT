@@ -95,7 +95,7 @@ public class UsuarioServicio implements UserDetailsService {
     }
     
     public void validar(String mail, String clave, EnumRol rol) throws ErrorServicio{
-        
+
         
         if(mail == null || mail.isEmpty()){
             throw new ErrorServicio("error con el mail");
