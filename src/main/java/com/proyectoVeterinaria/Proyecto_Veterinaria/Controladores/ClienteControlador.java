@@ -25,7 +25,7 @@ import org.springframework.web.bind.annotation.RequestParam;
  * @author Martin
  */
 @Controller
-@RequestMapping("/usuario")
+@RequestMapping("/cliente")
 public class ClienteControlador {
 
     @Autowired
@@ -81,8 +81,7 @@ public class ClienteControlador {
         if (login == null) {
             return "redirect:/login";
         }
-        List<Mascota> mascotas = mascotaServicio.buscarMascotaPorId(login.getId());
-        //falta el metodo ese para traerme mascota
+        List<Mascota> mascotas = mascotaServicio.listarMascotas(login.getId());
         model.put("mascotas", mascotas);
         return "mascotas";
     }
@@ -98,4 +97,5 @@ public class ClienteControlador {
         model.put("clientes", clientes);
         return "clientes";
     }
+    
 }
