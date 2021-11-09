@@ -41,7 +41,7 @@ public class MascotaControlador {
          if (id==null|| id.isEmpty()) {
              mascotaServicio.agregarMascota(nombre, cliente, especie, raza, edad, status, archivo);
          }else{
-             mascotaServicio.modificar(id,nombre, cliente, especie, raza, edad, edad, archivo);
+             mascotaServicio.modificar(id,nombre, cliente, especie, raza, edad, archivo);
              return ("redirect/mascota");
          }
      
