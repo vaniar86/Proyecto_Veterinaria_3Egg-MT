@@ -26,25 +26,13 @@ import org.springframework.web.multipart.MultipartFile;
 @Controller
 @RequestMapping("/mascota")
 public class MascotaControlador {
-/*private String id;
-    private String nombre
-    private EnumEspecie especie;
-    private EnumRaza raza;
-    private int edad;
-    private EnumStatusMascota status;
-    @OneToOne
-    private Cliente cliente;
-    @OneToMany
-    private List<Atencion> atencion;
-    @OneToMany
-    private List<Turno> turno;
-    */
 
     @Autowired
     private String perro;
     @Autowired
     private MascotaServicio mascotaServicio;
 
+    
     @PostMapping("/actualizar-mascota")
     public String Actualizar(HttpSession sesion,ModelMap model,@RequestParam(required = false) String id,@RequestParam String nombre,@RequestParam EnumRaza raza,@RequestParam int edad,@RequestParam EnumEspecie especie,@RequestParam int status,MultipartFile archivo,@RequestParam(required = false) Cliente cliente){
      
@@ -82,6 +70,8 @@ public class MascotaControlador {
         }
         return ("redirect/mascota");
     }
+    
+    
      @GetMapping("/editar-mascota")
     public String editarPerfil(HttpSession session, @RequestParam(required = false) String id, @RequestParam(required = false) String accion, ModelMap model) {
        
