@@ -1,0 +1,48 @@
+<header th:fragment="header">
+  <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+    <div class="container-fluid">
+      <a class="navbar-brand" th:href="@{/}">
+        <img src="./images/logoChico.png" alt="logo" />
+      </a>
+
+      <button
+        class="navbar-toggler"
+        type="button"
+        data-bs-toggle="collapse"
+        data-bs-target="#navbarCollapse"
+        aria-controls="navbarCollapse"
+        aria-expanded="false"
+        aria-label="Toggle navigation"
+      >
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarCollapse">
+        <ul class="navbar-nav me-auto mb-2 mb-md-0">
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" th:href="@{/}" 
+              >Home</a
+            >
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" th:href="@{/registro}" th:if="${session.usuariosession == null}">Registro</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" th:if="${session.usuariosession == null}">Iniciar Sesión</a>
+          </li>
+          <li>
+            <div class="dropdown" th:if="${session.usuariosession != null}">
+                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                  Dropdown button
+                </button>
+                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                  <li><a class="dropdown-item" th:href="@{/logout}">Cerrar Sesión</a></li>
+                  <li><a class="dropdown-item" th:href="@{/perfil}">Mi Perfil</a></li>
+                </ul>
+              </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+</header>
+
