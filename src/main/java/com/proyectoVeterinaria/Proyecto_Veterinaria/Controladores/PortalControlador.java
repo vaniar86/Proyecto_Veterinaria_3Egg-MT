@@ -58,6 +58,7 @@ public class PortalControlador {
              modelo.put("error", e.getMessage());
              modelo.put("nombre", nombre);
              modelo.put("apellido", apellido);
+             modelo.put("telefono", telefono);
              modelo.put("mail", mail);
              modelo.put("pass", pass);
              modelo.put("pass2", pass2);
