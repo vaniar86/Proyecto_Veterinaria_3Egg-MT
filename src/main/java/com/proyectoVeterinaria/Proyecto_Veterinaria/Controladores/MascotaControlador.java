@@ -27,8 +27,7 @@ import org.springframework.web.multipart.MultipartFile;
 @RequestMapping("/mascota")
 public class MascotaControlador {
 
-    @Autowired
-    private String perro;
+    
     @Autowired
     private MascotaServicio mascotaServicio;
 
