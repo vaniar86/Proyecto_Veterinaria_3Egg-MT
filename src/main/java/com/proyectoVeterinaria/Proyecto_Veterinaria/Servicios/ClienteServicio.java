@@ -86,11 +86,11 @@ public class ClienteServicio {
     }
 
     //metodo interno de Registrar, que verifica al momento de registrar, que ese mail no este en uso 
-    private void validar(String email) {
+    private void validar(String email) throws ErrorServicio {
     }
 
     @Transactional
-        public void eliminar(String idUsuario, String idCliente) throws ErrorServicio {
+    public void eliminar(String idUsuario, String idCliente) throws ErrorServicio {
         Optional<Cliente> respuesta = clienteRepositorio.findById(idCliente);
         if (respuesta.isPresent()) {
             Cliente cliente = respuesta.get();
@@ -105,12 +105,10 @@ public class ClienteServicio {
     public Cliente buscarPorId(String id) throws ErrorServicio {
         Optional<Cliente> respuesta = clienteRepositorio.findById(id);
         if (respuesta.isPresent()) {
-            //return clienteRepositorio.buscarClientePorId(id);
-            return null;
+            return respuesta.get();
         } else {
             throw new ErrorServicio("El cliente solicitado no existe.");
         }
-
     }
 
     public Cliente mostrarPorId(String id) throws ErrorServicio {
@@ -122,11 +120,10 @@ public class ClienteServicio {
             throw new ErrorServicio("El cliente solicitado no existe.");
         }
         /*  AGREGAR UN TO STRING*/
-        
     }
 
     public ArrayList<Cliente> listarTodos(String id) {
-        ArrayList <Cliente> clientes = new ArrayList(clienteRepositorio.findAll());
+        ArrayList<Cliente> clientes = new ArrayList(clienteRepositorio.findAll());
         return clientes;
     }
 }

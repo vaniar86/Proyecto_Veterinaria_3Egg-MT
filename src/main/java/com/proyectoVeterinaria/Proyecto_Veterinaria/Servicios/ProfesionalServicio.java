@@ -65,10 +65,7 @@ public class ProfesionalServicio {
 
     public void validar() {
     }
-
-    public void deshabilitar() {
-    }
-
+    
     @Transactional
     public void eliminar(String id) throws ErrorServicio {
         Optional<Profesional> respuesta = profesionalRepositorio.findById(id);
