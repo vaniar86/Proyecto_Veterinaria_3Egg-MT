@@ -3,14 +3,17 @@ package com.proyectoVeterinaria.Proyecto_Veterinaria.Controladores;
 import com.proyectoVeterinaria.Proyecto_Veterinaria.Entidades.Mascota;
 import com.proyectoVeterinaria.Proyecto_Veterinaria.Entidades.Profesional;
 import com.proyectoVeterinaria.Proyecto_Veterinaria.Enumeraciones.EnumStatusTurno;
+import com.proyectoVeterinaria.Proyecto_Veterinaria.Enumeraciones.EnumTipoAtencion;
 import com.proyectoVeterinaria.Proyecto_Veterinaria.Errores.ErrorServicio;
 import com.proyectoVeterinaria.Proyecto_Veterinaria.Repositorio.TurnoRepositorio;
 import com.proyectoVeterinaria.Proyecto_Veterinaria.Servicios.TurnoServicio;
 import java.util.Date;
+import java.util.List;
 import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -42,6 +45,14 @@ public class TurnoControlador {
         return "cliente.html";
     }
     
-    //falta completar
+    @GetMapping("/turno")
+    public String formularioTurno(ModelMap modelo) {
+        //
+        modelo.put("tipoConsultas", tipoConsultas);
+        return "turno.html";
+    }
     
+    
+    
+    //falta completar
 }
