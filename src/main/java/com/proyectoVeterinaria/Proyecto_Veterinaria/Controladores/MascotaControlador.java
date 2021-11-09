@@ -27,8 +27,7 @@ import org.springframework.web.multipart.MultipartFile;
 @RequestMapping("/mascota")
 public class MascotaControlador {
 
-    @Autowired
-    private String perro;
+    
     @Autowired
     private MascotaServicio mascotaServicio;
 
@@ -45,7 +44,7 @@ public class MascotaControlador {
              return ("redirect/mascota");
          }
      
-     }catch(Exception Error){
+     }catch(ErrorServicio Error){
          Mascota mascota = new Mascota();
          mascota.setNombre(nombre);
          mascota.setRaza(raza);
