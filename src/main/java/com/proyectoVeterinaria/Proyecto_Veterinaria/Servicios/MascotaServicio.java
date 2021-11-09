@@ -8,6 +8,7 @@ import com.proyectoVeterinaria.Proyecto_Veterinaria.Enumeraciones.EnumRaza;
 import com.proyectoVeterinaria.Proyecto_Veterinaria.Enumeraciones.EnumStatusMascota;
 import com.proyectoVeterinaria.Proyecto_Veterinaria.Errores.ErrorServicio;
 import com.proyectoVeterinaria.Proyecto_Veterinaria.Repositorio.MascotaRepositorio;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Optional;
 import javax.transaction.Transactional;
@@ -48,8 +49,8 @@ public class MascotaServicio {
     }
 
     @Transactional
-    public void modificar(String idMascota, String nombre, Cliente cliente, EnumEspecie especie, EnumRaza raza, int edad, int status, MultipartFile archivo) throws ErrorServicio {
-        
+    public void modificar(String idMascota, String nombre, Cliente cliente, EnumEspecie especie, EnumRaza raza, int edad, MultipartFile archivo) throws ErrorServicio {
+        //se saco el EnumStatusMascota, ya que la logica de Modificar, directamente lo "setea" a EnumMascotaStatus.MODIFICADO , desdes la vista el cliente toca el boton modificar y cambia datos basicos, si tocas "eliminar" es para borrar al perro de tu lista, y suponemos que "se murio" o lo quisiste sacar....
         if(idMascota == null || idMascota.isEmpty()){
             throw new ErrorServicio("error en el id de la mascota");
         }
@@ -63,7 +64,6 @@ public class MascotaServicio {
                 mascota.setEdad(edad);
                 mascota.setRaza(raza);
                 mascota.setEspecie(especie);
-                //mascota.setStatus(status);
                 
                 String idFoto = null;
                 if(mascota.getFoto().getId() != null){
@@ -97,7 +97,6 @@ public class MascotaServicio {
         if(respuesta.isPresent()){
             Mascota mascota = respuesta.get();
             if(mascota.getCliente().getId().equals(idMascota)){
-                //mascota.setBaja(new Date());
                 mascota.setStatus(EnumStatusMascota.BAJA);
                 
                 mascotaRepositorio.save(mascota);
@@ -124,5 +123,19 @@ public class MascotaServicio {
         if(especie == null){
             throw new ErrorServicio("error en la especie");
         }
+    }
+    
+    public Mascota buscarMascotaPorId(String id) throws ErrorServicio {
+        Optional<Mascota> respuesta = mascotaRepositorio.findById(id);
+        if (respuesta.isPresent()) {
+            return respuesta.get();
+        } else {
+            throw new ErrorServicio("La mascota seleccionada no existe.");
+        }
+    }
+    
+     public ArrayList<Mascota> listarMascotas(String id) {
+        ArrayList<Mascota> mascotas = new ArrayList(mascotaRepositorio.findAll());
+        return mascotas;
     }
 }
