@@ -67,7 +67,7 @@ public class AtencionControlador {
         }
         try {
             Optional<Turno> turno = turnoRepositorio.findById(id);
-            atencionServicio.
+           // atencionServicio. NO TOCAR, despues se habilita
             
         } catch (Exception Error) {
             Logger.getLogger(ProfesionalController.class.getName()).log(Level.SEVERE, null, Error);

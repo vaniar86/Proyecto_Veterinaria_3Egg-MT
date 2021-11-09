@@ -48,7 +48,7 @@ public class TurnoControlador {
     @GetMapping("/turno")
     public String formularioTurno(ModelMap modelo) {
         //
-        modelo.put("tipoConsultas", tipoConsultas);
+        //modelo.put("tipoConsultas", tipoConsultas); NO TOCAR despues se habilita
         return "turno.html";
     }
     
