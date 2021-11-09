@@ -40,17 +40,17 @@ public class UsuarioServicio implements UserDetailsService {
     UsuarioRepositorio usuarioRepositorio;
     
     @Transactional
-    public void registrar (String mail, String clave, EnumRol rol)throws ErrorServicio{
+    public void registrar (String mail, String clave, String clave2)throws ErrorServicio{
     
     //public void registrar (String nombre, String apellido, String mail, String clave)throws ErrorServicio{
         
-        validar(mail, clave, rol);
+        validar(mail, clave, clave2, EnumRol.CLIENTE);
         
         Usuario usuario = new Usuario();
         usuario.setMail(mail);
         //usuario.setPass(clave);
         //usuario.setRol(rol);
-        usuario.setRol(rol);
+        usuario.setRol(EnumRol.CLIENTE);
        
         
         // encriptar la clave
@@ -70,9 +70,9 @@ public class UsuarioServicio implements UserDetailsService {
     }
     
     @Transactional
-    public void modificar(String mail, String clave, EnumRol rol) throws ErrorServicio{
+    public void modificar(String mail, String clave, String clave2, EnumRol rol) throws ErrorServicio{
         
-        validar(mail, clave, rol);
+        validar(mail, clave, clave, rol);
         
         Optional<Usuario> respuesta = usuarioRepositorio.findById(mail);
         if(respuesta.isPresent()){
@@ -94,7 +94,7 @@ public class UsuarioServicio implements UserDetailsService {
         }
     }
     
-    public void validar(String mail, String clave, EnumRol rol) throws ErrorServicio{
+    public void validar(String mail, String clave, String clave2, EnumRol rol) throws ErrorServicio{
 
         
         if(mail == null || mail.isEmpty()){
@@ -103,6 +103,13 @@ public class UsuarioServicio implements UserDetailsService {
         
         if(clave == null || clave.isEmpty() || clave.length()<6){
             throw new ErrorServicio("error con la clave, longitud menor que 6 digitos");
+        }
+        if(clave == null || clave.isEmpty() || clave.length()<6){
+            throw new ErrorServicio("error con la clave, longitud menor que 6 digitos");
+        }
+        
+        if(clave != clave2){
+            throw new ErrorServicio("no coinciden las claves");
         }
         
         if(rol == null){
