@@ -5,6 +5,7 @@ import com.proyectoVeterinaria.Proyecto_Veterinaria.Entidades.Usuario;
 import com.proyectoVeterinaria.Proyecto_Veterinaria.Enumeraciones.EnumRol;
 import com.proyectoVeterinaria.Proyecto_Veterinaria.Errores.ErrorServicio;
 import com.proyectoVeterinaria.Proyecto_Veterinaria.Repositorio.ClienteRepositorio;
+import com.proyectoVeterinaria.Proyecto_Veterinaria.Repositorio.UsuarioRepositorio;
 import java.util.ArrayList;
 import java.util.Optional;
 import java.util.logging.Level;
@@ -19,6 +20,12 @@ public class ClienteServicio {
 
     @Autowired
     private ClienteRepositorio clienteRepositorio;
+    
+    @Autowired
+    private UsuarioServicio usuarioServicio;
+    
+    @Autowired
+    private UsuarioRepositorio usuarioRepositorio;
 
     @Transactional
     public void registrar(String nombre, String apellido, String direccion, Long telefono, String mail, String password, String password2) throws ErrorServicio {
@@ -44,26 +51,29 @@ public class ClienteServicio {
             throw new ErrorServicio("Confirme su contraseña");
         }
 
+        //seteo el cliente
         Cliente cliente = new Cliente();
         cliente.setNombre(nombre);
         cliente.setApellido(apellido);
         cliente.setDireccion(direccion);
         cliente.setTelefono(telefono);
 
+        
+        usuarioServicio.registrar(mail, password, password2, EnumRol.CLIENTE);
+        
+        //recupero el usuario de la db y seteo el usuario al cliente
         Usuario usuario = new Usuario();
-        usuario.setRol(EnumRol.CLIENTE);
-        usuario.setMail(mail);
-        String passCripto = new BCryptPasswordEncoder().encode(password);
-        usuario.setPass(passCripto);
-
+        usuario = usuarioRepositorio.findById(mail).get();
         cliente.setIdUsuario(usuario);
-
+        
+        //creo el cliente
         clienteRepositorio.save(cliente);
+        
         //notificar por mail "bienvenido usuario" ????
     }
 
     @Transactional
-    public void modificar(String id, String nombre, String apellido, String direccion, Long telefono, String mail, String password, String password2) {
+    public void modificar(String id, String nombre, String apellido, String direccion, Long telefono, String mail, String password, String password2) throws ErrorServicio {
         Optional<Cliente> respuesta = clienteRepositorio.findById(id);
 
         Cliente cliente = respuesta.get();
@@ -71,12 +81,15 @@ public class ClienteServicio {
         cliente.setApellido(apellido);
         cliente.setDireccion(direccion);
         cliente.setTelefono(telefono);
+        
+        
+        usuarioServicio.modificar(mail, password, password2, EnumRol.CLIENTE);
 
+        
+        //recupero el usuario de la db y seteo el usuario al cliente
         Usuario usuario = new Usuario();
-        usuario.setRol(EnumRol.CLIENTE);
-        usuario.setMail(mail);
-        String passCripto = new BCryptPasswordEncoder().encode(password);
-        usuario.setPass(passCripto);
+        usuario = usuarioRepositorio.findById(mail).get();
+        cliente.setIdUsuario(usuario);
 
         cliente.setIdUsuario(usuario);
 
