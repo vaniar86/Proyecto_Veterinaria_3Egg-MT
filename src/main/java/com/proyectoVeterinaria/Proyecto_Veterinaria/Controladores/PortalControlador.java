@@ -50,9 +50,9 @@ public class PortalControlador {
     }
     
      @PostMapping("/registrar") 
-    public String registrar(ModelMap modelo, @RequestParam String nombre, @RequestParam String apellido,@RequestParam String direccion,@RequestParam Long telefono, @RequestParam String mail,  @RequestParam String pass ,@RequestParam String pass2 ){
+    public String registrar(ModelMap modelo, @RequestParam String nombre, @RequestParam String apellido,@RequestParam String direccion,@RequestParam Long telefono, @RequestParam String mail,  @RequestParam String pass1 ,@RequestParam String pass2 ){
          try {
-             clienteServicio.registrar(nombre, apellido, direccion, telefono, mail, pass, pass2);
+             clienteServicio.registrar(nombre, apellido, direccion, telefono, mail, pass1, pass2);
          } catch (ErrorServicio e) {
   
              modelo.put("error", e.getMessage());
@@ -60,7 +60,7 @@ public class PortalControlador {
              modelo.put("apellido", apellido);
              modelo.put("telefono", telefono);
              modelo.put("mail", mail);
-             modelo.put("pass", pass);
+             modelo.put("pass1", pass1);
              modelo.put("pass2", pass2);
              return "registro.html";
          }

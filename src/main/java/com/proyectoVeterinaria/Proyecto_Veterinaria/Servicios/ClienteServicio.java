@@ -21,11 +21,14 @@ public class ClienteServicio {
     @Autowired
     private ClienteRepositorio clienteRepositorio;
     
-      @Autowired
+    @Autowired
     private UsuarioServicio usuarioServicio;
+    
+    @Autowired
+    private UsuarioRepositorio usuarioRepositorio;
 
     @Transactional
-    public void registrar(String nombre, String apellido, String direccion, Long telefono, String mail, String pass, String pass2) throws ErrorServicio {
+    public void registrar(String nombre, String apellido, String direccion, Long telefono, String mail, String password, String password2) throws ErrorServicio {
         if (nombre == null || nombre.isEmpty()) {
             throw new ErrorServicio("El nombre del usuario no puede ser nulo");
         }
@@ -41,10 +44,10 @@ public class ClienteServicio {
         if (mail == null || mail.isEmpty()) {
             throw new ErrorServicio("El mail es un requisito para el registro");
         }
-        if (pass == null || pass.isEmpty()) {
+        if (password == null || password.isEmpty()) {
             throw new ErrorServicio("El password es un requisito para el registro");
         }
-        if (pass2 == null || pass2.isEmpty()) {
+        if (password2 == null || password2.isEmpty()) {
             throw new ErrorServicio("Confirme su contraseña");
         }
         
@@ -52,26 +55,33 @@ public class ClienteServicio {
         usuario.setRol(EnumRol.CLIENTE);
         usuario.setMail(mail);
        
-        usuario.setPass(pass);
+        usuario.setPass(password);
          
-        usuarioServicio.registrar(mail, pass, EnumRol.CLIENTE );
-      
+            
 
+        //seteo el cliente
         Cliente cliente = new Cliente();
         cliente.setNombre(nombre);
         cliente.setApellido(apellido);
         cliente.setDireccion(direccion);
         cliente.setTelefono(telefono);
 
-        cliente.setIdUsuario(usuario);
-
-
+        
+        usuarioServicio.registrar(mail, password, password2, EnumRol.CLIENTE);
+        
+        //recupero el usuario de la db y seteo el usuario al cliente
+        Usuario user = new Usuario();
+        user = usuarioRepositorio.findById(mail).get();
+        cliente.setIdUsuario(user);
+        
+        //creo el cliente
         clienteRepositorio.save(cliente);
+        
         //notificar por mail "bienvenido usuario" ????
     }
 
     @Transactional
-    public void modificar(String id, String nombre, String apellido, String direccion, Long telefono, String mail, String password, String password2) {
+    public void modificar(String id, String nombre, String apellido, String direccion, Long telefono, String mail, String password, String password2) throws ErrorServicio {
         Optional<Cliente> respuesta = clienteRepositorio.findById(id);
 
         Cliente cliente = respuesta.get();
@@ -79,12 +89,15 @@ public class ClienteServicio {
         cliente.setApellido(apellido);
         cliente.setDireccion(direccion);
         cliente.setTelefono(telefono);
+        
+        
+        usuarioServicio.modificar(mail, password, password2, EnumRol.CLIENTE);
 
+        
+        //recupero el usuario de la db y seteo el usuario al cliente
         Usuario usuario = new Usuario();
-        usuario.setRol(EnumRol.CLIENTE);
-        usuario.setMail(mail);
-        String passCripto = new BCryptPasswordEncoder().encode(password);
-        usuario.setPass(passCripto);
+        usuario = usuarioRepositorio.findById(mail).get();
+        cliente.setIdUsuario(usuario);
 
         cliente.setIdUsuario(usuario);
 

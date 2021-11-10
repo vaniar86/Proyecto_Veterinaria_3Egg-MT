@@ -44,7 +44,7 @@ public class MascotaControlador {
              return ("redirect/mascota");
          }
      
-     }catch(Exception Error){
+     }catch(ErrorServicio Error){
          Mascota mascota = new Mascota();
          mascota.setNombre(nombre);
          mascota.setRaza(raza);

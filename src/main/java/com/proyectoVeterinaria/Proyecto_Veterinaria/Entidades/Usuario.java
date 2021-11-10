@@ -58,6 +58,11 @@ public class Usuario {
         this.fechaAlta = fechaAlta;
     }
 
+    @Override
+    public String toString() {
+        return "Usuario{" + "mail=" + mail + ", pass=" + pass + ", rol=" + rol + ", fechaAlta=" + fechaAlta + '}';
+    }
+
     
     
     
