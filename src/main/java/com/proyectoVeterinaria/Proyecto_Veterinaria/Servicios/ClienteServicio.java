@@ -50,14 +50,7 @@ public class ClienteServicio {
         if (password2 == null || password2.isEmpty()) {
             throw new ErrorServicio("Confirme su contraseña");
         }
-        
-        Usuario usuario = new Usuario();
-        usuario.setRol(EnumRol.CLIENTE);
-        usuario.setMail(mail);
-       
-        usuario.setPass(password);
-         
-            
+                          
 
         //seteo el cliente
         Cliente cliente = new Cliente();
@@ -70,9 +63,8 @@ public class ClienteServicio {
         usuarioServicio.registrar(mail, password, password2, EnumRol.CLIENTE);
         
         //recupero el usuario de la db y seteo el usuario al cliente
-        Usuario user = new Usuario();
-        user = usuarioRepositorio.findById(mail).get();
-        cliente.setIdUsuario(user);
+        Usuario usuario = usuarioRepositorio.findById(mail).get();
+        cliente.setIdUsuario(usuario);
         
         //creo el cliente
         clienteRepositorio.save(cliente);

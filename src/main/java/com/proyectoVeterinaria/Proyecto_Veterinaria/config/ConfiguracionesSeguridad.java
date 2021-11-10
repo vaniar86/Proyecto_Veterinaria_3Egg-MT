@@ -33,20 +33,21 @@ public class ConfiguracionesSeguridad extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.headers().frameOptions().sameOrigin().and()
-                .authorizeRequests()
-                    .antMatchers("/css/*", "/js/*", "/img/*", "/**")
-                    .permitAll()
-                .and().formLogin()
-                    .loginPage("/login") // Que formulario esta mi login
-                        .loginProcessingUrl("/logincheck")
-                        .usernameParameter("username") // Como viajan los datos del logueo
-                        .passwordParameter("password")// Como viajan los datos del logueo
-                        .defaultSuccessUrl("/index") // A que URL viaja
-                        .permitAll()
-                .and().logout() // Aca configuro la salida
-                    .logoutUrl("/logout")
-                    .logoutSuccessUrl("/")
-                    .permitAll().and().csrf().disable();
+			.authorizeRequests()
+				.antMatchers("/css/*", "/js/*", "/img/*", "/**")
+                                .permitAll()
+				.and().formLogin()
+					.loginPage("/login")
+                                            .loginProcessingUrl("/logincheck")
+                                            .usernameParameter("username")
+                                            .passwordParameter("password")
+                                            .defaultSuccessUrl("/inicio")
+                                            .permitAll()
+                                        .and().logout()
+                                             .logoutUrl("/logout")
+                                              .logoutSuccessUrl("/login")
+                                              .permitAll()
+                                              .and().csrf().disable();
         
     }
 }
