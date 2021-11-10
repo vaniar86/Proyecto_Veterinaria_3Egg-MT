@@ -5,6 +5,7 @@ import com.proyectoVeterinaria.Proyecto_Veterinaria.Entidades.Usuario;
 import com.proyectoVeterinaria.Proyecto_Veterinaria.Enumeraciones.EnumRol;
 import com.proyectoVeterinaria.Proyecto_Veterinaria.Errores.ErrorServicio;
 import com.proyectoVeterinaria.Proyecto_Veterinaria.Repositorio.ClienteRepositorio;
+import com.proyectoVeterinaria.Proyecto_Veterinaria.Repositorio.UsuarioRepositorio;
 import java.util.ArrayList;
 import java.util.Optional;
 import java.util.logging.Level;
@@ -19,9 +20,12 @@ public class ClienteServicio {
 
     @Autowired
     private ClienteRepositorio clienteRepositorio;
+    
+      @Autowired
+    private UsuarioServicio usuarioServicio;
 
     @Transactional
-    public void registrar(String nombre, String apellido, String direccion, Long telefono, String mail, String password, String password2) throws ErrorServicio {
+    public void registrar(String nombre, String apellido, String direccion, Long telefono, String mail, String pass, String pass2) throws ErrorServicio {
         if (nombre == null || nombre.isEmpty()) {
             throw new ErrorServicio("El nombre del usuario no puede ser nulo");
         }
@@ -37,12 +41,21 @@ public class ClienteServicio {
         if (mail == null || mail.isEmpty()) {
             throw new ErrorServicio("El mail es un requisito para el registro");
         }
-        if (password == null || password.isEmpty()) {
+        if (pass == null || pass.isEmpty()) {
             throw new ErrorServicio("El password es un requisito para el registro");
         }
-        if (password2 == null || password2.isEmpty()) {
+        if (pass2 == null || pass2.isEmpty()) {
             throw new ErrorServicio("Confirme su contraseña");
         }
+        
+        Usuario usuario = new Usuario();
+        usuario.setRol(EnumRol.CLIENTE);
+        usuario.setMail(mail);
+       
+        usuario.setPass(pass);
+         
+        usuarioServicio.registrar(mail, pass, EnumRol.CLIENTE );
+      
 
         Cliente cliente = new Cliente();
         cliente.setNombre(nombre);
@@ -50,13 +63,8 @@ public class ClienteServicio {
         cliente.setDireccion(direccion);
         cliente.setTelefono(telefono);
 
-        Usuario usuario = new Usuario();
-        usuario.setRol(EnumRol.CLIENTE);
-        usuario.setMail(mail);
-        String passCripto = new BCryptPasswordEncoder().encode(password);
-        usuario.setPass(passCripto);
-
         cliente.setIdUsuario(usuario);
+
 
         clienteRepositorio.save(cliente);
         //notificar por mail "bienvenido usuario" ????
