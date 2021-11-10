@@ -62,8 +62,7 @@ public class ClienteServicio {
         usuarioServicio.registrar(mail, password, password2, EnumRol.CLIENTE);
         
         //recupero el usuario de la db y seteo el usuario al cliente
-        Usuario usuario = new Usuario();
-        usuario = usuarioRepositorio.findById(mail).get();
+        Usuario usuario = usuarioRepositorio.findById(mail).get();
         cliente.setIdUsuario(usuario);
         
         //creo el cliente

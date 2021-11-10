@@ -128,10 +128,8 @@ public class UsuarioServicio implements UserDetailsService {
             //array con los permisos   estilo GrantedAuthority
             List<GrantedAuthority> permisos = new ArrayList<>();
             
-           
-            
             //creamos los permisos individualmente
-           /* GrantedAuthority p1 = new SimpleGrantedAuthority("MODULO_FOTO");
+            /* GrantedAuthority p1 = new SimpleGrantedAuthority("MODULO_FOTO");
             GrantedAuthority p2 = new SimpleGrantedAuthority("MODULO_MASCOTA");
             GrantedAuthority p3 = new SimpleGrantedAuthority("MODULO_VOTO");
             
@@ -141,14 +139,15 @@ public class UsuarioServicio implements UserDetailsService {
             permisos.add(p3);
             
             */
-           if(usuario.getRol().CLIENTE != EnumRol.CLIENTE){
+           /*if(usuario.getRol().CLIENTE != EnumRol.CLIENTE){
                
            }else{
                 GrantedAuthority p1 = new SimpleGrantedAuthority("ROLE_USUARIO_REGISTRADO");
                 permisos.add(p1);
-           }
+           }*/
            
-           
+           GrantedAuthority p1 = new SimpleGrantedAuthority("ROLE_USUARIO_REGISTRADO");
+           permisos.add(p1);
 
             //Esto me permite guardar el OBJETO USUARIO LOG, para luego ser utilizado
             ServletRequestAttributes attr = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();

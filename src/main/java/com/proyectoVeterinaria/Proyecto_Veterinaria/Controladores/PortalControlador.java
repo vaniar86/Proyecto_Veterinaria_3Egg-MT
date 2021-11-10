@@ -33,7 +33,10 @@ public class PortalControlador {
     
     @GetMapping("/login") 
     public String login(@RequestParam(required = false) String error, @RequestParam(required = false) String logout, ModelMap modelo){
+       System.out.println("error 1 " + error);
        if(error != null){
+           
+           System.out.println("error 2 " + error);
             modelo.put("error", "Nombre de usuario o clave Incorrectos");
        }
         
