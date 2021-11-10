@@ -9,6 +9,7 @@ import com.proyectoVeterinaria.Proyecto_Veterinaria.Repositorio.AtencionReposito
 import com.proyectoVeterinaria.Proyecto_Veterinaria.Repositorio.TurnoRepositorio;
 import com.proyectoVeterinaria.Proyecto_Veterinaria.Servicios.AtencionServicio;
 import com.proyectoVeterinaria.Proyecto_Veterinaria.Servicios.MascotaServicio;
+import com.proyectoVeterinaria.Proyecto_Veterinaria.Servicios.TurnoServicio;
 import java.util.List;
 import java.util.Optional;
 import java.util.logging.Level;
@@ -32,7 +33,10 @@ public class AtencionControlador {
 
     @Autowired
     private AtencionServicio atencionServicio;
-
+    
+    @Autowired
+    private TurnoServicio turnoServicio;
+    
     @Autowired
     private AtencionRepositorio atencionRepositorio;
 
@@ -67,7 +71,7 @@ public class AtencionControlador {
         }
         try {
             Optional<Turno> turno = turnoRepositorio.findById(id);
-           // atencionServicio. NO TOCAR, despues se habilita
+           turnoServicio.eliminar(id);//el metodo se podria llamar cancelarTurno, ya que nomas lo setea a DISPONIBLE, los TURNOS NO SE eLIMINAN de la base
             
         } catch (Exception Error) {
             Logger.getLogger(ProfesionalController.class.getName()).log(Level.SEVERE, null, Error);
