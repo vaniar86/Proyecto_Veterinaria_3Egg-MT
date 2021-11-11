@@ -6,6 +6,7 @@ import com.proyectoVeterinaria.Proyecto_Veterinaria.Entidades.Turno;
 import com.proyectoVeterinaria.Proyecto_Veterinaria.Enumeraciones.EnumStatusTurno;
 import com.proyectoVeterinaria.Proyecto_Veterinaria.Errores.ErrorServicio;
 import com.proyectoVeterinaria.Proyecto_Veterinaria.Repositorio.TurnoRepositorio;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Optional;
 import javax.transaction.Transactional;
@@ -43,6 +44,7 @@ public class TurnoServicio {
             turno.setStatus(status);
 
             turnoRepositorio.save(turno);
+            
         }else{
             throw new ErrorServicio("No se encontro con el id del turno solicitado");
         }
@@ -77,4 +79,34 @@ public class TurnoServicio {
         }
         
     }
+    
+    @Transactional
+    public void cancelarTurno(String id) throws ErrorServicio {
+        /*recibo el id del turno a "cancelar" y lo seteo a disponible para que otro cliente lo pueda usar 
+        y "borro el valor del perro" que estaba asignado, la fecha y profesional sigue igual 
+        */
+       Optional<Turno> respuesta = turnoRepositorio.findById(id);
+        if (respuesta.isPresent()) {
+            Turno turno = respuesta.get();
+            turno.setMascota(null);
+            turno.setStatus(EnumStatusTurno.DISPONIBLE);
+            turnoRepositorio.save(turno);
+        }else{
+            throw new ErrorServicio("No se encontro con el id del turno solicitado");
+        }
+    }
+    
+    public ArrayList<Turno> listarTurnos(){
+        //listo todo los turnos de la base de datos
+        ArrayList<Turno> turnos = new ArrayList(turnoRepositorio.findAll());
+        return turnos;
+    }
+    
+    /* habilitar cuando se vaya a usar, y a su vez habilitar lo comentado en turnoRepositorio
+    public ArrayList<Turno> listarTurnosPorProfesional(Profesional profe){
+        //listo todo los turnos de ESE profesional
+        ArrayList<Turno> turnos = new ArrayList(turnoRepositorio.buscarTurnosPorProfesional(profe.getId()));
+        return turnos;
+    }
+    */
 }
