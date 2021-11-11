@@ -6,6 +6,7 @@ import com.proyectoVeterinaria.Proyecto_Veterinaria.Enumeraciones.EnumRol;
 import com.proyectoVeterinaria.Proyecto_Veterinaria.Errores.ErrorServicio;
 import com.proyectoVeterinaria.Proyecto_Veterinaria.Repositorio.ProfesionalRepositorio;
 import com.proyectoVeterinaria.Proyecto_Veterinaria.Repositorio.UsuarioRepositorio;
+import java.util.ArrayList;
 import java.util.Optional;
 import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -77,6 +78,13 @@ public class ProfesionalServicio {
                 throw new ErrorServicio("No existe ese profesional");
             }
         }
+    }
+    
+    public ArrayList<Profesional> listarProfesionales() {
+        //listo todo los profesionales de la base de datos
+        ArrayList<Profesional> profesionales = new ArrayList(profesionalRepositorio.findAll());
+        
+        return profesionales;
     }
 
 }
