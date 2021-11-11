@@ -1,0 +1,89 @@
+.navbarContent{
+    background-color: #47324e;
+    height: 100px ;
+    font-size: 1.2rem;
+    font-weight: 500;
+    
+}
+.icon{
+     color: #ffff;
+}
+.nav-item a{
+    text-decoration:none;
+    color: #ffff;
+}
+.user{
+    width: 90%;
+    
+}
+
+@media only screen and (max-width: 991px) {
+    .user{
+        width: 70%;
+    }
+}
+.card img{
+    width: 100%;
+}
+
+
+.list-inline {
+    padding-left: 0;
+    list-style: none;
+  }
+  
+  .list-inline-item {
+    display: inline-block;
+   
+  }
+  .list-inline-item:not(:last-child) {
+    margin-right: 0.5rem;
+  }
+  .list-inline-item a {
+        text-decoration: none;
+        color: #ffff;
+        font-size: 1rem;
+  }
+.call-to-action {
+    position: relative;
+    background-color: #343a40;
+    background: url("../assets/images/bg-masthead.jpg") no-repeat center center;
+    background-size: cover;
+    padding-top: 7rem;
+    padding-bottom: 7rem;
+  }
+  .call-to-action:before {
+    content: "";
+    position: absolute;
+    background-color: #1c375e;
+    height: 100%;
+    width: 100%;
+    top: 0;
+    left: 0;
+    opacity: 0.5;
+  }
+  
+  footer.footer {
+    padding-top: 4rem;
+    padding-bottom: 4rem;
+    background-color: #474b4e;
+  }
+  .title{
+    font-size: 2rem;
+    font-weight: 600;
+    text-align: center;
+    width: 100%;
+    padding: 20px 10px;
+  }
+  .btnCard{
+    align-items: flex-end;
+  }
+  .box img{
+    width: 100%;
+    height: auto;
+  }
+  
+ .cardCont{
+    height: 250px;
+ }
+

@@ -14,7 +14,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import javax.servlet.http.HttpSession;
-import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -24,6 +23,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 import org.springframework.web.multipart.MultipartFile;
@@ -40,17 +40,15 @@ public class UsuarioServicio implements UserDetailsService {
     UsuarioRepositorio usuarioRepositorio;
     
     @Transactional
-    public void registrar (String mail, String clave, EnumRol rol)throws ErrorServicio{
+    public void registrar (String mail, String clave, String clave2, EnumRol rol)throws ErrorServicio{
     
     //public void registrar (String nombre, String apellido, String mail, String clave)throws ErrorServicio{
-        
-        validar(mail, clave, rol);
+        System.out.println(clave + "     " + clave2);
+        validar(mail, clave, clave2, rol);
         
         Usuario usuario = new Usuario();
         usuario.setMail(mail);
-        //usuario.setPass(clave);
-        //usuario.setRol(rol);
-        usuario.setRol(rol);
+        usuario.setRol(EnumRol.CLIENTE);
        
         
         // encriptar la clave
@@ -60,19 +58,16 @@ public class UsuarioServicio implements UserDetailsService {
             
         usuario.setFechaAlta(new Date());
         
-        
-        
         usuarioRepositorio.save(usuario);
-        
         
         // ----->>>>>>>  
         //NotificacionServicio.enviar("baruj aba al tinder de mascotas", "Tinder de mascotas", usuario.getMail());
     }
     
     @Transactional
-    public void modificar(String mail, String clave, EnumRol rol) throws ErrorServicio{
+    public void modificar(String mail, String clave, String clave2, EnumRol rol) throws ErrorServicio{
         
-        validar(mail, clave, rol);
+        validar(mail, clave, clave2, rol);
         
         Optional<Usuario> respuesta = usuarioRepositorio.findById(mail);
         if(respuesta.isPresent()){
@@ -82,10 +77,8 @@ public class UsuarioServicio implements UserDetailsService {
             
             // encriptar la clave
             // usar el mismo encriptacion que definimos en el archivo Tindermascotas3Application
-            String encriptada = new BCryptPasswordEncoder().encode(clave);
+            String encriptada = new BCryptPasswordEncoder().encode(clave2);
             usuario.setPass(encriptada);
-            
-           
             
             usuarioRepositorio.save(usuario);
         }else{
@@ -94,7 +87,7 @@ public class UsuarioServicio implements UserDetailsService {
         }
     }
     
-    public void validar(String mail, String clave, EnumRol rol) throws ErrorServicio{
+    public void validar(String mail, String clave, String clave2, EnumRol rol) throws ErrorServicio{
 
         
         if(mail == null || mail.isEmpty()){
@@ -103,6 +96,14 @@ public class UsuarioServicio implements UserDetailsService {
         
         if(clave == null || clave.isEmpty() || clave.length()<6){
             throw new ErrorServicio("error con la clave, longitud menor que 6 digitos");
+        }
+        if(clave2 == null || clave.isEmpty() || clave2.length()<6){
+            throw new ErrorServicio("error con la clave, longitud menor que 6 digitos");
+        }
+        
+        if(!clave.equals(clave2)){
+            
+            throw new ErrorServicio("no coinciden las claves");
         }
         
         if(rol == null){
@@ -140,8 +141,14 @@ public class UsuarioServicio implements UserDetailsService {
             permisos.add(p3);
             
             */
-           GrantedAuthority p1 = new SimpleGrantedAuthority("ROLE_USUARIO_REGISTRADO");
-            permisos.add(p1);
+           if(usuario.getRol().CLIENTE != EnumRol.CLIENTE){
+               
+           }else{
+                GrantedAuthority p1 = new SimpleGrantedAuthority("ROLE_USUARIO_REGISTRADO");
+                permisos.add(p1);
+           }
+           
+           
 
             //Esto me permite guardar el OBJETO USUARIO LOG, para luego ser utilizado
             ServletRequestAttributes attr = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();

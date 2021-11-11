@@ -5,10 +5,12 @@
  */
 package com.proyectoVeterinaria.Proyecto_Veterinaria.Entidades;
 
+import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import org.hibernate.annotations.GenericGenerator;
 
@@ -34,8 +36,8 @@ public class Cliente {
     
     
     
-    @ManyToOne
-    private Mascota mascota;
+    @OneToMany
+    private List<Mascota> mascota;
 
     public Cliente() {
     }
@@ -88,13 +90,20 @@ public class Cliente {
         this.telefono = telefono;
     }
 
-    public Mascota getMascota() {
+    public List<Mascota> getMascota() {
         return mascota;
     }
 
-    public void setMascota(Mascota mascota) {
+    public void setMascota(List<Mascota> mascota) {
         this.mascota = mascota;
     }
+
+    @Override
+    public String toString() {
+        return "Cliente{" + "id=" + id + ", idUsuario=" + idUsuario + ", nombre=" + nombre + ", apellido=" + apellido + ", direccion=" + direccion + ", telefono=" + telefono + ", mascota=" + mascota + '}';
+    }
+
+    
     
     
 }
