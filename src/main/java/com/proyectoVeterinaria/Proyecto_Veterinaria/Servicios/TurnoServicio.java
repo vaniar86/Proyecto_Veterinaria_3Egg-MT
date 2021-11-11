@@ -18,11 +18,11 @@ public class TurnoServicio {
 
     @Autowired
     private TurnoRepositorio turnoRepositorio;
-    
+
     @Transactional
-    public void crearTurno(Date fecha, EnumStatusTurno status, Mascota mascota, Profesional profesional)throws ErrorServicio {
-        validar(fecha,status,mascota,profesional);
-        
+    public void crearTurno(Date fecha, EnumStatusTurno status, Mascota mascota, Profesional profesional) throws ErrorServicio {
+        validar(fecha, status, mascota, profesional);
+
         Turno turno = new Turno();
         turno.setFecha(new Date());
         turno.setMascota(mascota);
@@ -34,8 +34,8 @@ public class TurnoServicio {
 
     @Transactional
     public void modificar(Date fecha, EnumStatusTurno status, Mascota mascota, Profesional profesional, String id) throws ErrorServicio {
-        validar(fecha,status,mascota,profesional);
-       Optional<Turno> respuesta = turnoRepositorio.findById(id);
+        validar(fecha, status, mascota, profesional);
+        Optional<Turno> respuesta = turnoRepositorio.findById(id);
         if (respuesta.isPresent()) {
             Turno turno = respuesta.get();
             turno.setFecha(fecha);
@@ -44,26 +44,26 @@ public class TurnoServicio {
             turno.setStatus(status);
 
             turnoRepositorio.save(turno);
-            
-        }else{
+
+        } else {
             throw new ErrorServicio("No se encontro con el id del turno solicitado");
         }
     }
 
-    public void validar(Date fecha, EnumStatusTurno status,Mascota mascota, Profesional profesional)throws ErrorServicio {
-    
-        if(fecha == null){
+    public void validar(Date fecha, EnumStatusTurno status, Mascota mascota, Profesional profesional) throws ErrorServicio {
+
+        if (fecha == null) {
             throw new ErrorServicio("error con la fecha");
         }
-        
-        if(mascota == null ){
+
+        if (mascota == null) {
             throw new ErrorServicio("error, la mascota no fue seleccionada");
         }
-        
-        if(status == null){
+
+        if (status == null) {
             throw new ErrorServicio("error, no se encuentra el status del turno");
         }
-        
+
     }
 
     @Transactional
@@ -74,39 +74,58 @@ public class TurnoServicio {
             respuesta.get().setFecha(new Date());
             respuesta.get().setMascota(null);
             respuesta.get().setProfesional(null);
-        }else{
+        } else {
             throw new ErrorServicio("El turno no existe");
         }
-        
+
     }
-    
+
     @Transactional
-    public void cancelarTurno(String id) throws ErrorServicio {
-        /*recibo el id del turno a "cancelar" y lo seteo a disponible para que otro cliente lo pueda usar 
-        y "borro el valor del perro" que estaba asignado, la fecha y profesional sigue igual 
-        */
-       Optional<Turno> respuesta = turnoRepositorio.findById(id);
+    public void statusTurno(String id, String status) throws ErrorServicio {
+        /*recibo el id del turno y un String que puede decir "cancelar, modificar, atendido, etc"
+        luego segun lo que diga, se hara tal accion,la persona toca el boton y se manda de manera oculta
+        BORRAR ESTE COMENTARIO: cuando admin, profesional y cliente, ya tengan funcionando los botones
+         */
+        Optional<Turno> respuesta = turnoRepositorio.findById(id);
+        Turno turno = respuesta.get();
         if (respuesta.isPresent()) {
-            Turno turno = respuesta.get();
-            turno.setMascota(null);
-            turno.setStatus(EnumStatusTurno.DISPONIBLE);
-            turnoRepositorio.save(turno);
-        }else{
+            if (status.equals("cancelar")) {
+                turno.setMascota(null);
+                turno.setStatus(EnumStatusTurno.DISPONIBLE);
+                turnoRepositorio.save(turno);
+            } else {
+                if (status.equals("atendido")) {
+                    turno.setStatus(EnumStatusTurno.ATENDIDO);
+                    turnoRepositorio.save(turno);
+                } else {
+                    if (status.equals("suspendido")) {
+                        turno.setStatus(EnumStatusTurno.SUSPENDIDO);
+                        turnoRepositorio.save(turno);
+                        //notificar por mail
+                    } else {
+                        if (status.equals("ausente")) {
+                            turno.setStatus(EnumStatusTurno.AUSENTE);
+                            turnoRepositorio.save(turno);
+                        }
+                    }
+                }
+            }
+        } else {
             throw new ErrorServicio("No se encontro con el id del turno solicitado");
         }
     }
-    
-    public ArrayList<Turno> listarTurnos(){
+
+    public ArrayList<Turno> listarTurnos() {
         //listo todo los turnos de la base de datos
         ArrayList<Turno> turnos = new ArrayList(turnoRepositorio.findAll());
         return turnos;
     }
-    
+
     /* habilitar cuando se vaya a usar, y a su vez habilitar lo comentado en turnoRepositorio
     public ArrayList<Turno> listarTurnosPorProfesional(Profesional profe){
         //listo todo los turnos de ESE profesional
         ArrayList<Turno> turnos = new ArrayList(turnoRepositorio.buscarTurnosPorProfesional(profe.getId()));
         return turnos;
     }
-    */
+     */
 }
