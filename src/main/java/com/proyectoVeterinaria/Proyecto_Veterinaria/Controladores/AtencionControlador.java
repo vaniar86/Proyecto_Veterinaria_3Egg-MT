@@ -87,26 +87,20 @@ public class AtencionControlador {
     }
 
     @PostMapping("/modificar-turno")
-    public String modificarTurno(ModelMap modelo, @RequestParam Date fecha, @RequestParam EnumStatusTurno status, @RequestParam Mascota mascota, @RequestParam Profesional profesional, @RequestParam String idTurno) {
-        /* Cuando el cliente o admin tocan el boton modificar turno, se manda el ID del turno original llamado idTurno, 
-        y los parametros para el turno NUEVO, entonces se "CREA UN TURNO NUEVO" y a su vez "se libera el turno anterior"
+    public String modificarTurno(ModelMap modelo, @RequestParam String idTurno) {
+        /* 
+        ESTO solo si van a haber 2 botones (cancelar y modificar TURNO)
+        si existe el boton modificar, se "libera" el turno actual
+        y se lo redirecciona al formulario para crear un turno nuevo,
+        sino directamente nos manejamos con el boton cancelar turno, y que vayan
+        a sacar turno nuevo
          */
         try {
             turnoServicio.statusTurno(idTurno, "cancelar");
-            turnoServicio.crearTurno(fecha, status, mascota, profesional);
-            //PD: creo no hace falta desde la vista "pedir que INGRESE de vuelta los datos de la mascota",
-            //sino la nueva fecha y el profesional para el nuevo turno
-            //si se complica el modificar, directamente que toque cancelar turno, y saque uno nuevo
         } catch (ErrorServicio e) {
-
             modelo.put("error", e.getMessage());
-            modelo.put("fecha", fecha);
-            modelo.put("status", status);
-            modelo.put("mascota", mascota);
-            modelo.put("profesional", profesional);
             return "turno.html";
         }
-
-        return "/atencion.html";
+        return "redirect:/login/crear-turno";
     }
 }
