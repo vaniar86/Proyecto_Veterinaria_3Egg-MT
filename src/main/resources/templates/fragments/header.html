@@ -1,21 +1,14 @@
-<header th:fragment="header">
-  <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+<header th:fragment="header">        
+  <nav class="navbar navbar-expand-md navbarContent fixed-top">
     <div class="container-fluid">
       <a class="navbar-brand" th:href="@{/}">
         <img src="./images/logoChico.png" alt="logo" />
       </a>
 
-      <button
-        class="navbar-toggler"
-        type="button"
-        data-bs-toggle="collapse"
-        data-bs-target="#navbarCollapse"
-        aria-controls="navbarCollapse"
-        aria-expanded="false"
-        aria-label="Toggle navigation"
-      >
-        <span class="navbar-toggler-icon"></span>
-      </button>
+       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse"
+          aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+          <i class="fa-light fa-bars icon"></i>
+        </button>
       <div class="collapse navbar-collapse" id="navbarCollapse">
         <ul class="navbar-nav me-auto mb-2 mb-md-0">
           <li class="nav-item">
@@ -24,24 +17,26 @@
             >
           </li>
           <li class="nav-item">
+            <a class="nav-link" th:href="@{/inicio}" th:if="${session.usuariosession != null}">Inicio</a>
+          </li>
+          <li><p th:if="${session.usuariosession != null}" th:text="${session.usuariosession.mail}"></p>
+          <li class="nav-item">
             <a class="nav-link" th:href="@{/registro}" th:if="${session.usuariosession == null}">Registro</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" th:if="${session.usuariosession == null}">Iniciar Sesión</a>
-          </li>
-          <li>
-            <div class="dropdown" th:if="${session.usuariosession != null}">
-                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                  Dropdown button
-                </button>
-                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                  <li><a class="dropdown-item" th:href="@{/logout}">Cerrar Sesión</a></li>
-                  <li><a class="dropdown-item" th:href="@{/perfil}">Mi Perfil</a></li>
-                </ul>
-              </div>
+            <a class="nav-link" th:if="${session.usuariosession == null}" th:href="@{/login}">Iniciar Sesión</a>
           </li>
         </ul>
       </div>
+        <div class="dropdown justify-content-start " th:if="${session.usuariosession != null}">
+            <img src="/images/avatar-2.jpg" class="btn user dropdown-toggle rounded-circle dropdown-toggle" alt="user" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+
+            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                <li><p th:text="${session.usuariosession.mail}"></p>
+              <li><a class="dropdown-item" th:href="@{/logout}">Cerrar Sesión</a></li>
+              <li><a class="dropdown-item" th:href="@{/perfil}">Mi Perfil</a></li>
+            </ul>
+        </div>
     </div>
   </nav>
 </header>
