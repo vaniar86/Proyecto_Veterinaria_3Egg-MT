@@ -37,15 +37,15 @@ public class ConfiguracionesSeguridad extends WebSecurityConfigurerAdapter {
 				.antMatchers("/css/*", "/js/*", "/img/*", "/**")
                                 .permitAll()
 				.and().formLogin()
-					.loginPage("/login")
-                                            .loginProcessingUrl("/logincheck")
-                                            .usernameParameter("email")
-                                            .passwordParameter("password")
-                                            .defaultSuccessUrl("/index")
+					.loginPage("/login")//html del login
+                                            .loginProcessingUrl("/logincheck")//formulario de login
+                                            .usernameParameter("email")//user
+                                            .passwordParameter("password")//pass
+                                            .defaultSuccessUrl("/index")//html que se dirige al ingresar
                                             .permitAll()
                                         .and().logout()
                                              .logoutUrl("/logout")
-                                              .logoutSuccessUrl("/index")
+                                              .logoutSuccessUrl("/")
                                               .permitAll()
                                               .and().csrf().disable();
         

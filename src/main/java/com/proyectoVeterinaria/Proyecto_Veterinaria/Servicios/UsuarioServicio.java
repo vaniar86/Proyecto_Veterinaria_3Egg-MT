@@ -123,8 +123,9 @@ public class UsuarioServicio implements UserDetailsService {
     public UserDetails loadUserByUsername(String mail) throws UsernameNotFoundException {
         //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
         Usuario usuario = usuarioRepositorio.buscarPorMail(mail);
+        System.out.println(usuario);
         if(usuario != null){
-            
+            System.out.println("ingreso al if");
             //array con los permisos   estilo GrantedAuthority
             List<GrantedAuthority> permisos = new ArrayList<>();
             
@@ -140,7 +141,8 @@ public class UsuarioServicio implements UserDetailsService {
             
             */
            if(usuario.getRol().CLIENTE != EnumRol.CLIENTE){
-               
+               GrantedAuthority p1 = new SimpleGrantedAuthority("ROLE_USUARIO_PROFESIONAL");
+                permisos.add(p1);
            }else{
                 GrantedAuthority p1 = new SimpleGrantedAuthority("ROLE_USUARIO_REGISTRADO");
                 permisos.add(p1);
@@ -157,6 +159,8 @@ public class UsuarioServicio implements UserDetailsService {
             
             //constructor usuario, clave, lista de permisos
             User user = new User(usuario.getMail(), usuario.getPass(), permisos);
+            
+            System.out.println("MOSTRAR USER" + user.toString());
             return user;
         }else{
             return null;

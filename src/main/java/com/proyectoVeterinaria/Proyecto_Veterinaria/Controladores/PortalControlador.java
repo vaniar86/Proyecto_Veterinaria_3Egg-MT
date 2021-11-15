@@ -33,12 +33,12 @@ public class PortalControlador {
     
     @GetMapping("/login") 
     public String login(@RequestParam(required = false) String error, @RequestParam(required = false) String logout, ModelMap modelo){
-       System.out.println("error 1 " + error);
-       if(error != null){
-           
-           System.out.println("error 2 " + error);
+       System.out.println("error 1 portal controlador" + error);
+       //if(error != "" || error !=null){
+      /* if(error !=null){    
+           System.out.println("error 2 portasl controlador" + error);
             modelo.put("error", "Nombre de usuario o clave Incorrectos");
-       }
+       }*/
         
        if(logout != null){
             modelo.put("logout", "Se ha deslogueado correctamente");
@@ -56,6 +56,12 @@ public class PortalControlador {
     public String registrar(ModelMap modelo, @RequestParam String nombre, @RequestParam String apellido,@RequestParam String direccion,@RequestParam Long telefono, @RequestParam String mail,  @RequestParam String pass1 ,@RequestParam String pass2 ){
          try {
              clienteServicio.registrar(nombre, apellido, direccion, telefono, mail, pass1, pass2);
+             
+             
+                System.err.println("mail  " + mail);
+                System.err.println("clave1  " + pass1);
+                System.err.println("clave2  " + pass2);
+                
          } catch (ErrorServicio e) {
   
              modelo.put("error", e.getMessage());
@@ -67,6 +73,8 @@ public class PortalControlador {
              modelo.put("pass2", pass2);
              return "registro.html";
          }
+        //modelo.put("titulo", "Registro exitoso");
+        //modelo.put("descripcion", "Usted se ha logrado registrar exitosamente en nuestro sitio web.");
         
         return "index.html";
     }
