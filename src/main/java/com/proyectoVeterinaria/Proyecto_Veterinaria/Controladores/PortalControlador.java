@@ -1,10 +1,14 @@
 
 package com.proyectoVeterinaria.Proyecto_Veterinaria.Controladores;
 
+import com.proyectoVeterinaria.Proyecto_Veterinaria.Entidades.Usuario;
 import com.proyectoVeterinaria.Proyecto_Veterinaria.Errores.ErrorServicio;
 import com.proyectoVeterinaria.Proyecto_Veterinaria.Servicios.ClienteServicio;
+import java.util.Arrays;
 import java.util.List;
+import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -31,18 +35,37 @@ public class PortalControlador {
         return "index.html";
     }
     
+    @PreAuthorize("hasAnyRole('ROLE_USUARIO_REGISTRADO')")
+    @GetMapping("/inicio")
+    public String inicio() {
+        return "inicio.html";
+    }
+
+    
+    
     @GetMapping("/login") 
     public String login(@RequestParam(required = false) String error, @RequestParam(required = false) String logout, ModelMap modelo){
-       System.out.println("error 1 portal controlador" + error);
+    // public String login(HttpSession session, ModelMap modelo, @RequestParam(required=false) String error, @RequestParam(required=false) String logout) {
+       // System.out.println(" portal controlador  " + error);
+        //System.out.println(session.toString());
+        //System.out.println(session.getId());
        //if(error != "" || error !=null){
       /* if(error !=null){    
            System.out.println("error 2 portasl controlador" + error);
             modelo.put("error", "Nombre de usuario o clave Incorrectos");
        }*/
         
-       if(logout != null){
-            modelo.put("logout", "Se ha deslogueado correctamente");
-       }
+       if (logout != null) {
+            modelo.put("logout", "¡Se ha deslogueado correctamente de nuestro sitio web!");
+        }
+        
+        
+        if (error != null) {
+            modelo.put("error", "¡El usuario o contraseña no coinciden!");
+            //session.invalidate();
+        }
+        
+       
         return "login.html";
     }
     
@@ -78,5 +101,7 @@ public class PortalControlador {
         
         return "index.html";
     }
+    
+
     
 }

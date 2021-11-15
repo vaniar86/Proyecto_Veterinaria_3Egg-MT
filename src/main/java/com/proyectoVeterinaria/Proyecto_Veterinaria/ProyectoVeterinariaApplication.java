@@ -12,16 +12,21 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 public class ProyectoVeterinariaApplication extends WebSecurityConfigurerAdapter{
 
     @Autowired
-    UsuarioServicio usuarioServicio;
+    private UsuarioServicio usuarioServicio;
     
     public static void main(String[] args) {
 	SpringApplication.run(ProyectoVeterinariaApplication.class, args);
 
     }
         
-    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception{
-        auth.userDetailsService(usuarioServicio).passwordEncoder(new BCryptPasswordEncoder());
+    @Autowired
+    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
+        auth
+                .userDetailsService(usuarioServicio)
+                .passwordEncoder(new BCryptPasswordEncoder());
+
     }
+
 
 }
 

@@ -25,10 +25,10 @@ public class ConfiguracionesSeguridad extends WebSecurityConfigurerAdapter {
     @Autowired
     private UsuarioServicio usuarioServicio;
 
-    @Autowired
+   /* @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(usuarioServicio).passwordEncoder(new BCryptPasswordEncoder());
-    }
+    }*/
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -39,9 +39,9 @@ public class ConfiguracionesSeguridad extends WebSecurityConfigurerAdapter {
 				.and().formLogin()
 					.loginPage("/login")//html del login
                                             .loginProcessingUrl("/logincheck")//formulario de login
-                                            .usernameParameter("email")//user
+                                            .usernameParameter("username")//user
                                             .passwordParameter("password")//pass
-                                            .defaultSuccessUrl("/index")//html que se dirige al ingresar
+                                            .defaultSuccessUrl("/inicio")//html que se dirige al ingresar
                                             .permitAll()
                                         .and().logout()
                                              .logoutUrl("/logout")
