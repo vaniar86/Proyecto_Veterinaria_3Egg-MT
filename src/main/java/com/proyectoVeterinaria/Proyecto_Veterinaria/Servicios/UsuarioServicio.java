@@ -140,14 +140,15 @@ public class UsuarioServicio implements UserDetailsService {
             permisos.add(p3);
             
             */
-           if(usuario.getRol().CLIENTE != EnumRol.CLIENTE){
+           /*if(usuario.getRol().CLIENTE != EnumRol.CLIENTE){
                GrantedAuthority p1 = new SimpleGrantedAuthority("ROLE_USUARIO_PROFESIONAL");
                 permisos.add(p1);
            }else{
                 GrantedAuthority p1 = new SimpleGrantedAuthority("ROLE_USUARIO_REGISTRADO");
                 permisos.add(p1);
-           }
-           
+           }*/
+           GrantedAuthority p1 = new SimpleGrantedAuthority("ROLE_USUARIO_REGISTRADO");
+                permisos.add(p1);
 
 
             //Esto me permite guardar el OBJETO USUARIO LOG, para luego ser utilizado
@@ -160,7 +161,7 @@ public class UsuarioServicio implements UserDetailsService {
             //constructor usuario, clave, lista de permisos
             User user = new User(usuario.getMail(), usuario.getPass(), permisos);
             
-            System.out.println("MOSTRAR USER" + user.toString());
+            System.out.println("MOSTRAR USER   " + user.toString());
             return user;
         }else{
             return null;

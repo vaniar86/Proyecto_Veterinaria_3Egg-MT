@@ -37,12 +37,14 @@ public class UsuarioControlador {
 
     @PreAuthorize("hasAnyRole('ROLE_USUARIO_REGISTRADO')")
     @GetMapping("/editar-pefil")
-    public String editarPerfil(HttpSession session, @RequestParam String id, ModelMap model) {
-        /*List<Zona> zonas = zonaRepositorio.findAll();
-        model.put("zonas", zonas);*/
-
+    public String editarPerfil(HttpSession session, ModelMap model, @RequestParam String id) {
+    //public String editarPerfil(HttpSession session, @RequestParam String id, ModelMap model) {
+       
         Usuario login = (Usuario) session.getAttribute("usuariosession");
-
+       
+        System.out.println("usuarioControlador  " + login.toString());
+        
+        
         if (login == null || !login.getMail().equals(id)) {
             return "redirect:/inicio";
         }
@@ -81,13 +83,14 @@ public class UsuarioControlador {
             usuarioServicio.modificar( mail, clave1, clave2, EnumRol.CLIENTE);
 
             session.setAttribute("usuariosession", usuario);
-            return "redirect:/inicio";
+            return "redirect:/index";
         } catch (Exception e) {
             //List<Zona> zonas = zonaRepositorio.findAll();
             //model.put("zonas", zonas);
-            model.put("error", e.getMessage());
+            /*model.put("error", e.getMessage());
             model.put("perfil", usuario);
-            return "perfil.html";
+            return "perfil.html";*/
+            return "index.html";
         }
     }
 }
