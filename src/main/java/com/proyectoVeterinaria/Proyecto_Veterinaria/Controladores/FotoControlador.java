@@ -31,10 +31,12 @@ public class FotoControlador {
         try {
             Optional<Mascota> respuesta = mascotaRepositorio.findById(id);
             Mascota mascota = respuesta.get();
+           
+             byte[] foto = mascota.getFoto().getContenido();
             if (mascota.getFoto() == null) {
                 throw new ErrorServicio("La mascota no tiene una foto");
             }
-            byte[] foto = mascota.getFoto().getContenido();
+           
             HttpHeaders headers = new HttpHeaders();
             headers.setContentType(MediaType.IMAGE_JPEG);
             return new ResponseEntity<>(foto, headers, HttpStatus.OK);

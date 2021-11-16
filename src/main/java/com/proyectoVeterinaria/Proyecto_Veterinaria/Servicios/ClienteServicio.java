@@ -139,4 +139,13 @@ public class ClienteServicio {
         ArrayList<Cliente> clientes = new ArrayList(clienteRepositorio.findAll());
         return clientes;
     }
+    
+   public Cliente  buscarClientePorUsuario(String mail)throws ErrorServicio{
+       
+       try {
+           return clienteRepositorio.findByMail(mail);
+       } catch (Exception e) {
+           throw  new ErrorServicio("Ocurrió un error");
+       }
+   }
 }

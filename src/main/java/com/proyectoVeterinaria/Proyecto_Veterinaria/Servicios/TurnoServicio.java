@@ -8,6 +8,7 @@ import com.proyectoVeterinaria.Proyecto_Veterinaria.Errores.ErrorServicio;
 import com.proyectoVeterinaria.Proyecto_Veterinaria.Repositorio.TurnoRepositorio;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Optional;
 import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -119,6 +120,18 @@ public class TurnoServicio {
         //listo todo los turnos de la base de datos
         ArrayList<Turno> turnos = new ArrayList(turnoRepositorio.findAll());
         return turnos;
+    }
+    
+    public List<Turno> listarTurnosPorMascota(String id)throws ErrorServicio{
+        try {
+            return turnoRepositorio.buscarTurnosPorMascotas(id);
+        } catch (Exception e) {
+            throw  new ErrorServicio("Ocurrió un error inesperado, pongase en contacto con el soporteTecnico");
+        }
+    }
+    
+    public Optional<Turno> buscaPorId(String id){
+        return turnoRepositorio.findById(id);
     }
 
     /* habilitar cuando se vaya a usar, y a su vez habilitar lo comentado en turnoRepositorio

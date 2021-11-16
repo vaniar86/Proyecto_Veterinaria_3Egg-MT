@@ -10,6 +10,7 @@ import com.proyectoVeterinaria.Proyecto_Veterinaria.Errores.ErrorServicio;
 import com.proyectoVeterinaria.Proyecto_Veterinaria.Repositorio.MascotaRepositorio;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Optional;
 import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -138,4 +139,10 @@ public class MascotaServicio {
         ArrayList<Mascota> mascotas = new ArrayList(mascotaRepositorio.findAll());
         return mascotas;
     }
+     
+     public List<Mascota> buscarMascotaPorCliente(String userId){
+       
+             return mascotaRepositorio.findByUser(userId);
+        
+     }
 }
