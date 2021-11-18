@@ -123,11 +123,7 @@ public class TurnoServicio {
     }
     
     public List<Turno> listarTurnosPorMascota(String id)throws ErrorServicio{
-        try {
-            return turnoRepositorio.buscarTurnosPorMascotas(id);
-        } catch (Exception e) {
-            throw  new ErrorServicio("Ocurrió un error inesperado, pongase en contacto con el soporteTecnico");
-        }
+        return turnoRepositorio.buscarTurnosPorMascotas(id);
     }
     
     public Optional<Turno> buscaPorId(String id){

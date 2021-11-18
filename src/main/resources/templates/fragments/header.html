@@ -19,6 +19,9 @@
           <li class="nav-item">
             <a class="nav-link" th:href="@{/inicio}" th:if="${session.usuariosession != null}">Inicio</a>
           </li>
+          <li class="nav-item">
+            <a class="nav-link" th:href="@{/mascota}" th:if="${session.usuariosession != null}">Cargar Mascota</a>
+          </li>
           <li><p th:if="${session.usuariosession != null}" th:text="${session.usuariosession.mail}"></p>
           <li class="nav-item">
             <a class="nav-link" th:href="@{/registro}" th:if="${session.usuariosession == null}">Registro</a>

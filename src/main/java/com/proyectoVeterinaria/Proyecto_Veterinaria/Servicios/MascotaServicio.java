@@ -22,16 +22,19 @@ public class MascotaServicio {
     
     @Autowired
     private MascotaRepositorio mascotaRepositorio;
+    
+    @Autowired
+    private ClienteServicio clienteServicio;
+    
     @Autowired
     private FotoServicio fotoServicio;
 
     @Transactional
-    public void agregarMascota(String nombre, Cliente cliente, EnumEspecie especie, EnumRaza raza, int edad, int status, MultipartFile archivo) throws ErrorServicio {
-        /*if (nombre == null || nombre.isEmpty()) {
-            throw new ErrorServicio("Ingrese el nombre del perro");
-        }*/
+    public void agregarMascota(String nombre, String idCliente , EnumEspecie especie, EnumRaza raza, int edad,  MultipartFile archivo) throws ErrorServicio {
+       
+        validar(nombre, idCliente, raza, especie);
         
-        validar(nombre, cliente, raza, especie);
+        Cliente cliente = clienteServicio.buscarPorId(idCliente);
         
         Mascota mascota = new Mascota();
         mascota.setNombre(nombre);
@@ -39,6 +42,8 @@ public class MascotaServicio {
         mascota.setRaza(raza);
         mascota.setEspecie(especie);
         mascota.setStatus(EnumStatusMascota.ALTA);
+        mascota.setCliente(cliente);
+      
         
         
         Foto foto = fotoServicio.guardar(archivo);
@@ -50,12 +55,12 @@ public class MascotaServicio {
     }
 
     @Transactional
-    public void modificar(String idMascota, String nombre, Cliente cliente, EnumEspecie especie, EnumRaza raza, int edad, MultipartFile archivo) throws ErrorServicio {
+    public void modificar(String idMascota, String nombre, String idCliente, EnumEspecie especie, EnumRaza raza, int edad, MultipartFile archivo) throws ErrorServicio {
         //se saco el EnumStatusMascota, ya que la logica de Modificar, directamente lo "setea" a EnumMascotaStatus.MODIFICADO , desdes la vista el cliente toca el boton modificar y cambia datos basicos, si tocas "eliminar" es para borrar al perro de tu lista, y suponemos que "se murio" o lo quisiste sacar....
         if(idMascota == null || idMascota.isEmpty()){
             throw new ErrorServicio("error en el id de la mascota");
         }
-        validar(nombre, cliente, raza, especie);
+        validar(nombre, idCliente , raza, especie);
         
         Optional<Mascota> respuesta = mascotaRepositorio.findById(idMascota);
         if(respuesta.isPresent()){
@@ -111,11 +116,11 @@ public class MascotaServicio {
     
     }
     
-    private void validar(String nombre, Cliente cliente, EnumRaza raza, EnumEspecie especie) throws ErrorServicio{
+    private void validar(String nombre, String idCliente, EnumRaza raza, EnumEspecie especie) throws ErrorServicio{
         if(nombre == null || nombre.isEmpty()){
             throw new ErrorServicio("error en el nombre");
         }
-        if(cliente == null ){
+        if(idCliente == null ){
             throw new ErrorServicio("error en el cliente");
         }
         if(raza == null){

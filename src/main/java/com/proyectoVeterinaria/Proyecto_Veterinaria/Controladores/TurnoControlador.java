@@ -53,8 +53,8 @@ public class TurnoControlador {
         //modelo.put("tipoConsultas", tipoConsultas); NO TOCAR despues se habilita
         return "turno.html";
     }
-    @GetMapping("/turnosMascota/{id}")
-    public String turnosMascota(ModelMap model, @PathVariable String id ) throws ErrorServicio{
+    @GetMapping("/turnosMascota")
+    public String turnosMascota(ModelMap model, @RequestParam String id ) throws ErrorServicio{
        List<Turno> turnos = turnoServicio.listarTurnosPorMascota(id);
         if(!turnos.isEmpty()){
             model.put("turnos", turnos);
