@@ -9,10 +9,8 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface TurnoRepositorio extends JpaRepository<Turno, String> {
-/*
-    @Query("SELECT c FROM Turno c WHERE c.nombre = :nombre")
-    public List<Turno> buscarTurnosPorProfesional(@Param("nombre") String nombre);
-//La query esa da error al hacer clean&build y termina afectando a los metodos comentados en
-    turnoServicio y adminControlador
-*/
+
+    @Query("SELECT c FROM Turno c WHERE c.profesional.id = :id")
+    public List<Turno> buscarTurnosPorProfesional(@Param("id") String id);
+
 }

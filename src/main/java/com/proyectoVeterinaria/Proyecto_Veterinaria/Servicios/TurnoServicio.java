@@ -121,13 +121,10 @@ public class TurnoServicio {
         return turnos;
     }
 
-    
-    /*
-    public ArrayList<Turno> listarTurnosPorProfesional(Profesional profe){
+    public ArrayList<Turno> listarTurnosPorProfesional(Profesional profe) {
         //listo todo los turnos de ESE profesional
-        ArrayList<Turno> turnos = new ArrayList(turnoRepositorio.buscarTurnosPorProfesional(profe.getNombre()));
+        ArrayList<Turno> turnos = new ArrayList(turnoRepositorio.buscarTurnosPorProfesional(profe.getId()));
         return turnos;
     }
-    //La query de turnoRepositorio da error al hacer clean&build y termina afectando a esta llamada
-     */
+
 }

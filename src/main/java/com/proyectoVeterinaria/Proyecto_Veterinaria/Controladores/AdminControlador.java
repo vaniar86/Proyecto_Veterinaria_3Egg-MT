@@ -42,11 +42,9 @@ public class AdminControlador {
         if (login == null) {
             return "redirect:/login";
         }
-        /*
+
         List<Turno> turnos = turnoServicio.listarTurnosPorProfesional(profe);
         model.put("turnos", turnos);
-        //La query de turnoRepositorio da error al hacer clean&build y termina afectando a esta llamada
-        */
         return "/atencion";
     }
 
@@ -58,13 +56,9 @@ public class AdminControlador {
         if (login == null) {
             return "redirect:/login";
         }
-        /*
+
         List<Profesional> profesionales = profesionalServicio.listarProfesionales();
         model.put("profesionales", profesionales);
-        
-        //La query de turnoRepositorio da error al hacer clean&build y termina afectando a esta llamada
-        que esta
-        */
         return "/Profesionales";
     }
 }
