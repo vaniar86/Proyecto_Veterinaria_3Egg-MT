@@ -8,6 +8,7 @@ import com.proyectoVeterinaria.Proyecto_Veterinaria.Errores.ErrorServicio;
 import com.proyectoVeterinaria.Proyecto_Veterinaria.Repositorio.TurnoRepositorio;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Optional;
 import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -120,6 +121,11 @@ public class TurnoServicio {
         ArrayList<Turno> turnos = new ArrayList(turnoRepositorio.findAll());
         return turnos;
     }
+    public List<Turno> turnoXprofesional(String id){
+       List<Turno> turnos = new ArrayList(turnoRepositorio.buscarTurnosPorProfesional(id));   
+       return turnos;
+    }
+    
 
     /* habilitar cuando se vaya a usar, y a su vez habilitar lo comentado en turnoRepositorio
     public ArrayList<Turno> listarTurnosPorProfesional(Profesional profe){

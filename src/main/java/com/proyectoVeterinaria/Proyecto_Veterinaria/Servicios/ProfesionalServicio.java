@@ -1,12 +1,15 @@
 package com.proyectoVeterinaria.Proyecto_Veterinaria.Servicios;
 
 import com.proyectoVeterinaria.Proyecto_Veterinaria.Entidades.Profesional;
+import com.proyectoVeterinaria.Proyecto_Veterinaria.Entidades.Turno;
 import com.proyectoVeterinaria.Proyecto_Veterinaria.Entidades.Usuario;
 import com.proyectoVeterinaria.Proyecto_Veterinaria.Enumeraciones.EnumRol;
 import com.proyectoVeterinaria.Proyecto_Veterinaria.Errores.ErrorServicio;
 import com.proyectoVeterinaria.Proyecto_Veterinaria.Repositorio.ProfesionalRepositorio;
+import com.proyectoVeterinaria.Proyecto_Veterinaria.Repositorio.TurnoRepositorio;
 import com.proyectoVeterinaria.Proyecto_Veterinaria.Repositorio.UsuarioRepositorio;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +24,8 @@ public class ProfesionalServicio {
     @Autowired
     private UsuarioRepositorio usuarioRepositorio;
 
+    @Autowired
+    private TurnoRepositorio turnoRepositorio;
     @Transactional
     public void registrar(String nombre, String apellido, Long telefono, EnumRol rol, Usuario usuario) throws ErrorServicio {
         if (nombre == null || nombre.isEmpty()) {
@@ -86,5 +91,12 @@ public class ProfesionalServicio {
         
         return profesionales;
     }
-
+    public List<Turno> listarTurnoXprofesional(String id){
+      
+        return turnoRepositorio.buscarTurnosPorProfesional(id);
+    }
+    public Profesional BuscarProfesional(String idUsuario){
+      
+        return profesionalRepositorio.BuscarProfesional(idUsuario);
+    }
 }
