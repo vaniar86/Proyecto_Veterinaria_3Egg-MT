@@ -11,6 +11,7 @@ import com.proyectoVeterinaria.Proyecto_Veterinaria.Servicios.ProfesionalServici
 import com.proyectoVeterinaria.Proyecto_Veterinaria.Servicios.TurnoServicio;
 import com.proyectoVeterinaria.Proyecto_Veterinaria.Servicios.UsuarioServicio;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.http.HttpSession;
@@ -61,17 +62,26 @@ public class ProfesionalController {
     
     @GetMapping("/listar-Turnos")
     public String listarTurnos(ModelMap model){
-        
+   
         ArrayList<Turno> turnos = turnoServicio.listarTurnos();
         model.put("turnos", turnos);
      return ("turnos");   
     }
     
-    //@GetMapping("/listar-turnos-por-profesional")
-    //public String listarTurnoPorId(){
-    //    turnoServicio.
-    //    return ("");
-    //}
+    @GetMapping("")
+    public String listarTurnoPorId(HttpSession session, ModelMap model){
+        Usuario usuario= (Usuario) session.getAttribute("usuariosession");
+        if (usuario== null || usuario.getMail().isEmpty()) {
+            return "redirect/index";
+        }
+        Profesional profesional = profesionalServicio.BuscarProfesional(usuario.getMail());
+
+        
+        List<Turno>turnoXprofesional = turnoServicio.turnoXprofesional(profesional.getId());
+        model.put("turnos", turnoXprofesional);
+        
+        return "profesional";
+    }
     
     
     

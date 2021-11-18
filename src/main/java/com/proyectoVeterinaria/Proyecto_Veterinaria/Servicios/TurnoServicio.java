@@ -129,6 +129,11 @@ public class TurnoServicio {
     public Optional<Turno> buscaPorId(String id){
         return turnoRepositorio.findById(id);
     }
+    public List<Turno> turnoXprofesional(String id){
+       List<Turno> turnos = new ArrayList(turnoRepositorio.buscarTurnosPorProfesional(id));   
+       return turnos;
+    }
+    
 
     /* habilitar cuando se vaya a usar, y a su vez habilitar lo comentado en turnoRepositorio
     public ArrayList<Turno> listarTurnosPorProfesional(Profesional profe){
