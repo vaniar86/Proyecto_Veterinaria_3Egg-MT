@@ -25,7 +25,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 @PreAuthorize("hasAnyRole('ROLE_USUARIO_REGISTRADO')")
 @Controller
-@RequestMapping("/mascota")
+@RequestMapping("/misMascotas")
 public class MascotaControlador {
 
     @Autowired
@@ -35,15 +35,15 @@ public class MascotaControlador {
     @Autowired
     private MascotaServicio mascotaServicio;
 
+    @PreAuthorize("hasAnyRole('ROLE_USUARIO_REGISTRADO')")
     @GetMapping("")
     public String vistaMascota(HttpSession session, ModelMap model) throws ErrorServicio{
          Usuario login = (Usuario) session.getAttribute("usuariosession");      
-
+         
         if (login == null) {
             return "redirect:/login";
         }
-        Mascota mascota = new Mascota();
-        model.put("mascota", mascota);
+       
         model.put("tipos", EnumEspecie.values());
         model.put("razas", EnumRaza.values());
         
@@ -51,10 +51,10 @@ public class MascotaControlador {
         return "cargarMascota";
     }
     
-    @PreAuthorize("hasAnyRole('ROLE_USUARIO_REGISTRADO')")
+   
     @PostMapping("/crearMascota")
-    public String Actualizar(HttpSession session, ModelMap model, @RequestParam(required = false) String id, @RequestParam String nombre, @RequestParam EnumRaza raza, @RequestParam int edad,@RequestParam EnumEspecie idTipo,MultipartFile archivo){
-            System.out.println("entro al controlador"); 
+    public String crearActualizarMascota (HttpSession session, ModelMap model, @RequestParam(required = false) String id, @RequestParam String nombre, @RequestParam EnumRaza raza, @RequestParam int edad,@RequestParam EnumEspecie idTipo,MultipartFile archivo){
+             
         
         Usuario login = (Usuario) session.getAttribute("usuariosession");
              if (login == null) {
@@ -71,7 +71,7 @@ public class MascotaControlador {
              mascotaServicio.modificar(id,nombre, cliente.getId(), idTipo, raza, edad, archivo);
             
          }
-          return "cargarMascota";
+          return "redirect:/inicio";
      
      }catch(ErrorServicio e){
          model.put("error", "Ocurrió un error, pongase en contacto con servicio técnico");

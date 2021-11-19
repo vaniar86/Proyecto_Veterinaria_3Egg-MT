@@ -147,6 +147,7 @@ public class UsuarioServicio implements UserDetailsService {
                 GrantedAuthority p1 = new SimpleGrantedAuthority("ROLE_USUARIO_REGISTRADO");
                 permisos.add(p1);
            }*/
+            System.out.println(usuario.getRol());
            GrantedAuthority p1 = new SimpleGrantedAuthority("ROLE_USUARIO_REGISTRADO");
                 permisos.add(p1);
 

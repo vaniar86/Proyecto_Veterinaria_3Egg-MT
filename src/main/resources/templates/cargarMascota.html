@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="es-AR" xmlns:th="http://www.thymeleaf.org">
-  <head th:replace="/fragments/head :: head">
+  <head th:replace="./fragments/head :: head">
 </head>
 <body>
-  <header th:replace="/fragments/header :: header"></header>
+  <header th:replace="./fragments/header :: header"></header>
   <main>
         <div class="container w-100 my-md-5 contenedor">
             <div class="row ">
@@ -19,11 +19,11 @@
 
                     <!--Registro-->
 
-                    <form class="row g-3" th:action="@{/mascota/crearMascota}" method="POST" enctype="multipart/form-data">
+                    <form class="row g-3" th:action="@{/misMascotas/crearMascota}" method="POST" enctype="multipart/form-data">
                         <div class="alert alert-danger" role="alert" th:if="${error != null}" th:text="${error}"></div>
                          <div class="alert alert-success" role="alert" th:if="${message != null}" th:text="${message}"></div>
                             
-                            <input type="hidden"  name="id" th:value="${mascota.id}" />
+                           
                             
                         <div class="col-md-4 ">
                             <label for="validationDefault01" class="form-check-label">Nombre</label>

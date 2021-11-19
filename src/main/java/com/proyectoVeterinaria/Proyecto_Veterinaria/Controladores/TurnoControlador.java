@@ -7,6 +7,7 @@ import com.proyectoVeterinaria.Proyecto_Veterinaria.Enumeraciones.EnumStatusTurn
 import com.proyectoVeterinaria.Proyecto_Veterinaria.Enumeraciones.EnumTipoAtencion;
 import com.proyectoVeterinaria.Proyecto_Veterinaria.Errores.ErrorServicio;
 import com.proyectoVeterinaria.Proyecto_Veterinaria.Repositorio.TurnoRepositorio;
+import com.proyectoVeterinaria.Proyecto_Veterinaria.Servicios.MascotaServicio;
 import com.proyectoVeterinaria.Proyecto_Veterinaria.Servicios.TurnoServicio;
 import java.util.Date;
 import java.util.List;
@@ -29,6 +30,9 @@ public class TurnoControlador {
 
     @Autowired
     private TurnoRepositorio turnoRepositorio;
+    
+    @Autowired
+    private MascotaServicio mascotaServicio;
 
     @PostMapping("/crear-turno") 
     public String registrar(ModelMap modelo, @RequestParam Date fecha, @RequestParam EnumStatusTurno status, @RequestParam  Mascota mascota, @RequestParam Profesional profesional){
@@ -53,16 +57,21 @@ public class TurnoControlador {
         //modelo.put("tipoConsultas", tipoConsultas); NO TOCAR despues se habilita
         return "turno.html";
     }
-    @GetMapping("/turnosMascota")
-    public String turnosMascota(ModelMap model, @RequestParam String id ) throws ErrorServicio{
-       List<Turno> turnos = turnoServicio.listarTurnosPorMascota(id);
+    
+    
+    @GetMapping("/turnosMascota/{id}")
+    public String turnosMascota(ModelMap model, @PathVariable String id ) throws ErrorServicio{
+       Mascota mascota = mascotaServicio.buscarMascotaPorId(id);
+        
+       List<Turno> turnos = turnoServicio.listarTurnosPorMascota(mascota.getId());
         if(!turnos.isEmpty()){
+            model.put("macota", mascota);
             model.put("turnos", turnos);
         }else{
             model.put("message", "La mascota no posee turnos Cargados");
         }
          
-        return "atencion";
+        return "atencion.html";
     }
     
     

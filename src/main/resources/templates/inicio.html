@@ -1,90 +1,76 @@
 <!DOCTYPE html>
-<<<<<<< HEAD
 <html lang="es" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
-
-<head>
-
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta name="description" content="">
-  <meta name="author" content="">
-
-  <title>Tinder de Mascota - Inicio</title>
-
-  <!-- Bootstrap core CSS -->
-  <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-
-  <!-- Custom fonts for this template -->
-  <link href="https://fonts.googleapis.com/css?family=Catamaran:100,200,300,400,500,600,700,800,900" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css?family=Lato:100,100i,300,300i,400,400i,700,700i,900,900i" rel="stylesheet">
-
-  <!-- Custom styles for this template -->
-  <link href="css/one-page-wonder.min.css" rel="stylesheet">
+  <head>
+     <title>Patitas Felices - Veterinaria</title>
+  <meta charset="UTF-8">
+  <meta name="author" content="Equipo N° 6 ">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css" integrity="sha384-zCbKRCUGaJDkqS1kPbPd7TveP5iyJE0EjAuZQTgFLD2ylzuqKfdKlfG/eSrtxUkn" crossorigin="anonymous">  <link rel="stylesheet" href="./css/carousel.css">
+  <link rel="stylesheet" href="./css/styles.css">
+  <link href="carousel.css" rel="stylesheet">
+  <script src="https://kit.fontawesome.com/5274bdad60.js" crossorigin="anonymous"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,200;1,200;1,400&display=swap" rel="stylesheet">
 
 </head>
-
-<body>
-
-  <!-- Navigation -->
-  <nav class="navbar navbar-expand-lg navbar-dark navbar-custom fixed-top">
-    <div class="container">
-      <a class="navbar-brand" href="/">Tinder de Mascota</a>
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarResponsive">
-        <ul class="navbar-nav ml-auto">
-          <li class="nav-item">
-            <a class="nav-link" href="/">Salir</a>
-          </li>
-        </ul>
-      </div>
+  <body>
+       <header th:replace="/fragments/header :: header"></header>
+    
+    <main>
+        <div class="container contenedor mt-5 ">
+           <div class="row my-3">
+                <div class="col align-self-center">
+                    <div class="card bg-dark text-white cardContainer">
+                        <img src="./images/body-bg-3.jpg" class="img-fluid imgCard" alt="...">
+                        <div class="card-img-overlay">
+                            <h5 class="card-title">CARGA TUS MACOTAS</h5>
+                            <a th:href="@{/misMascotas}"><button type="button" class="btn btn-success">
+                                CargarMascotas
+                            </button></a>
+                        </div>
+                      </div>
+                </div>
+           </div>
+           <div class="row my-3">
+            <div class="col align-self-center">
+                <div class="card bg-dark text-white cardContainer">
+                    <img src="./images/body-bg-1.jpg" class="img-fluid" alt="...">
+                    <div class="card-img-overlay">
+                        <h5 class="card-title">TURNOS</h5>
+                        <a th:href="@{/solicitarTurno}"><button type="button" class="btn btn-success">
+                          Pedir Turno
+                      </button></a>                
+                    </div>
+                  </div>
+            </div>
+       </div>
+       <div class="row my-3">
+        <div class="col align-self-center">
+            <div class="card bg-dark text-white cardContainer">
+                <img src="./images/body-bg-2.jpg" class="img-fluid" alt="...">
+                    <div class="card-img-overlay">
+                        <h5 class="card-title">ATENCIONES</h5>
+                        <a th:href="@{/misAtenciones}"><button type="button" class="btn btn-success">
+                            Ver mis atenciones
+                        </button></a>          
+                </div>
+            </div>
+        </div>
     </div>
-  </nav>
+  </div>
 
-  <header class="masthead text-center text-white">
-    <div class="masthead-content">
-      <div class="container">
-        <h1 class="masthead-heading mb-0">Usuario Logueado</h1>
-        <!-- <h2 class="masthead-subheading mb-0" th:if="${session.usuariosession != null}" th:text="${session.usuariosession.nombre + ' ' + session.usuariosession.apellido}"></h2> -->
-        <a href="#" class="btn btn-primary btn-xl rounded-pill mt-5">¡Configura tu Perfil!</a>
-      </div>
-    </div>
-    <div class="bg-circle-1 bg-circle"></div>
-    <div class="bg-circle-2 bg-circle"></div>
-    <div class="bg-circle-3 bg-circle"></div>
-    <div class="bg-circle-4 bg-circle"></div>
-  </header>
-
-
-  <!-- Footer -->
-  <footer class="py-5 bg-black">
-    <div class="container">
-      <p class="m-0 text-center text-white small">Copyright &copy; Your Website 2019</p>
-    </div>
-    <!-- /.container -->
-  </footer>
-
-  <!-- Bootstrap core JavaScript -->
-  <script src="vendor/jquery/jquery.min.js"></script>
-  <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-
-</body>
-
-=======
-<!--
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
--->
-<!--<html>
-    <head>
-        <title>TODO supply a title</title>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    </head>
-    <body>
-        <div>TODO write content</div>
-    </body>
->>>>>>> 5a17dcf2df82b8dd481205977b946cad3b2ad7be-->
+  </main>
+  <footer th:replace="/fragments/footer :: footer"></footer>
+    <script
+      src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"
+      integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js"
+      integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13"
+      crossorigin="anonymous"
+    ></script>
+  </body>
 </html>

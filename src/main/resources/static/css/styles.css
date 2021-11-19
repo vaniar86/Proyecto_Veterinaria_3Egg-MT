@@ -91,3 +91,8 @@
  .contenedor{
      margin-top: 100px;
  }
+ .cardContainer {
+  height: 200px;
+  margin: 30px, 20px;
+  overflow: hidden
+}
