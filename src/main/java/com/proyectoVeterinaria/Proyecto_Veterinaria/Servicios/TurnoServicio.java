@@ -135,11 +135,10 @@ public class TurnoServicio {
     }
     
 
-    /* habilitar cuando se vaya a usar, y a su vez habilitar lo comentado en turnoRepositorio
-    public ArrayList<Turno> listarTurnosPorProfesional(Profesional profe){
+    public ArrayList<Turno> listarTurnosPorProfesional(Profesional profe) {
         //listo todo los turnos de ESE profesional
         ArrayList<Turno> turnos = new ArrayList(turnoRepositorio.buscarTurnosPorProfesional(profe.getId()));
         return turnos;
     }
-     */
+
 }
