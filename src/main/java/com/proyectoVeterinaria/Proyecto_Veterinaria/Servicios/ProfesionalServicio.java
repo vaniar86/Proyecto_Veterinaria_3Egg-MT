@@ -3,7 +3,7 @@ package com.proyectoVeterinaria.Proyecto_Veterinaria.Servicios;
 import com.proyectoVeterinaria.Proyecto_Veterinaria.Entidades.Profesional;
 import com.proyectoVeterinaria.Proyecto_Veterinaria.Entidades.Turno;
 import com.proyectoVeterinaria.Proyecto_Veterinaria.Entidades.Usuario;
-import com.proyectoVeterinaria.Proyecto_Veterinaria.Enumeraciones.EnumRol;
+import com.proyectoVeterinaria.Proyecto_Veterinaria.Enumeraciones.EnumRolProfesional;
 import com.proyectoVeterinaria.Proyecto_Veterinaria.Errores.ErrorServicio;
 import com.proyectoVeterinaria.Proyecto_Veterinaria.Repositorio.ProfesionalRepositorio;
 import com.proyectoVeterinaria.Proyecto_Veterinaria.Repositorio.TurnoRepositorio;
@@ -27,7 +27,7 @@ public class ProfesionalServicio {
     @Autowired
     private TurnoRepositorio turnoRepositorio;
     @Transactional
-    public void registrar(String nombre, String apellido, Long telefono, EnumRol rol, Usuario usuario) throws ErrorServicio {
+    public void registrar(String nombre, String apellido, Long telefono, EnumRolProfesional rol, Usuario usuario) throws ErrorServicio {
         if (nombre == null || nombre.isEmpty()) {
             throw new ErrorServicio("El nombre del usuario no puede ser nulo");
         }
@@ -49,7 +49,7 @@ public class ProfesionalServicio {
     }
 
     @Transactional
-    public void modificar(String id, String nombre, String apellido, Long telefono, EnumRol rol, Usuario usuario) throws ErrorServicio {
+    public void modificar(String id, String nombre, String apellido, Long telefono, EnumRolProfesional rol, Usuario usuario) throws ErrorServicio {
         Optional<Profesional> respuesta = profesionalRepositorio.findById(id);
         if (respuesta.isPresent()) {
             Profesional profesional = respuesta.get();

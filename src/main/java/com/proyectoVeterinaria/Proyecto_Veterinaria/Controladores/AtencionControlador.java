@@ -1,12 +1,10 @@
 package com.proyectoVeterinaria.Proyecto_Veterinaria.Controladores;
 
-import com.proyectoVeterinaria.Proyecto_Veterinaria.Entidades.Atencion;
+
 import com.proyectoVeterinaria.Proyecto_Veterinaria.Entidades.Cliente;
 import com.proyectoVeterinaria.Proyecto_Veterinaria.Entidades.Mascota;
-import com.proyectoVeterinaria.Proyecto_Veterinaria.Entidades.Profesional;
 import com.proyectoVeterinaria.Proyecto_Veterinaria.Entidades.Turno;
 import com.proyectoVeterinaria.Proyecto_Veterinaria.Entidades.Usuario;
-import com.proyectoVeterinaria.Proyecto_Veterinaria.Enumeraciones.EnumStatusTurno;
 import com.proyectoVeterinaria.Proyecto_Veterinaria.Errores.ErrorServicio;
 import com.proyectoVeterinaria.Proyecto_Veterinaria.Repositorio.AtencionRepositorio;
 import com.proyectoVeterinaria.Proyecto_Veterinaria.Repositorio.TurnoRepositorio;
@@ -14,7 +12,6 @@ import com.proyectoVeterinaria.Proyecto_Veterinaria.Servicios.AtencionServicio;
 import com.proyectoVeterinaria.Proyecto_Veterinaria.Servicios.ClienteServicio;
 import com.proyectoVeterinaria.Proyecto_Veterinaria.Servicios.MascotaServicio;
 import com.proyectoVeterinaria.Proyecto_Veterinaria.Servicios.TurnoServicio;
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.logging.Level;
@@ -25,7 +22,6 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -37,7 +33,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 @RequestMapping("/misAtenciones")
-@PreAuthorize("hasAnyRole('ROLE_USUARIO_REGISTRADO')")
+@PreAuthorize("hasAnyRole('ROLE_CLIENTE')")
 public class AtencionControlador {
 
     @Autowired
@@ -61,8 +57,7 @@ public class AtencionControlador {
     @GetMapping("")
     public String atenciones(HttpSession session, ModelMap model) throws ErrorServicio {
 
-        Usuario login = (Usuario) session.getAttribute("usuariosession");
-       
+        Usuario login = (Usuario) session.getAttribute("usuariosession");     
 
         if (login == null) {
             return "redirect:/login";
@@ -80,11 +75,11 @@ public class AtencionControlador {
              }
               
         } catch (ErrorServicio e) {
-            throw new ErrorServicio("Ocurrió un error inesperado por favor pongase en contacto con el servicio tecnico");
+            throw new ErrorServicio("Ocurrió un error inesperado por favor pongase en contacto con el servicio técnico");
         }
         
        
-        return "/atencion";
+        return "atencion";
     }
 
     @PostMapping("/modificarTurno")

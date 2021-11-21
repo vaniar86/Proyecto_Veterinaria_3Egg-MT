@@ -4,7 +4,7 @@ package com.proyectoVeterinaria.Proyecto_Veterinaria.Controladores;
 import com.proyectoVeterinaria.Proyecto_Veterinaria.Entidades.Profesional;
 import com.proyectoVeterinaria.Proyecto_Veterinaria.Entidades.Turno;
 import com.proyectoVeterinaria.Proyecto_Veterinaria.Entidades.Usuario;
-import com.proyectoVeterinaria.Proyecto_Veterinaria.Enumeraciones.EnumRol;
+import com.proyectoVeterinaria.Proyecto_Veterinaria.Enumeraciones.EnumRolProfesional;
 import com.proyectoVeterinaria.Proyecto_Veterinaria.Errores.ErrorServicio;
 import com.proyectoVeterinaria.Proyecto_Veterinaria.Repositorio.UsuarioRepositorio;
 import com.proyectoVeterinaria.Proyecto_Veterinaria.Servicios.ProfesionalServicio;
@@ -41,7 +41,7 @@ public class ProfesionalController {
     
     
     @PostMapping("/actualizarprofesional")  
-    public String Actualizar(HttpSession sesion,ModelMap model,@RequestParam String id,@RequestParam long telefono,@RequestParam String nombre,@RequestParam String apellido,@RequestParam EnumRol rol,@RequestParam Usuario idUsuario)throws ErrorServicio{       
+    public String Actualizar(HttpSession sesion,ModelMap model,@RequestParam String id,@RequestParam long telefono,@RequestParam String nombre,@RequestParam String apellido,@RequestParam EnumRolProfesional rol,@RequestParam Usuario idUsuario)throws ErrorServicio{       
         try{
         if (id== null || id.isEmpty()) {
             profesionalServicio.registrar(nombre, apellido,telefono, rol, idUsuario);

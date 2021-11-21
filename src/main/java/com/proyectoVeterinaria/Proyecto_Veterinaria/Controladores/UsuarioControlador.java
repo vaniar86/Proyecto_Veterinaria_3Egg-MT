@@ -64,7 +64,7 @@ public class UsuarioControlador {
     @PreAuthorize("hasAnyRole('ROLE_USUARIO_REGISTRADO')")
     @PostMapping("/actualizar-perfil")
     public String registrar(ModelMap model, HttpSession session, @RequestParam String mail, @RequestParam String clave1, @RequestParam String clave2) {
-    //public String registrar(ModelMap model, HttpSession session, @RequestParam String mail, @RequestParam String clave1, @RequestParam String clave2, @RequestParam EnumRol rol) {
+    //public String registrar(ModelMap model, HttpSession session, @RequestParam String mail, @RequestParam String clave1, @RequestParam String clave2, @RequestParam EnumRolProfesional rol) {
         Usuario usuario = null;
 
         Usuario login = (Usuario) session.getAttribute("usuariosession");
@@ -80,7 +80,7 @@ public class UsuarioControlador {
 
             
             //usuarioServicio.modificar(id, nombre, apellido, mail, clave1, archivo, clave2, idZona);
-            usuarioServicio.modificar( mail, clave1, clave2, EnumRol.CLIENTE);
+            usuarioServicio.modificar(mail, clave1, clave2, EnumRol.CLIENTE);
 
             session.setAttribute("usuariosession", usuario);
             return "redirect:/index";

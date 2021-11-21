@@ -26,7 +26,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
-import org.springframework.web.multipart.MultipartFile;
+
 
 /**
  *
@@ -43,7 +43,7 @@ public class UsuarioServicio implements UserDetailsService {
     public void registrar (String mail, String clave, String clave2, EnumRol rol)throws ErrorServicio{
     
     //public void registrar (String nombre, String apellido, String mail, String clave)throws ErrorServicio{
-        System.out.println(clave + "     " + clave2);
+       
         validar(mail, clave, clave2, rol);
         
         Usuario usuario = new Usuario();
@@ -128,28 +128,9 @@ public class UsuarioServicio implements UserDetailsService {
             System.out.println("ingreso al if");
             //array con los permisos   estilo GrantedAuthority
             List<GrantedAuthority> permisos = new ArrayList<>();
-            
-            //creamos los permisos individualmente
-            /* GrantedAuthority p1 = new SimpleGrantedAuthority("MODULO_FOTO");
-            GrantedAuthority p2 = new SimpleGrantedAuthority("MODULO_MASCOTA");
-            GrantedAuthority p3 = new SimpleGrantedAuthority("MODULO_VOTO");
-            
-            //construimos el array
+                       
+           GrantedAuthority p1 = new SimpleGrantedAuthority("ROLE_"+ usuario.getRol());
             permisos.add(p1);
-            permisos.add(p2);
-            permisos.add(p3);
-            
-            */
-           /*if(usuario.getRol().CLIENTE != EnumRol.CLIENTE){
-               GrantedAuthority p1 = new SimpleGrantedAuthority("ROLE_USUARIO_PROFESIONAL");
-                permisos.add(p1);
-           }else{
-                GrantedAuthority p1 = new SimpleGrantedAuthority("ROLE_USUARIO_REGISTRADO");
-                permisos.add(p1);
-           }*/
-            System.out.println(usuario.getRol());
-           GrantedAuthority p1 = new SimpleGrantedAuthority("ROLE_USUARIO_REGISTRADO");
-                permisos.add(p1);
 
 
             //Esto me permite guardar el OBJETO USUARIO LOG, para luego ser utilizado
@@ -162,7 +143,6 @@ public class UsuarioServicio implements UserDetailsService {
             //constructor usuario, clave, lista de permisos
             User user = new User(usuario.getMail(), usuario.getPass(), permisos);
             
-            System.out.println("MOSTRAR USER   " + user.toString());
             return user;
         }else{
             return null;

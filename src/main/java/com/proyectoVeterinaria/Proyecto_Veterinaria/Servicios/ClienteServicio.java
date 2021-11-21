@@ -3,6 +3,7 @@ package com.proyectoVeterinaria.Proyecto_Veterinaria.Servicios;
 import com.proyectoVeterinaria.Proyecto_Veterinaria.Entidades.Cliente;
 import com.proyectoVeterinaria.Proyecto_Veterinaria.Entidades.Usuario;
 import com.proyectoVeterinaria.Proyecto_Veterinaria.Enumeraciones.EnumRol;
+import com.proyectoVeterinaria.Proyecto_Veterinaria.Enumeraciones.EnumRolProfesional;
 import com.proyectoVeterinaria.Proyecto_Veterinaria.Errores.ErrorServicio;
 import com.proyectoVeterinaria.Proyecto_Veterinaria.Repositorio.ClienteRepositorio;
 import com.proyectoVeterinaria.Proyecto_Veterinaria.Repositorio.UsuarioRepositorio;

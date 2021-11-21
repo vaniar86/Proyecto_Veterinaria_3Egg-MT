@@ -23,7 +23,7 @@
                                             <p class="card-text" th:text="${masc.raza}"></p>
 
                                         <div class='d-flex align-items-end'>                      
-                                            <a th:href="@{/turno/turnosMascota/__${masc.id}__}"><button type="button" class="btn btn-success " data-bs-toggle="modal" data-bs-target="#exampleModal">
+                                            <a th:href="@{/atencion/turnosMascota/__${masc.id}__}"><button type="button" class="btn btn-success " data-bs-toggle="modal" data-bs-target="#exampleModal">
                                             Turnos
                                         </button></a>  
                                         </div>
@@ -33,69 +33,11 @@
                       </div>
                     
                   </div>
-                </div>+
-            <div th:if="${mascota}">
-                 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                <div class="modal-dialog  modal-lg">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                    <h5 class="modal-title modalTitle" id="exampleModalLabel">Turnos</h5>
-                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                    </div>
-                                    <div class="modal-body" th:each="turno : ${turnos}">
-                                        <div class="card" >
-                                            <div class="card-body d-flex bd-highlight">
-                                             <div class="col-md-8 p-2 flex-grow-1 bd-highlight">
-                                                <h5 class="card-title" th:text="${mascota.nombre}"></h5>
-                                                <p class="card-text" th:text="${turno.fecha}"></p>
-                                                <p class="card-text" th:text="${turno.profesional}"></p>
-                                             </div>
-                                              <div class="col-md-2  p-1 bd-highlight">
-                                                <a href="#" class="btn btn-danger">Cancelar turno</a>
-
-                                              </div>
-                                              <div class="col-md-2  p-1 bd-highlight">
-                                                <a href="#" class="btn btn-success">Modificar perfil</a>
-                                              </div>
-                                            </div>
-                                          </div>
-                                    </div>
-                                </div>
-                                </div>
-                            </div>
+                </div>
+           
     </main>
-       <!-- Footer-->
-       <footer class="footer">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-6 h-100 text-center text-lg-start my-auto">
-                    <ul class="list-inline mb-2">
-                        <li class="list-inline-item"><a href="#!">Sobre nosotros</a></li>
-                        <li class="list-inline-item">⋅</li>
-                        <li class="list-inline-item"><a href="#!">Contacto</a></li>
-                        <li class="list-inline-item">⋅</li>
-                        <li class="list-inline-item"><a href="#!">Terms of Use</a></li>
-                        <li class="list-inline-item">⋅</li>
-                        <li class="list-inline-item"><a href="#!">Privacy Policy</a></li>
-                    </ul>
-                    <p class="text-muted small mb-4 mb-lg-0">&copy; Your Website 2021. All Rights Reserved.</p>
-                </div>
-                <div class="col-lg-6 h-100 text-center text-lg-end my-auto">
-                    <ul class="list-inline mb-0">
-                        <li class="list-inline-item me-4">
-                            <a href="#!"><i class="fab fa-facebook"></i></a>
-                        </li>
-                        <li class="list-inline-item me-4">
-                            <a href="#!"><i class="fab fa-twitter"></i></a>
-                        </li>
-                        <li class="list-inline-item">
-                            <a href="#!"><i class="fab fa-instagram"></i></a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </footer>
+        <!-- Footer -->
+   <footer th:replace="/fragments/footer :: footer"></footer>
     <script
       src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"
       integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB"

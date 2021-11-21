@@ -35,7 +35,7 @@ public class PortalControlador {
         return "index.html";
     }
     
-    @PreAuthorize("hasAnyRole('ROLE_USUARIO_REGISTRADO')")
+    @PreAuthorize("hasAnyRole('ROLE_CLIENTE', 'ROLE_ADMIN', 'ROLE_PROFESIONAL')")
     @GetMapping("/inicio")
     public String inicio() {
         return "inicio.html";

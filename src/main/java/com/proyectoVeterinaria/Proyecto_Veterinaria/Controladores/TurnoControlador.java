@@ -3,6 +3,7 @@ package com.proyectoVeterinaria.Proyecto_Veterinaria.Controladores;
 import com.proyectoVeterinaria.Proyecto_Veterinaria.Entidades.Mascota;
 import com.proyectoVeterinaria.Proyecto_Veterinaria.Entidades.Profesional;
 import com.proyectoVeterinaria.Proyecto_Veterinaria.Entidades.Turno;
+import com.proyectoVeterinaria.Proyecto_Veterinaria.Entidades.Usuario;
 import com.proyectoVeterinaria.Proyecto_Veterinaria.Enumeraciones.EnumStatusTurno;
 import com.proyectoVeterinaria.Proyecto_Veterinaria.Enumeraciones.EnumTipoAtencion;
 import com.proyectoVeterinaria.Proyecto_Veterinaria.Errores.ErrorServicio;
@@ -59,20 +60,7 @@ public class TurnoControlador {
     }
     
     
-    @GetMapping("/turnosMascota/{id}")
-    public String turnosMascota(ModelMap model, @PathVariable String id ) throws ErrorServicio{
-       Mascota mascota = mascotaServicio.buscarMascotaPorId(id);
-        
-       List<Turno> turnos = turnoServicio.listarTurnosPorMascota(mascota.getId());
-        if(!turnos.isEmpty()){
-            model.put("macota", mascota);
-            model.put("turnos", turnos);
-        }else{
-            model.put("message", "La mascota no posee turnos Cargados");
-        }
-         
-        return "atencion.html";
-    }
+   
     
     
     //falta completar

@@ -18,8 +18,8 @@
        <header th:replace="/fragments/header :: header"></header>
     
     <main>
-        <div class="container contenedor mt-5 ">
-           <div class="row my-3">
+        <div class="container contenedor mt-5" >
+           <div class="row my-3"  sec:authorize="hasRole('CLIENTE')">
                 <div class="col align-self-center">
                     <div class="card bg-dark text-white cardContainer">
                         <img src="./images/body-bg-3.jpg" class="img-fluid imgCard" alt="...">
@@ -31,8 +31,9 @@
                         </div>
                       </div>
                 </div>
-           </div>
-           <div class="row my-3">
+           
+       
+           <div class="row my-3"  sec:authorize="hasRole('CLIENTE')">
             <div class="col align-self-center">
                 <div class="card bg-dark text-white cardContainer">
                     <img src="./images/body-bg-1.jpg" class="img-fluid" alt="...">
@@ -45,7 +46,7 @@
                   </div>
             </div>
        </div>
-       <div class="row my-3">
+       <div class="row my-3"  sec:authorize="hasRole('CLIENTE')">
         <div class="col align-self-center">
             <div class="card bg-dark text-white cardContainer">
                 <img src="./images/body-bg-2.jpg" class="img-fluid" alt="...">
@@ -58,8 +59,33 @@
             </div>
         </div>
     </div>
+    <div class="row my-3"  sec:authorize="hasRole('PROFESIONAL')">
+        <div class="col align-self-center">
+            <div class="card bg-dark text-white cardContainer">
+                <img src="./images/body-bg-2.jpg" class="img-fluid" alt="...">
+                    <div class="card-img-overlay">
+                        <h5 class="card-title">Lista de Turnos</h5>
+                        <a th:href="@{/profesional/turnos}"><button type="button" class="btn btn-success">
+                          Lista Turnos
+                        </button></a>          
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row my-3"  sec:authorize="hasRole('ADMIN')">
+        <div class="col align-self-center">
+            <div class="card bg-dark text-white cardContainer">
+                <img src="./images/body-bg-2.jpg" class="img-fluid" alt="...">
+                    <div class="card-img-overlay">
+                        <h5 class="card-title">Panel de Gestión</h5>
+                        <a th:href="@{/admin/dasboard}"><button type="button" class="btn btn-success">
+                            Ver mis atenciones
+                        </button></a>          
+                </div>
+            </div>
+        </div>
+    </div>           
   </div>
-
   </main>
   <footer th:replace="/fragments/footer :: footer"></footer>
     <script

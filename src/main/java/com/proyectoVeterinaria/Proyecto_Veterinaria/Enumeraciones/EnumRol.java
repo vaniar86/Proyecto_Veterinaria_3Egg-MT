@@ -1,6 +1,10 @@
 
 package com.proyectoVeterinaria.Proyecto_Veterinaria.Enumeraciones;
 
+/**
+ *
+ * @author Vanina
+ */
 public enum EnumRol {
-    CLIENTE,VETERINARIO,ENFERMERO,BAÑO,PELUQUERO;
+    CLIENTE, PROFESIONAL,ADMIN;
 }

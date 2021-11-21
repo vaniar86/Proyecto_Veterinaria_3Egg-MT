@@ -39,6 +39,9 @@ public class Turno {
    private Mascota mascota;
    @OneToOne
    private Profesional profesional;
+   
+    @OneToOne
+   private Atencion atencion;
 
     public Turno() {
     }
@@ -80,8 +83,16 @@ public class Turno {
         return profesional;
     }
 
-    public void setProfesional(Profesional profesional) {
+    public void setProfesional(Profesional atencion) {
         this.profesional = profesional;
+    }
+    
+    public Atencion getAtencion() {
+        return atencion;
+    }
+
+    public void setAtencion (Atencion  atencion) {
+        this.atencion = atencion;
     }
    
    
