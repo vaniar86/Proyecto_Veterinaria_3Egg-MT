@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="es-AR" xmlns:th="http://www.thymeleaf.org">
+  <head th:replace="/fragments/head :: head">
+</head>
+<body>
+  <header th:replace="/fragments/header :: header"></header>
+    <main>
+        <div class='container-fluid mt-5 contenedor' >
+            <div class='row col-md-12 mt-5'>
+                <h2 class='title p-5'>Ficha medica de atención </h2>
+            </div>
+              <div class="alert alert-success" role="alert" th:if="${message != null}" th:text="${message}"></div>
+               <div class="alert alert-danger" role="alert" th:if="${error != null}" th:text="${error}"></div>
+                <div class=' d-flex justify-content-center mb-2' >
+                     <div class="card mb-3 col-md-8 shadow-lg p-3  bg-body rounded "   >
+                         <div class="card-body">
+                            <div class="row g-0 doc">
+                                   <div class="col-md-4 box">
+                                      <img th:if="${foto != null}" class="img-fluid w-100" th:src="@{/foto/mascota/__${mascotaId}__}" alt="">
+                                      <img th:if="${foto == null}" class="img-fluid w-100" src="/images/perro_1.png" alt="">
+                                   </div>
+                                      <div class="col-md-8">
+
+                                               <p class="card-text  my-2" >Nombre  : <span  th:text="${turno.mascota.nombre}"></span></p> 
+                                               <p class="card-text  my-2" >Edad  : <span  th:text="${turno.mascota.edad}"></span></p> 
+                                               <p class="card-text  my-2" >Raza : <span th:text="${turno.mascota.raza}" ></span></p> 
+                                               <p class="card-text  my-2" >Dueño : <span th:text="${turno.mascota.cliente.nombre}" ></span></p> 
+                                                <p class="card-text  my-2" >Fecha Turno  : <span  th:text="${turno.fecha}"></span></p> 
+                                                <p class="card-text  my-2" >Atención  : <span  th:text="${turno.atencion.atencionPuntual}"></span></p> 
+                                                <div class="col-md-4 justify-content-end mt-5">
+                                                    <a th:href="@{/profesional/modificar-status/__${turno.id}__/atendido}"><button type="button" class="btn btn-primary" data-bs-toggle="tooltip" data-bs-placement="top" title="Marcar como atendido"><i class="fas fa-edit">Atendido</i></button></a> 
+                                                </div>
+                                       </div>
+                                 </div>
+                             </div>
+                        </div>
+                      </div>
+            <div class="d-flex justify-content-center">
+                <div class="card mb-3 col-md-10 shadow-lg p-3  bg-body rounded " >
+                    
+                    
+                     <form class="row g-3" th:action="@{/profesional/cargarAtencion}" method="POST">
+                         
+                         <input type="hidden"  name="atencionId" th:value="${turno.atencion.id}" >
+                         <input type="hidden"  name="turnoId" th:value="${turno.id}" >
+                        <div class="alert alert-danger" role="alert" th:if="${error != null}" th:text="${error}"></div>
+
+                       <div class="col-md-12 my-2">
+                                <label for="validationDefault04" class="form-check-label">Atención puntual</label>
+                             <select class="form-control" name="atencion"> 
+                                <option th:each="atencion: ${atenciones}" th:value="${atencion}" th:text="${atencion}" th:selected="${turno.atencion.atencionPuntual != null && atencion == turno.atencion.atencionPuntual}" ></option> 
+                             </select>              
+                         </div>
+                        
+                        <div class="col-md-12 my-2">
+                            <label for="validationDefault02" class="form-check-label">Descripción</label>
+                            <textarea  class="form-control" id="exampleFormControlTextarea1" rows="3" name="descripcion" th:value="${turno.atencion.descripcion}"  required></textarea>
+                        </div>
+
+                        <div class="col-md-12 my-2">
+                            <label for="validationDefault03" class="form-check-label">Prescripción</label>
+                            <textarea  class="form-control" id="exampleFormControlTextarea1" rows="3" name="prescripcion" th:value="${turno.atencion.prescripcion}" required></textarea>
+                        </div>     
+                        
+                     
+                        <div class="col-12 p-md-4 text-center">
+                            <button class="btn btn-outline-dark btn-lg p-md-1"type="submit">Cargar atención</a></button>
+                        </div>
+                    </form>
+                    
+                </div>                
+            </div>  
+     
+    </main>
+       <!-- Footer-->
+       <footer th:replace="/fragments/footer :: footer"></footer>
+    <script
+      src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"
+      integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js"
+      integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13"
+      crossorigin="anonymous"
+    ></script>
+  </body>
+</html>

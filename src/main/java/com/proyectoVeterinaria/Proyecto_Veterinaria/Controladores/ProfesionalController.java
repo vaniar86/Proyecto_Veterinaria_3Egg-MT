@@ -1,36 +1,44 @@
 
 package com.proyectoVeterinaria.Proyecto_Veterinaria.Controladores;
 
+import com.proyectoVeterinaria.Proyecto_Veterinaria.Entidades.Mascota;
 import com.proyectoVeterinaria.Proyecto_Veterinaria.Entidades.Profesional;
 import com.proyectoVeterinaria.Proyecto_Veterinaria.Entidades.Turno;
 import com.proyectoVeterinaria.Proyecto_Veterinaria.Entidades.Usuario;
+import com.proyectoVeterinaria.Proyecto_Veterinaria.Enumeraciones.EnumAtencionPuntual;
 import com.proyectoVeterinaria.Proyecto_Veterinaria.Enumeraciones.EnumRolProfesional;
+import com.proyectoVeterinaria.Proyecto_Veterinaria.Enumeraciones.EnumStatusTurno;
+import com.proyectoVeterinaria.Proyecto_Veterinaria.Enumeraciones.EnumTipoAtencion;
 import com.proyectoVeterinaria.Proyecto_Veterinaria.Errores.ErrorServicio;
 import com.proyectoVeterinaria.Proyecto_Veterinaria.Repositorio.UsuarioRepositorio;
+import com.proyectoVeterinaria.Proyecto_Veterinaria.Servicios.AtencionServicio;
+import com.proyectoVeterinaria.Proyecto_Veterinaria.Servicios.MascotaServicio;
 import com.proyectoVeterinaria.Proyecto_Veterinaria.Servicios.ProfesionalServicio;
 import com.proyectoVeterinaria.Proyecto_Veterinaria.Servicios.TurnoServicio;
 import com.proyectoVeterinaria.Proyecto_Veterinaria.Servicios.UsuarioServicio;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-@PreAuthorize("hasAnyRole('ROLE_PROFESIONAL')")
+@PreAuthorize("hasAnyRole('ROLE_PROFESIONAL', 'ADMIN')")
 @Controller
 @RequestMapping("/profesional")
 public class ProfesionalController {
     
     @Autowired
-    private UsuarioRepositorio usuarioRepositorio;
+    private AtencionServicio atencionServicio;
     @Autowired
-    private UsuarioServicio usuarioServicio;
+    private MascotaServicio mascotaservicio;
     @Autowired
     private ProfesionalServicio profesionalServicio;
     @Autowired
@@ -64,6 +72,93 @@ public class ProfesionalController {
           return "profesional";
     }
     
+    
+    @GetMapping("/modificarAtencion/{id}")
+   public String modificarAtencion (@PathVariable String id,HttpSession session,ModelMap model){
+       try {
+           Usuario usuario = (Usuario) session.getAttribute("usuariosession");    
+       
+        if (usuario == null) {
+            return "redirect:/login";
+        }
+        
+        Turno turno = turnoServicio.buscarTurnoPorId(id);
+         model.put("turno", turno);
+         model.put("atenciones", EnumAtencionPuntual.values());  
+               
+        
+         return "atencionPuntual";
+        
+       } catch (Exception e) {
+           model.put("error", "Ocurrio un error al cargar la pagina");
+                       return "redirect:/profesional";
+
+       }
+   }    
+    
+    
+    @GetMapping("/modificar-status/{id}/{status}")
+    public String modificarStatus(@PathVariable String id, @PathVariable String status, ModelMap model)throws ErrorServicio{
+        
+    
+        try{
+            Optional<Turno> respuesta = turnoServicio.buscaPorId(id);
+            if(respuesta.isPresent()){
+             Turno turno = respuesta.get();
+                if(turno.getStatus().equals(EnumStatusTurno.ATENDIDO) && status.equalsIgnoreCase("ausente")){
+                    model.put("error", "No puede marcar como ausente un turno ya atendido");
+                    return ("redirect:/profesional");            
+                 }               
+            }
+        if (status.equals("atendido") || status.equals("ausente")) {
+        turnoServicio.statusTurno(id, status);    
+        }
+        }catch (ErrorServicio e){
+            e.getMessage();
+        }
+        return ("redirect:/profesional");
+    }
+    
+    @PostMapping("/cargarAtencion") 
+    public String cargarAtención(ModelMap model,@RequestParam String atencionId, @RequestParam String turnoId, @RequestParam String descripcion, @RequestParam String prescripcion, @RequestParam EnumAtencionPuntual atencion){
+        try {
+            atencionServicio.modificar(atencionId, atencion, descripcion, prescripcion);
+            turnoServicio.statusTurno(turnoId, "atendido");
+             return ("redirect:/profesional");
+             
+        } catch (Exception e) {
+            model.put("error", "Ocurrio un error al cargar la atención");
+            return "atencionPuntual";            
+        }
+    }
+    
+    @GetMapping("/historialAtencion/{id}")
+    public String historialAtenciones(@PathVariable String id, ModelMap model,HttpSession session){
+        try {
+            Mascota mascota = mascotaservicio.buscarMascotaPorId(id);
+            model.put("mascota", mascota);
+            List<Turno> turnos = turnoServicio.listarTurnosAtendidos(mascota.getId());
+            
+            if(!turnos.isEmpty()){
+                model.put("turnos", turnos);
+            }else{
+                model.put("message", "No hay atenciones cargadas para esta mascota");
+            }
+            return "historialAtencion";
+            
+        } catch (Exception e) {
+            model.put("error", "Ocurrio un error al cargar el historial");
+            
+            return ("redirect:/profesional");   
+            
+        }
+
+    } 
+    
+    
+    
+    
+    
     @PostMapping("/actualizarprofesional")  
     public String Actualizar(HttpSession sesion,ModelMap model,@RequestParam String id,@RequestParam long telefono,@RequestParam String nombre,@RequestParam String apellido,@RequestParam EnumRolProfesional rol,@RequestParam Usuario idUsuario)throws ErrorServicio{       
         try{
@@ -93,22 +188,6 @@ public class ProfesionalController {
     }
     
    
-    
-    
-    
-    @PostMapping("/modificar-status")
-    public String modificarStatus(String id, String status)throws ErrorServicio{
-    
-        try{
-        if (status.equals("atendido") || status.equals("ausente")) {
-        turnoServicio.statusTurno(id, status);    
-        }
-        }catch (ErrorServicio e){
-            e.getMessage();
-        }
-        return("/status");
-    }
-    
 
   //  
   // @PostMapping("/eliminarprofesional") 

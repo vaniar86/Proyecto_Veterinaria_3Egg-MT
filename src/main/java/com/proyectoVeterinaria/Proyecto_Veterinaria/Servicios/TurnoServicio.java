@@ -117,7 +117,6 @@ public class TurnoServicio {
     }
 
     public ArrayList<Turno> listarTurnos() {
-        //listo todo los turnos de la base de datos
         ArrayList<Turno> turnos = new ArrayList(turnoRepositorio.findAll());
         return turnos;
     }
@@ -129,17 +128,25 @@ public class TurnoServicio {
     public Optional<Turno> buscaPorId(String id){
         return turnoRepositorio.findById(id);
     }
+    
     public List<Turno> turnoXprofesional(String id){
        List<Turno> turnos = new ArrayList(turnoRepositorio.buscarTurnosPorProfesional(id));   
-        System.out.println(turnos);
+        
        return turnos;
     }
     
+    public Turno buscarTurnoPorId(String id){
+        return turnoRepositorio.buscarTurnoPorId(id);
+    }
+    
+    public List<Turno> listarTurnosAtendidos(String id){
+        return turnoRepositorio.buscarTurnosAtendidosXMasc(id);
+    }
 
-    public ArrayList<Turno> listarTurnosPorProfesional(Profesional profe) {
-        //listo todo los turnos de ESE profesional
-        ArrayList<Turno> turnos = new ArrayList(turnoRepositorio.buscarTurnosPorProfesional(profe.getId()));
-        return turnos;
+    
+    
+    public List<Turno> listarTurnosAsignados(){
+        return turnoRepositorio.buscarTurnosAsignados();
     }
 
 }

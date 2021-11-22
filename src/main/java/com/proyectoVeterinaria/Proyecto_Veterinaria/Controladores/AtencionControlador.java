@@ -34,7 +34,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 @RequestMapping("/misAtenciones")
-@PreAuthorize("hasAnyRole('ROLE_CLIENTE')")
+@PreAuthorize("hasAnyRole('ROLE_CLIENTE', 'ROLE_ADMIN')")
 public class AtencionControlador {
 
     

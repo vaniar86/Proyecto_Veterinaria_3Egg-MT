@@ -1,73 +1,99 @@
 <!DOCTYPE html>
 <html lang="es-AR" xmlns:th="http://www.thymeleaf.org">
-
-<head th:replace="/fragments/head :: head">
+  <head th:replace="/fragments/head :: head">
 </head>
-
 <body>
   <header th:replace="/fragments/header :: header"></header>
-  <main>
-    <div class='container-fluid mt-5'>
-      <div class='row col-md-12'>
-        <h2 class='title'>Administracion</h2>
-      </div>
-      <div class="card-body">
-        <div class='d-flex align-items-end'>
-          <button type="button" class="float-right btn btn-dark mx-2 my-3" data-bs-toggle="modal"
-            data-bs-target="#exampleModal">
-            Profesionales
-          </button>
-          <table>
-            <thead>
-            </thead>
-            <tbody>
-            <tr th:each="profesionales : ${profesional}">
-                <td th:text="${profesional.nombre}"></td>
-            </tr>
-            </tbody>
-        </table>
-        </div>
+    <main>
+        <div class='container-fluid mt-5'>
+            <div class='row col-md-12'>
+                <h2 class='title'>Gestión de Turnos</h2>
+            </div>
+              >
+               <div class="alert alert-success" role="alert" th:if="${message != null}" th:text="${message}"></div>
+               <div class="row d-flex justify-content-betweenjustify-content-around">
+                   <div class="col-md-10">
+                       <div class="dropdown col-md-4 mx-4">
+                            <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
+                              Profesionales
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink" th:each="profesional : ${profesionales}">
+                                <li><a class="dropdown-item" th:href="@{/admin}" >Todos</a></li>
+                                <li><a class="dropdown-item" th:href="@{/admin/filtrarXProfesional/__${profesional.id}__}" th:text="${profesional.apellido }+ ${ profesional.nombre}"></a></li>
+                              
+                            </ul>
+                          </div>
+                       
+                        
+                   
+                       <div class="dropdown col-md-4 mx-4">
+                            <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
+                              Turnos
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink" th:each="status : ${statusTurno}">
+                                <li><a class="dropdown-item" th:href="@{/admin}" >Todos</a></li>
+                                <li><a class="dropdown-item" th:href="@{/admin/filtrarXTurnos}" th:text="${status}"></a></li>
+                              
+                            </ul>
+                        </div>
+                   </div>
+                   
+               </div>
+               <div class="alert alert-danger mt-5" role="alert" th:if="${error != null}" th:text="${error}"></div>
+                <div class=' d-flex justify-content-center mb-2'  >
+                    <div class="p-5">
+                        <table class="table table-striped">
+                                  <thead>
+                                          <tr>
+                                                  <th scope="col">Nombre Mascota</th>
+                                                  <th scope="col">Tipo</th>
+                                                  <th scope="col">Dueño</th>
+                                                  <th scope="col">Horario</th>
+                                                  <th scope="col">Profesional</th>
+                                                  <th scope="col">Atención</th>
+                                                  <th scope="col">Fecha Atención</th>
+                                                  <th scope="col">Estado turno</th>
+                                                  <th scope="col">Acciones</th>
+                                          </tr>
+                                  </thead>
+                                  <tbody th:each="turno : ${turnos}" th:if="${turnos}"> 
+                                        <tr>
 
+                                                  <td th:text="${turno.mascota.nombre}"></td>
+                                                  <td th:text="${turno.mascota.especie}"></td>
+                                                  <td th:text="${turno.mascota.cliente.nombre}"></td>
+                                                  <td th:text="${turno.fecha}"></td>
+                                                  <td th:text="${turno.profesional.nombre}"></td>
+                                                  <td th:text="${turno.atencion.atencionPuntual}"></td>
+                                                  <td th:text="${turno.atencion.fechaAtencion}"></td>
+                                                  <td th:text="${turno.status}"></td>
+                                                  <td>
+                                                 <!--FLECHITA-->
+                                                  <a th:href="@{/admin/modificar-status/__${turno.id}__/cancelar}"><button type="button" class="btn btn-danger btn-sm" data-bs-toggle="tooltip" data-bs-placement="top" title="Cancelar Turno" ><i class="fas fa-minus"></i></button></a>
+                                                  <a th:href="@{/profesional/historialAtencion/__${turno.mascota.id}__}"><button type="button" class="btn btn-dark btn-sm" data-bs-toggle="tooltip" data-bs-placement="top" title="Ver historial de atenciones"><i class="fas fa-clipboard" ></i></i></button></a>
+                                                  
+                              </td> 
+                                          </tr> 
 
-  </main>
-  <!-- Footer-->
-  <footer class="footer">
-    <div class="container">
-      <div class="row">
-        <div class="col-lg-6 h-100 text-center text-lg-start my-auto">
-          <ul class="list-inline mb-2">
-            <li class="list-inline-item"><a href="#!">Sobre nosotros</a></li>
-            <li class="list-inline-item">⋅</li>
-            <li class="list-inline-item"><a href="#!">Contacto</a></li>
-            <li class="list-inline-item">⋅</li>
-            <li class="list-inline-item"><a href="#!">Terms of Use</a></li>
-            <li class="list-inline-item">⋅</li>
-            <li class="list-inline-item"><a href="#!">Privacy Policy</a></li>
-          </ul>
-          <p class="text-muted small mb-4 mb-lg-0">&copy; Your Website 2021. All Rights Reserved.</p>
-        </div>
-        <div class="col-lg-6 h-100 text-center text-lg-end my-auto">
-          <ul class="list-inline mb-0">
-            <li class="list-inline-item me-4">
-              <a href="#!"><i class="fab fa-facebook"></i></a>
-            </li>
-            <li class="list-inline-item me-4">
-              <a href="#!"><i class="fab fa-twitter"></i></a>
-            </li>
-            <li class="list-inline-item">
-              <a href="#!"><i class="fab fa-instagram"></i></a>
-            </li>
-          </ul>
-        </div>
-      </div>
-    </div>
-  </footer>
-  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"
-    integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB"
-    crossorigin="anonymous"></script>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js"
-    integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13"
-    crossorigin="anonymous"></script>
-</body>
-
+                                  </tbody>
+                          </table>
+                    </div>
+                    
+                </div>
+                
+           
+    </main>
+        <!-- Footer -->
+   <footer th:replace="/fragments/footer :: footer"></footer>
+    <script
+      src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"
+      integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js"
+      integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13"
+      crossorigin="anonymous"
+    ></script>
+  </body>
 </html>

@@ -7,15 +7,13 @@
     <main>
         <div class='container-fluid mt-5'>
             <div class='row col-md-12'>
-                <h2 class='title'>Mis Mascotas</h2>
+                <h2 class='title'>Panel de Turnos</h2>
             </div>
                <div class="alert alert-danger" role="alert" th:if="${error != null}" th:text="${error}"></div>
                <div class="alert alert-success" role="alert" th:if="${message != null}" th:text="${message}"></div>
            
                 <div class=' d-flex justify-content-center mb-2'  >
                     <div class="p-5">
-                        <h1>Panel de Turnos</h1>
-
                         <table class="table table-striped">
                                   <thead>
                                           <tr>
@@ -36,9 +34,11 @@
                                                   <td th:text="${turno.fecha}"></td>
                                                   <td th:text="${turno.status}"></td>
                                                   <td>
-                                                  <a th:href="@{/admin/habilitar/__${turno.id}__}"><i class="fa fa-arrow-up"></i></a> <!--FLECHITA-->
-                                                 <a th:href="@{/admin/deshabilitar/__${turno.id}__}"><i class="fa fa-ban"></i></a>
-                                                  <a th:href="@{/admin/cambiar_rol/__${turno.id}__}"><i class="fas fa-feather-alt"></i></a> 
+                                                 <!--FLECHITA-->
+                                                  <a th:href="@{/profesional/modificar-status/__${turno.id}__/ausente}"><button type="button" class="btn btn-danger btn-sm" data-bs-toggle="tooltip" data-bs-placement="top" title="Marcar como ausente" ><i class="fas fa-minus"></i></button></a>
+                                                 <a th:href="@{/profesional/modificarAtencion/__${turno.id}__}"><button type="button" class="btn btn-success btn-sm" data-bs-toggle="tooltip" data-bs-placement="top" title="Cargar Atención"><i class="far fa-address-card"></i></button></a>
+                                                  <a th:href="@{/profesional/historialAtencion/__${turno.mascota.id}__}"><button type="button" class="btn btn-dark btn-sm" data-bs-toggle="tooltip" data-bs-placement="top" title="Ver historial de atenciones"><i class="fas fa-clipboard" ></i></i></button></a>
+                                                  
                               </td> 
                                           </tr> 
 

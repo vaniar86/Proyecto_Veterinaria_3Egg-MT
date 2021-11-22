@@ -48,14 +48,14 @@ String Prescripcion
 */
 
     @Autowired
-    AtencionRepositorio atencionRepositorio;
+    private AtencionRepositorio atencionRepositorio;
     
     @Transactional
     public void registrarAtencion (EnumTipoAtencion tipoAtencion, EnumAtencionPuntual atencionPuntual, String descripcion, String prescripcion)throws ErrorServicio{
     
     //public void registrar (String nombre, String apellido, String mail, String clave)throws ErrorServicio{
         
-        validar(tipoAtencion, atencionPuntual, descripcion, prescripcion);
+        validar(atencionPuntual, descripcion, prescripcion);
         
         Atencion atencion = new Atencion();
         atencion.setTipoAtencion(tipoAtencion);
@@ -72,18 +72,15 @@ String Prescripcion
     
     
      @Transactional
-    public void modificar(String idAtencion, EnumTipoAtencion tipoAtencion, EnumAtencionPuntual atencionPuntual, String descripcion, String prescripcion) throws ErrorServicio {
+    public void modificar(String idAtencion, EnumAtencionPuntual atencionPuntual, String descripcion, String prescripcion) throws ErrorServicio {
         
-        if(idAtencion == null || idAtencion.isEmpty()){
-            throw new ErrorServicio("error en el id de la ATENCION");
-        }
-        validar(tipoAtencion, atencionPuntual, descripcion, prescripcion);
+        validar(atencionPuntual, descripcion, prescripcion);
         
         Optional<Atencion> respuesta = atencionRepositorio.findById(idAtencion);
         if(respuesta.isPresent()){
             Atencion atencion = respuesta.get();
             
-            atencion.setTipoAtencion(tipoAtencion);
+            
             atencion.setAtencionPuntual(atencionPuntual);
             atencion.setDescripcion(descripcion);
             atencion.setPrescripcion(prescripcion);
@@ -97,16 +94,14 @@ String Prescripcion
         }
     }
     
-    private void validar(EnumTipoAtencion tipoAtencion, EnumAtencionPuntual atencionPuntual, String descripcion, String prescripcion) throws ErrorServicio{
+    private void validar( EnumAtencionPuntual atencionPuntual, String descripcion, String prescripcion) throws ErrorServicio{
         if(descripcion == null || descripcion.isEmpty()){
             throw new ErrorServicio("error en la descripcion");
         }
         if(prescripcion == null || prescripcion.isEmpty()){
             throw new ErrorServicio("error en la prescripcion");
         }
-        if(tipoAtencion == null ){
-            throw new ErrorServicio("error en el tipo de atencion");
-        }
+      
         if(atencionPuntual == null){
             throw new ErrorServicio("error en la atencion puntual");
         }
