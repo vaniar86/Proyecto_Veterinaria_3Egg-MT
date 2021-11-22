@@ -4,14 +4,17 @@ package com.proyectoVeterinaria.Proyecto_Veterinaria.Controladores;
 import com.proyectoVeterinaria.Proyecto_Veterinaria.Entidades.Cliente;
 import com.proyectoVeterinaria.Proyecto_Veterinaria.Entidades.Mascota;
 import com.proyectoVeterinaria.Proyecto_Veterinaria.Entidades.Profesional;
+import com.proyectoVeterinaria.Proyecto_Veterinaria.Entidades.Turno;
 import com.proyectoVeterinaria.Proyecto_Veterinaria.Entidades.Usuario;
 import com.proyectoVeterinaria.Proyecto_Veterinaria.Enumeraciones.EnumRol;
+import com.proyectoVeterinaria.Proyecto_Veterinaria.Enumeraciones.EnumStatusTurno;
 import com.proyectoVeterinaria.Proyecto_Veterinaria.Enumeraciones.EnumTipoAtencion;
 import com.proyectoVeterinaria.Proyecto_Veterinaria.Errores.ErrorServicio;
 import com.proyectoVeterinaria.Proyecto_Veterinaria.Repositorio.ProfesionalRepositorio;
 import com.proyectoVeterinaria.Proyecto_Veterinaria.Servicios.ClienteServicio;
 import com.proyectoVeterinaria.Proyecto_Veterinaria.Servicios.MascotaServicio;
 import com.proyectoVeterinaria.Proyecto_Veterinaria.Servicios.ProfesionalServicio;
+import com.proyectoVeterinaria.Proyecto_Veterinaria.Servicios.TurnoServicio;
 import static com.sun.corba.se.spi.presentation.rmi.StubAdapter.request;
 import java.util.Arrays;
 import java.util.List;
@@ -48,6 +51,9 @@ public class PortalControlador {
     
     @Autowired
     private MascotaServicio mascotaServicio;
+    
+    @Autowired
+    private TurnoServicio turnoServicio;
     
     @GetMapping("/") 
     public String index(){
@@ -155,14 +161,20 @@ public class PortalControlador {
              
              List<Profesional> listaProfesionales;
              
+             
             switch(tipoDeAtencion)
             {
                case "1" :
                   // Atencion
                    
                    listaProfesionales = profesionalServicio.listarProfesionalPorRol(EnumRol.VETERINARIO);
-                   modelo.addAttribute("profesionalSelec", listaProfesionales);
                    modelo.addAttribute("actProfe", 2);
+                   
+                   if(!listaProfesionales.isEmpty()){
+                                modelo.addAttribute("profesionalSelec", listaProfesionales);
+                            }else{
+                                modelo.put("message", "No hay Veteninarios en la nomina");
+                            }
                    
                    System.out.println("PROFESIONAL     VETENINARIO");
                    //listaProfesionales = profesionalRepositorio.findAll();
@@ -173,8 +185,13 @@ public class PortalControlador {
                case "2" :
                    //Peluqueria
                   listaProfesionales = profesionalServicio.listarProfesionalPorRol(EnumRol.PELUQUERO);
-                   modelo.addAttribute("profesionalSelec", listaProfesionales);
                    modelo.addAttribute("actProfe", 2);
+                   
+                   if(!listaProfesionales.isEmpty()){
+                                modelo.addAttribute("profesionalSelec", listaProfesionales);
+                            }else{
+                                modelo.put("message", "No hay peluqueros caninos en la nomina");
+                            }
                    
                    System.out.println("PROFESIONAL     PELUQUERO");
                    //profesionalSelec = "me cago en vos";
@@ -183,8 +200,15 @@ public class PortalControlador {
                case "3" :
                   // Vacunacion
                    listaProfesionales = profesionalServicio.listarProfesionalPorRol(EnumRol.ENFERMERO);
-                   modelo.addAttribute("profesionalSelec", listaProfesionales);
+
                    modelo.addAttribute("actProfe", 2);
+                   
+                   if(!listaProfesionales.isEmpty()){
+                                modelo.addAttribute("profesionalSelec", listaProfesionales);
+                            }else{
+                                modelo.put("message", "No hay enfermeros en la nomina");
+                            }
+                   
                    
                    System.out.println("PROFESIONAL     ENFERMERO");
                    //profesionalSelec = "me cago en vos";
@@ -211,47 +235,106 @@ public class PortalControlador {
     
     @PostMapping("/nuevoTurnoPROFESIONAL")
     public String nuevoTurnoPROFESIONAL(HttpSession session, ModelMap modelo, @RequestParam(required = false) String tipoDeAtencion, @RequestParam(required = false) String profesionalSelec, @RequestParam(required = false) String horarioTurno, @RequestParam(required = false) String mascotaSelec) throws ErrorServicio{
-        System.out.println(tipoDeAtencion);
-        System.out.println(profesionalSelec);
-        System.out.println(horarioTurno);
-        System.out.println(mascotaSelec);
+        
+        Usuario login = (Usuario) session.getAttribute("usuariosession");
+        if (login == null) {
+            return "redirect:/login";
+        }
+        
+        System.out.println("tipoDeAtencion  " + tipoDeAtencion);
+        System.out.println("profesionalSelec  " + profesionalSelec);
+        System.out.println("horarioTurno  " + horarioTurno);
+        System.out.println("mascotaSelec  " + mascotaSelec);
         
         String Act = "Open this select menu";
         
          if(profesionalSelec == null || profesionalSelec.equals(Act)){
                 modelo.addAttribute("actTurno", 0);
                 System.out.println("op1");
+                
             }else{
                 /*codigo para cargar los turnos disponible y las mascotas*/
                 
                 modelo.addAttribute("actTurno", 3);
                 System.out.println("op2");
                 
-                //System.out.println(profesionalSelec);
-            }
-    
-        return "turno.html";
-    } 
+                //vuelvo a setear el profesional, como unico profesional
+                Profesional profesional;
+                profesional = profesionalRepositorio.getById(profesionalSelec);
+                modelo.addAttribute("profesionalSelec", profesional);
+                modelo.addAttribute("actProfe", 2);
+                
+                /*List<Turno> turnosDisponiblesPorProfesional = turnoServicio.listarTurnoDisponiblesPorProfesional(profesionalSelec);
+         //       modelo.addAttribute("horarioTurno", turnosDisponiblesPorProfesional);
+                modelo.addAttribute("horarioTurno", turnosDisponiblesPorProfesional);
+                System.out.println("tamaño lista turnosDisponiblesPorProfesional  " + turnosDisponiblesPorProfesional.size());
+                
+                System.out.println("usuario   " + session.getId());
+                System.out.println("usuario   " + session.toString());*/
+                        
+                        
+
+                            List<Turno> turnosDisponiblesPorProfesional = turnoServicio.listarTurnoDisponiblesPorProfesional(profesionalSelec);           
+
+                            if(!turnosDisponiblesPorProfesional.isEmpty()){
+                                modelo.addAttribute("horarioTurno", turnosDisponiblesPorProfesional);
+                            }else{
+                                modelo.put("message", "El profesional no tiene turnos disponibles");
+                            }
+
+                       
+                
+                
+                /*Cliente cliente = clienteServicio.buscarClientePorUsuario(login.getMail());
+                List<Mascota> mascotas = mascotaServicio.buscarMascotaPorCliente(cliente.getId()); 
+                
+                modelo.addAttribute("mascotaSelec", mascotas);
+                System.out.println("tamaño lista mascotas  " + mascotas.size());*/
+                
+                
+                        try{
+                            Cliente cliente = clienteServicio.buscarClientePorUsuario(login.getMail());
+
+                            List<Mascota> mascotas = mascotaServicio.buscarMascotaPorCliente(cliente.getId());           
+
+                            if(!mascotas.isEmpty()){
+                                modelo.put("mascotaSelec", mascotas);
+                            }else{
+                                modelo.put("message", "El Cliente no tiene mascotas para motrar");
+                            }
+
+                       } catch (ErrorServicio e) {
+                           throw new ErrorServicio("Ocurrió un error inesperado por favor pongase en contacto con el servicio tecnico");
+                       }
+
+                }
+
+               return "turno.html";
+           } 
     
     @PostMapping("/nuevoTurnoCOMPLETO")
     public String nuevoTurnoCOMPLETO(HttpSession session, ModelMap modelo, @RequestParam(required = false) String tipoDeAtencion, @RequestParam(required = false) String profesionalSelec, @RequestParam(required = false) String horarioTurno, @RequestParam(required = false) String mascotaSelec) throws ErrorServicio{
-        System.out.println(tipoDeAtencion);
-        System.out.println(profesionalSelec);
-        System.out.println(horarioTurno);
-        System.out.println(mascotaSelec);
+        System.out.println("tipoDeAtencion  " + tipoDeAtencion);
+        System.out.println("profesionalSelec  " + profesionalSelec);
+        System.out.println("horarioTurno  " + horarioTurno);
+        System.out.println("mascotaSelec  "  + mascotaSelec);
         
         String Act = "Open this select menu";
         
         System.out.println("la variable prefesionalSelec" + profesionalSelec);
         
+        turnoServicio.asignarTurno(mascotaSelec, horarioTurno);
+        
+        
          if(profesionalSelec == null || profesionalSelec.equals(Act)){
                 modelo.addAttribute("actTurno", 0);
                 System.out.println("op1");
             }else{
-                /*codigo para cargar los turnos disponible y las mascotas*/
+                /*codigoidProfesional para cargar los turnos disponible y las mascotas*/
                 
                 modelo.addAttribute("actTurno", 3);
                 System.out.println("op2");
+                
                 
                 //System.out.println(profesionalSelec);
             }

@@ -18,7 +18,7 @@
             <option value="2">Peluqueria</option>
             <option value="3">Vacunacion</option>> 
           </select>
-          <button class="btn btn-primary" type="submit">Submit form</button>
+          <button class="btn btn-primary" type="submit">Seleccionar tipo de atencion</button>
       </form>    
        
        <!--  lee el profesional y carga los horarios y las mascotas -->
@@ -43,7 +43,7 @@
                 </select>       
             </div>
           
-          <button class="btn btn-primary" type="submit">Submit form</button>
+          <button class="btn btn-primary" type="submit">Seleccionar profesional</button>
       </form>    
        
        <!--  lee todos los campos y hace la carga a bd -->
@@ -53,21 +53,21 @@
           <!--<div th:if="${actTurno != '3'}">--> 
           <div th:if="${actTurno} == '3' " >
                 <label > horarios disponibles </label>
-                <select  class="form-select" aria-label="Default select example" name="horarioTurno" >
-                  <option selected>Open this select menu</option>
-                  <option value="1">One</option>
-                  <option value="2">Two</option>
-                  <option value="3">Three</option>
+                <select  class="form-control form-control-sm col-md-6" name="horarioTurno">
+                                <option th:each="turno: ${horarioTurno}"
+                                          th:value="${turno.id}"
+                                          th:text="${turno.fecha}"/>
                 </select>
                 <label  > mascotas </label> 
-                <select   class="form-select" aria-label="Default select example" name="mascotaSelec">
-                  <option selected>Open this select menu</option>
-                  <option value="1">One</option>
-                  <option value="2">Two</option>
-                  <option value="3">Three</option>
+                
+                <select  class="form-control form-control-sm col-md-6" name="mascotaSelec">
+                                <option th:each="mascota: ${mascotaSelec}"
+                                          th:value="${mascota.id}"
+                                          th:text="${mascota.nombre}"/>
                 </select>
-                </div>
-          <button class="btn btn-primary" type="submit">Submit form</button>
+               
+                <button class="btn btn-primary" type="submit">Cargar Turno</button>
+           </div>
       </form>
           
   </main>

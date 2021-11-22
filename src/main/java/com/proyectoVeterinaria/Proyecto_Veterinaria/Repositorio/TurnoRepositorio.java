@@ -24,8 +24,8 @@ public interface TurnoRepositorio extends JpaRepository<Turno, String> {
      @Query("Select t FROM Turno t WHERE t.mascota.id = :id")
     public List<Turno> buscarTurnosPorMascotas(@Param ("id")String id);
     
-    
-    /*@Query("SELECT * FROM Turno WHERE (profesional_id = :id) AND (status = :status)")
+    /*
+    @Query("SELECT c FROM Turno c WHERE (c.profesional_id = :id) AND (status = :status)")
     public List<Turno> buscarTurnosDisponiblesPorProfesional(@Param("id")String id, @Param("status")EnumStatusTurno status);
     */
     
