@@ -11,7 +11,7 @@ import org.springframework.stereotype.Repository;
 public interface TurnoRepositorio extends JpaRepository<Turno, String> {
 
     
-    @Query("SELECT c FROM Turno c WHERE c.profesional.id = :id")
+    @Query("SELECT c, m , a , d  FROM Turno c INNER JOIN c.mascota m INNER JOIN c.atencion a INNER JOIN m.cliente d WHERE c.profesional.id = :id")
     public List<Turno> buscarTurnosPorProfesional(@Param("id")String id);
     
     

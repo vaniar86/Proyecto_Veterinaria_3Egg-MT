@@ -22,6 +22,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -36,14 +37,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 @PreAuthorize("hasAnyRole('ROLE_CLIENTE')")
 public class AtencionControlador {
 
-    @Autowired
-    private AtencionServicio atencionServicio;
+    
 
     @Autowired
-    private TurnoServicio turnoServicio;
-
-    @Autowired
-    private AtencionRepositorio atencionRepositorio;
+    private TurnoServicio turnoServicio;   
     
     @Autowired
     private ClienteServicio clienteServicio;
@@ -51,8 +48,7 @@ public class AtencionControlador {
     @Autowired
     private MascotaServicio mascotaServicio;
 
-    @Autowired
-    private TurnoRepositorio turnoRepositorio;
+   
 
     @GetMapping("")
     public String atenciones(HttpSession session, ModelMap model) throws ErrorServicio {
@@ -81,35 +77,71 @@ public class AtencionControlador {
        
         return "atencion";
     }
+    
+    @GetMapping("/perfilMascota/{id}")
+    public String modificarPerfil(ModelMap model, @PathVariable String id){
+        try {
+            Mascota mascota = mascotaServicio.buscarMascotaPorId(id);
+            if(mascota != null){
+                String idMasc = mascota.getId();
+                return "redirect:/mascota/modificarMascota/{idMasc}";
+            }else{
+                 model.put("message", "No se encontro la mascota");
+            return "turnosMascotas";
+            }    
+            
 
-    @PostMapping("/modificarTurno")
-    public String statusTurno(HttpSession session, ModelMap model, @RequestParam String id, @RequestParam String status) throws ErrorServicio {
+        } catch (Exception e) {
+            model.put("error", "Ocurrio un error inesperado");
+            return "turnosMascotas";
+        }
+        
+    }
+
+    @GetMapping("/modificarTurno/{id}/status")
+    public String statusTurno(HttpSession session, ModelMap model, @PathVariable String id, @PathVariable String status) throws ErrorServicio {
        
         try {
-            Optional<Turno> turno = turnoServicio.buscaPorId(id);
+            
             turnoServicio.statusTurno(id, status);/*el string Status que se recibe de la vista puede estar mandando
            "cancelar, modificar u otra cosa entonces este metodo del servicio recibe 
            el idTurno y el string ese, y procesa, no hace falta varios metodos*/
+            return ("redirect:/turnosMascotas");
 
         } catch (Exception Error) {
-            Logger.getLogger(ProfesionalController.class.getName()).log(Level.SEVERE, null, Error);
-            Error.getMessage();
-            return ("/index");
+            model.put("error", "No fue posible cancelar el turno");
+            return "turnosMascotas";
         }
-        return ("redirect:/atencion");
+        
     }
-//    Lo dejo comentado porque se llama en el controlador de turnos
-//        @GetMapping("/turnosMascota/{id}")
-//        public void turnosMascota(ModelMap model, @PathVariable String id ) throws ErrorServicio{
-//       List<Turno> turnos = turnoServicio.listarTurnosPorMascota(id);
-//        if(!turnos.isEmpty()){
-//            model.put("turnos", turnos);
-//        }else{
-//            model.put("message", "La mascota no posee turnos Cargados");
-//        }
-//        
-//    }
 
+    @GetMapping("/turnosMascota/{id}")
+    public String turnosMascota(ModelMap model, @PathVariable String id ) throws Exception{
+        try {
+            Mascota mascota = mascotaServicio.buscarMascotaPorId(id);
+             List<Turno> turnos = turnoServicio.listarTurnosPorMascota(id);
+             model.put("nombre", mascota.getNombre());
+             model.put("edad", mascota.getEdad());
+             model.put("raza", mascota.getRaza());
+            if(!turnos.isEmpty()){
+                model.put("turnos", turnos);
+            }else{
+                model.put("message", "La mascota no posee turnos Cargados");
+            }
+            return "turnosMascota";
+        } catch (Exception e) {
+           model.put("error", "No fue posible recuperar los turnos de la mascota");
+             return "redirect:/atencion";
+        }
+        
+    }
+
+    
+    
+    
+    
+    
+//        QUEDA PARA ELIMINAR
     @PostMapping("/modificar-turno")
     public String modificarTurno(ModelMap modelo, @RequestParam String idTurno) {
         /* 

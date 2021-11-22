@@ -8,6 +8,8 @@ package com.proyectoVeterinaria.Proyecto_Veterinaria.Entidades;
 import com.proyectoVeterinaria.Proyecto_Veterinaria.Enumeraciones.EnumRol;
 import java.util.Date;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.Id;
 
 /**
@@ -20,7 +22,11 @@ public class Usuario {
     @Id
     private String mail;
     private String pass;
+    
+    
+    @Enumerated(EnumType.STRING)
     private EnumRol rol;
+    
     private Date fechaAlta;
 
     public Usuario() {

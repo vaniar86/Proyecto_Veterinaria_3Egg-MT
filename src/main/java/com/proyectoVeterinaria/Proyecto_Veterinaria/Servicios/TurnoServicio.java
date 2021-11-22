@@ -131,6 +131,7 @@ public class TurnoServicio {
     }
     public List<Turno> turnoXprofesional(String id){
        List<Turno> turnos = new ArrayList(turnoRepositorio.buscarTurnosPorProfesional(id));   
+        System.out.println(turnos);
        return turnos;
     }
     

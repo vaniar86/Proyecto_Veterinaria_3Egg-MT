@@ -9,6 +9,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface ProfesionalRepositorio extends JpaRepository<Profesional, String>{
-    @Query("SELECT c FROM Profesional c WHERE c.idUsuario.id = :id")
+    @Query("SELECT c FROM Profesional c  WHERE c.idUsuario.id = :id")
     public Profesional BuscarProfesional(@Param("id")String id);
 }

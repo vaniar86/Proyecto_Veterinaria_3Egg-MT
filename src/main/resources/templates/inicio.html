@@ -23,17 +23,18 @@
                 <div class="col align-self-center">
                     <div class="card bg-dark text-white cardContainer">
                         <img src="./images/body-bg-3.jpg" class="img-fluid imgCard" alt="...">
-                        <div class="card-img-overlay">
-                            <h5 class="card-title">CARGA TUS MACOTAS</h5>
-                            <a th:href="@{/misMascotas}"><button type="button" class="btn btn-success">
-                                CargarMascotas
-                            </button></a>
-                        </div>
+                          <div class="card-img-overlay">
+                                <h5 class="card-title">CARGA TUS MACOTAS</h5>
+                                <a th:href="@{/misMascotas}"><button type="button" class="btn btn-success">
+                                    CargarMascotas
+                                </button></a>
+                          </div>
                       </div>
                 </div>
+           </div>
            
        
-           <div class="row my-3"  sec:authorize="hasRole('CLIENTE')">
+        <div class="row my-3"  sec:authorize="hasRole('CLIENTE')">
             <div class="col align-self-center">
                 <div class="card bg-dark text-white cardContainer">
                     <img src="./images/body-bg-1.jpg" class="img-fluid" alt="...">
@@ -47,25 +48,25 @@
             </div>
        </div>
        <div class="row my-3"  sec:authorize="hasRole('CLIENTE')">
-        <div class="col align-self-center">
-            <div class="card bg-dark text-white cardContainer">
-                <img src="./images/body-bg-2.jpg" class="img-fluid" alt="...">
-                    <div class="card-img-overlay">
-                        <h5 class="card-title">ATENCIONES</h5>
-                        <a th:href="@{/misAtenciones}"><button type="button" class="btn btn-success">
-                            Ver mis atenciones
-                        </button></a>          
+            <div class="col align-self-center">
+                <div class="card bg-dark text-white cardContainer">
+                    <img src="./images/body-bg-2.jpg" class="img-fluid" alt="...">
+                        <div class="card-img-overlay">
+                            <h5 class="card-title">ATENCIONES</h5>
+                            <a th:href="@{/misAtenciones}"><button type="button" class="btn btn-success">
+                                Ver mis atenciones
+                            </button></a>          
+                        </div>
                 </div>
-            </div>
+             </div>
         </div>
-    </div>
     <div class="row my-3"  sec:authorize="hasRole('PROFESIONAL')">
         <div class="col align-self-center">
             <div class="card bg-dark text-white cardContainer">
                 <img src="./images/body-bg-2.jpg" class="img-fluid" alt="...">
                     <div class="card-img-overlay">
                         <h5 class="card-title">Lista de Turnos</h5>
-                        <a th:href="@{/profesional/turnos}"><button type="button" class="btn btn-success">
+                        <a th:href="@{/profesional}"><button type="button" class="btn btn-success">
                           Lista Turnos
                         </button></a>          
                 </div>
@@ -85,7 +86,7 @@
             </div>
         </div>
     </div>           
-  </div>
+</div>            
   </main>
   <footer th:replace="/fragments/footer :: footer"></footer>
     <script

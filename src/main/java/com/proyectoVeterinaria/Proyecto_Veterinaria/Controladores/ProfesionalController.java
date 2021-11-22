@@ -12,8 +12,6 @@ import com.proyectoVeterinaria.Proyecto_Veterinaria.Servicios.TurnoServicio;
 import com.proyectoVeterinaria.Proyecto_Veterinaria.Servicios.UsuarioServicio;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -24,7 +22,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-@PreAuthorize("hasAnyRole('ROLE_USUARIO_REGISTRADO')")
+@PreAuthorize("hasAnyRole('ROLE_PROFESIONAL')")
 @Controller
 @RequestMapping("/profesional")
 public class ProfesionalController {
@@ -39,6 +37,32 @@ public class ProfesionalController {
     private TurnoServicio turnoServicio;
     
     
+     @GetMapping("")
+    public String listarTurnoPorId(HttpSession session, ModelMap model){
+       
+        Usuario login = (Usuario) session.getAttribute("usuariosession");     
+       
+        if (login == null) {
+            return "redirect:/login";
+        }
+         try {
+             Profesional profesional = profesionalServicio.BuscarProfesional(login.getMail());
+        
+
+                List<Turno>turnoXprofesional = turnoServicio.turnoXprofesional(profesional.getId());
+                
+                if(!turnoXprofesional.isEmpty()){
+                    model.put("turnos", turnoXprofesional);
+                }else{
+                     model.put("message", "No hay turnos cargados");
+                }
+  
+    
+         } catch (Exception e) {
+              model.put("error", "Ocurrió un error al intentar recuperar los turnos");
+         }
+          return "profesional";
+    }
     
     @PostMapping("/actualizarprofesional")  
     public String Actualizar(HttpSession sesion,ModelMap model,@RequestParam String id,@RequestParam long telefono,@RequestParam String nombre,@RequestParam String apellido,@RequestParam EnumRolProfesional rol,@RequestParam Usuario idUsuario)throws ErrorServicio{       
@@ -68,20 +92,7 @@ public class ProfesionalController {
      return ("turnos");   
     }
     
-    @GetMapping("")
-    public String listarTurnoPorId(HttpSession session, ModelMap model){
-        Usuario usuario= (Usuario) session.getAttribute("usuariosession");
-        if (usuario== null || usuario.getMail().isEmpty()) {
-            return "redirect/index";
-        }
-        Profesional profesional = profesionalServicio.BuscarProfesional(usuario.getMail());
-
-        
-        List<Turno>turnoXprofesional = turnoServicio.turnoXprofesional(profesional.getId());
-        model.put("turnos", turnoXprofesional);
-        
-        return "profesional";
-    }
+   
     
     
     

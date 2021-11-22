@@ -96,7 +96,7 @@ public class ProfesionalServicio {
         return turnoRepositorio.buscarTurnosPorProfesional(id);
     }
     public Profesional BuscarProfesional(String idUsuario){
-      
+        System.out.println(idUsuario);
         return profesionalRepositorio.BuscarProfesional(idUsuario);
     }
 }

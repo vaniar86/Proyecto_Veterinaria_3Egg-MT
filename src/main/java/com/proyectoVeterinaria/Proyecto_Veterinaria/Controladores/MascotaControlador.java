@@ -23,8 +23,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
-@PreAuthorize("hasAnyRole('ROLE_USUARIO_REGISTRADO')")
 @Controller
+@PreAuthorize("hasAnyRole('ROLE_CLIENTE')")
 @RequestMapping("/misMascotas")
 public class MascotaControlador {
 
@@ -35,7 +35,7 @@ public class MascotaControlador {
     @Autowired
     private MascotaServicio mascotaServicio;
 
-    @PreAuthorize("hasAnyRole('ROLE_USUARIO_REGISTRADO')")
+    
     @GetMapping("")
     public String vistaMascota(HttpSession session, ModelMap model) throws ErrorServicio{
          Usuario login = (Usuario) session.getAttribute("usuariosession");      
