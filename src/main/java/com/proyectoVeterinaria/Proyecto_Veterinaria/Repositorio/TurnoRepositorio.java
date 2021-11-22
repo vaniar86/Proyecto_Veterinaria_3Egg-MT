@@ -1,6 +1,7 @@
 package com.proyectoVeterinaria.Proyecto_Veterinaria.Repositorio;
 
 import com.proyectoVeterinaria.Proyecto_Veterinaria.Entidades.Turno;
+import com.proyectoVeterinaria.Proyecto_Veterinaria.Enumeraciones.EnumStatusTurno;
 import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -14,7 +15,6 @@ public interface TurnoRepositorio extends JpaRepository<Turno, String> {
     @Query("SELECT c FROM Turno c WHERE c.profesional.id = :id")
     public List<Turno> buscarTurnosPorProfesional(@Param("id")String id);
     
-    
     /*
     devuelve los turnos de X profesional, descomentar solo cuando vaya a usarse
     @Query("SELECT c FROM Turno c WHERE c.profesional = :id")
@@ -22,5 +22,11 @@ public interface TurnoRepositorio extends JpaRepository<Turno, String> {
      */
     
      @Query("Select t FROM Turno t WHERE t.mascota.id = :id")
-    public  List<Turno> buscarTurnosPorMascotas(@Param ("id")String id);
+    public List<Turno> buscarTurnosPorMascotas(@Param ("id")String id);
+    
+    
+    /*@Query("SELECT * FROM Turno WHERE (profesional_id = :id) AND (status = :status)")
+    public List<Turno> buscarTurnosDisponiblesPorProfesional(@Param("id")String id, @Param("status")EnumStatusTurno status);
+    */
+    
 }

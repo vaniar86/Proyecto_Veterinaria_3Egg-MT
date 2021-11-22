@@ -134,6 +134,11 @@ public class TurnoServicio {
        return turnos;
     }
     
+    /*public List<Turno> listarTurnoDisponiblesPorProfesional(String id){
+        
+       return turnoRepositorio.buscarTurnosDisponiblesPorProfesional(id, EnumStatusTurno.DISPONIBLE);
+    }*/
+    
 
     /* habilitar cuando se vaya a usar, y a su vez habilitar lo comentado en turnoRepositorio
     public ArrayList<Turno> listarTurnosPorProfesional(Profesional profe){

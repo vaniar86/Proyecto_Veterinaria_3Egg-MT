@@ -47,7 +47,7 @@ public class TurnoControlador {
         return "cliente.html";
     }
     
-    @GetMapping("/turno")
+    /*@GetMapping("/turno")
     public String formularioTurno(ModelMap modelo) {
         //
         //modelo.put("tipoConsultas", tipoConsultas); NO TOCAR despues se habilita
@@ -63,7 +63,7 @@ public class TurnoControlador {
         }
          
         return "atencion";
-    }
+    }*/
     
     
     //falta completar

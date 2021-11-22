@@ -99,4 +99,13 @@ public class ProfesionalServicio {
       
         return profesionalRepositorio.BuscarProfesional(idUsuario);
     }
+    
+    public List<Profesional> listarProfesionalPorRol(EnumRol rol){
+       
+           System.out.println(rol);
+           List<Profesional> lista = profesionalRepositorio.buscarProfesionalPorRol(rol);
+           System.out.println(lista.get(0).getNombre());
+           return lista;
+        
+     }
 }
