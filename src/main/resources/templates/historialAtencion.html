@@ -54,7 +54,7 @@
 
                                                   <td th:text="${turno.atencion.tipoAtencion}"></td>
                                                   <td th:text="${turno.atencion.atencionPuntual}"></td>
-                                                  <td th:text="${turno.profesional.apellido}"></td>
+                                                  <td th:text="${turno.profesional.apellido +  turno.profesional.nombre}"></td>
                                                   <td th:text="${turno.atencion.fechaAtencion}"></td>
                                                   <td th:text="${turno.atencion.descripcion}"></td>
                                                   <td th:text="${turno.atencion.prescripcion}"></td>

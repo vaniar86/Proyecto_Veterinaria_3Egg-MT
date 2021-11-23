@@ -16,5 +16,6 @@ public interface AtencionRepositorio extends JpaRepository<Atencion, String> {
     @Query("SELECT c FROM Atencion c WHERE c.id = :id")
     public List<Atencion> buscarAtencionPorUsuario(@Param("id")String id);
     
-    
+    @Query("SELECT a FROM Atencion a WHERE a.id = :id")
+    public Atencion buscarAtencionPorId(@Param("id") String id);
 }

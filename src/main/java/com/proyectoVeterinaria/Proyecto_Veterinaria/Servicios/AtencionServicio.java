@@ -1,10 +1,12 @@
 package com.proyectoVeterinaria.Proyecto_Veterinaria.Servicios;
 
 import com.proyectoVeterinaria.Proyecto_Veterinaria.Entidades.Atencion;
+import com.proyectoVeterinaria.Proyecto_Veterinaria.Entidades.Turno;
 import com.proyectoVeterinaria.Proyecto_Veterinaria.Enumeraciones.EnumAtencionPuntual;
 import com.proyectoVeterinaria.Proyecto_Veterinaria.Enumeraciones.EnumTipoAtencion;
 import com.proyectoVeterinaria.Proyecto_Veterinaria.Errores.ErrorServicio;
 import com.proyectoVeterinaria.Proyecto_Veterinaria.Repositorio.AtencionRepositorio;
+import com.proyectoVeterinaria.Proyecto_Veterinaria.Repositorio.TurnoRepositorio;
 import java.util.Date;
 import java.util.Optional;
 import javax.transaction.Transactional;
@@ -16,42 +18,25 @@ import org.springframework.web.multipart.MultipartFile;
 @Service
 public class AtencionServicio {
 
-    public AtencionServicio() {
-    }
-
-
     
-    
-    public String tipoAtencion() {
-        return null;
-    }
-
-    public String Descripcion() {
-        return null;
-    }
-
-    public String Prescipcion() {
-        return null;
-    }
-
-    @Transactional
-    public void modificar() {
-    }
-
-    public void validar() {
-    }
 /*String Id Primary Key defaultValue
 Enum TipoAtencion
 Enum AtencionPuntual
 String Descripcion
 String Prescripcion
 */
-
+     @Autowired
+    private TurnoServicio turnoServicio;
+     
+      @Autowired
+    private TurnoRepositorio turnoRepositorio;
+     
+     
     @Autowired
     private AtencionRepositorio atencionRepositorio;
     
     @Transactional
-    public void registrarAtencion (EnumTipoAtencion tipoAtencion, EnumAtencionPuntual atencionPuntual, String descripcion, String prescripcion)throws ErrorServicio{
+    public void registrarAtencion (String turnoId, EnumTipoAtencion tipoAtencion, EnumAtencionPuntual atencionPuntual, String descripcion, String prescripcion)throws ErrorServicio{
     
     //public void registrar (String nombre, String apellido, String mail, String clave)throws ErrorServicio{
         
@@ -64,6 +49,11 @@ String Prescripcion
         atencion.setPrescripcion(prescripcion);
         atencion.setFechaAtencion(new Date());
         
+        Turno turno = turnoServicio.buscarTurnoPorId(turnoId);
+        turno.setAtencion(atencion);
+        
+        turnoRepositorio.save(turno);
+       
         atencionRepositorio.save(atencion);
         
        // mailServicio.enviar("baruj aba al tinder de mascotas", "Tinder de mascotas", usuario.getMail());
@@ -72,7 +62,7 @@ String Prescripcion
     
     
      @Transactional
-    public void modificar(String idAtencion, EnumAtencionPuntual atencionPuntual, String descripcion, String prescripcion) throws ErrorServicio {
+    public void modificar(String turnoId, String idAtencion, EnumAtencionPuntual atencionPuntual, String descripcion, String prescripcion) throws ErrorServicio {
         
         validar(atencionPuntual, descripcion, prescripcion);
         
@@ -92,6 +82,10 @@ String Prescripcion
         }else{
             throw new ErrorServicio("la mascota no existe");
         }
+    }
+    
+    public Atencion buscarAtencionPorId(String id){
+        return atencionRepositorio.buscarAtencionPorId(id);
     }
     
     private void validar( EnumAtencionPuntual atencionPuntual, String descripcion, String prescripcion) throws ErrorServicio{

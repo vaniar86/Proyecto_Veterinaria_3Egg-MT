@@ -1,6 +1,7 @@
 
 package com.proyectoVeterinaria.Proyecto_Veterinaria.Controladores;
 
+import com.proyectoVeterinaria.Proyecto_Veterinaria.Entidades.Atencion;
 import com.proyectoVeterinaria.Proyecto_Veterinaria.Entidades.Mascota;
 import com.proyectoVeterinaria.Proyecto_Veterinaria.Entidades.Profesional;
 import com.proyectoVeterinaria.Proyecto_Veterinaria.Entidades.Turno;
@@ -77,7 +78,7 @@ public class ProfesionalController {
     
     @GetMapping("/modificarAtencion/{id}")
    public String modificarAtencion (@PathVariable String id,HttpSession session,ModelMap model){
-        System.out.println("controlador de turnos");
+        Atencion atencion = new Atencion();
        try {
            Usuario usuario = (Usuario) session.getAttribute("usuariosession");    
        
@@ -87,7 +88,14 @@ public class ProfesionalController {
         
         
         Turno turno = turnoServicio.buscarTurnoPorId(id);
-        System.out.println(turno.getId() + "turnoID");
+           System.out.println(turno);
+           System.out.println(turno.getAtencion());
+        if(turno.getAtencion()!= null){
+            System.out.println("entro al if");
+             atencion = atencionServicio.buscarAtencionPorId(turno.getAtencion().getId());
+            System.out.println(atencion.getDescripcion());
+        }
+         model.put("atencion", atencion);
          model.put("turno", turno);
          model.put("tipoAtencion", EnumTipoAtencion.values());
          model.put("atenciones", EnumAtencionPuntual.values());  
@@ -127,15 +135,23 @@ public class ProfesionalController {
     }
     
     @PostMapping("/cargarAtencion") 
-    public String cargarAtención(ModelMap model,@RequestParam String atencionId, @RequestParam String turnoId, @RequestParam String descripcion, @RequestParam String prescripcion, @RequestParam EnumAtencionPuntual atencion){
+    public String cargarAtención(ModelMap model,@RequestParam String atencionId, @RequestParam EnumTipoAtencion tipoAtencion, @RequestParam String turnoId, @RequestParam String descripcion, @RequestParam String prescripcion, @RequestParam EnumAtencionPuntual atencion){
         try {
-            atencionServicio.modificar(atencionId, atencion, descripcion, prescripcion);
-            turnoServicio.statusTurno(turnoId, "atendido");
+           
+            if(atencionId.isEmpty() ){
+                
+                atencionServicio.registrarAtencion(turnoId, tipoAtencion, atencion, descripcion, prescripcion);
+                turnoServicio.statusTurno(turnoId, "atendido");
+            }else{
+                atencionServicio.modificar(turnoId, atencionId, atencion, descripcion, prescripcion);
+                
+            }
+            
              return ("redirect:/profesional");
              
         } catch (Exception e) {
             model.put("error", "Ocurrio un error al cargar la atención");
-            return "atencionPuntual";            
+            return ("redirect:/profesional");      
         }
     }
     

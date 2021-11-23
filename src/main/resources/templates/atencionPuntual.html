@@ -41,25 +41,33 @@
                     
                      <form class="row g-3" th:action="@{/profesional/cargarAtencion}" method="POST">
                          
-                         
+                         <input  type="hidden"  name="atencionId" th:value="${atencion.id}" >
                          <input type="hidden"  name="turnoId" th:value="${turno.id}" >
                         <div class="alert alert-danger" role="alert" th:if="${error != null}" th:text="${error}"></div>
-
+                        
+                        <div class="col-md-12 my-2">
+                          <label for="validationDefault04" class="form-check-label">Tipo Atención</label>
+                             <select class="form-control" name="tipoAtencion"> 
+                                <option th:each="tipoatencion: ${tipoAtencion}" th:value="${tipoatencion}" th:text="${tipoatencion}" th:selected="${atencion.tipoAtencion != null && tipoatencion == atencion.tipoAtencion}" ></option> 
+                             </select>              
+                         </div>
+                        
+                        
                        <div class="col-md-12 my-2">
                           <label for="validationDefault04" class="form-check-label">Atención puntual</label>
                              <select class="form-control" name="atencion"> 
-                                <option th:each="atencion: ${atenciones}" th:value="${atencion}" th:text="${atencion}"  ></option> 
+                                <option th:each="atencion: ${atenciones}" th:value="${atencion}" th:text="${atencion}"   ></option> 
                              </select>              
                          </div>
                         
                         <div class="col-md-12 my-2">
                             <label for="validationDefault02" class="form-check-label">Descripción</label>
-                            <textarea  class="form-control" id="exampleFormControlTextarea1" rows="3" name="descripcion"   required></textarea>
+                            <textarea  class="form-control" id="exampleFormControlTextarea1" rows="3" name="descripcion"  th:value="${atencion.descripcion}" required></textarea>
                         </div>
 
                         <div class="col-md-12 my-2">
                             <label for="validationDefault03" class="form-check-label">Prescripción</label>
-                            <textarea  class="form-control" id="exampleFormControlTextarea1" rows="3" name="prescripcion"  required></textarea>
+                            <textarea  class="form-control" id="exampleFormControlTextarea1" rows="3" name="prescripcion" th:value="${atencion.prescripcion}" required></textarea>
                         </div>     
                         
                      
