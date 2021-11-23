@@ -19,6 +19,9 @@ public class TurnoServicio {
 
     @Autowired
     private TurnoRepositorio turnoRepositorio;
+    
+    @Autowired
+    private MascotaServicio mascotaServicio;
 
     @Transactional
     public void crearTurno(Date fecha, EnumStatusTurno status, Mascota mascota, Profesional profesional) throws ErrorServicio {
@@ -142,6 +145,62 @@ public class TurnoServicio {
     public List<Turno> listarTurnosAtendidos(String id){
         return turnoRepositorio.buscarTurnosAtendidosXMasc(id);
     }
+   /* public List<Turno> listarTurnoDisponiblesPorProfesional(String id){
+        try {
+            return turnoRepositorio.buscarTurnosDisponiblesPorProfesional(id, EnumStatusTurno.DISPONIBLE);
+        } catch (Exception e) {
+            return null;
+        }
+       
+    }*/
+    
+    public List<Turno> listarTurnoDisponiblesPorProfesional(String id){
+        
+        List<Turno> turnosDelProfesional = turnoRepositorio.buscarTurnosPorProfesional(id);
+        
+        System.out.println(turnosDelProfesional.get(2).toString());
+        System.out.println(turnosDelProfesional.size());
+        List<Turno> turnosDisponiblesDelProfesional = new ArrayList<Turno>();
+        
+            for (int i = 0; i < turnosDelProfesional.size(); i++) {
+                System.out.println("vuelta " + i + " status " +turnosDelProfesional.get(i).getStatus());
+            if(turnosDelProfesional.get(i).getStatus() == EnumStatusTurno.DISPONIBLE){
+                
+                turnosDisponiblesDelProfesional.add(turnosDelProfesional.get(i));
+                
+            }
+            
+        
+        }
+        
+        System.out.println(turnosDisponiblesDelProfesional.size());
+        
+        return turnosDisponiblesDelProfesional;
+    }
+    
+    @Transactional
+    public void asignarTurno(String idMascota, String idTurno) throws ErrorServicio {
+        //validar(fecha, status, mascota, profesional);
+        Optional<Turno> respuesta = turnoRepositorio.findById(idTurno);
+       
+        
+        if (respuesta.isPresent()) {
+            Turno turno = respuesta.get();
+            //turno.setFecha(fecha);
+            turno.setMascota( mascotaServicio.buscarMascotaPorId(idMascota));
+            //turno.setProfesional(profesional);
+            turno.setStatus(EnumStatusTurno.ASIGNADO);
+
+            turnoRepositorio.save(turno);
+
+        } else {
+            throw new ErrorServicio("No se encontro con el id del turno solicitado");
+        }
+    }
+    
+    
+    
+    
 
     
     

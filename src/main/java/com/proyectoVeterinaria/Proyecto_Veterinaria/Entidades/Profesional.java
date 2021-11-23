@@ -84,6 +84,11 @@ public class Profesional {
         this.rol = rol;
     }
 
+    @Override
+    public String toString() {
+        return "Profesional{" + "id=" + id + ", idUsuario=" + idUsuario + ", nombre=" + nombre + ", apellido=" + apellido + ", telefono=" + telefono + ", rol=" + rol + '}';
+    }
+
     
     
     

@@ -1,6 +1,7 @@
 package com.proyectoVeterinaria.Proyecto_Veterinaria.Repositorio;
 
 import com.proyectoVeterinaria.Proyecto_Veterinaria.Entidades.Turno;
+import com.proyectoVeterinaria.Proyecto_Veterinaria.Enumeraciones.EnumStatusTurno;
 import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -33,4 +34,8 @@ public interface TurnoRepositorio extends JpaRepository<Turno, String> {
      @Query("Select t, p, a FROM Turno t INNER JOIN t.atencion a INNER JOIN t.profesional p WHERE t.status != 'DISPONIBLE' ")
     public List<Turno> buscarTurnosAsignados();
     
+    
+ 
+    
+ 
 }
