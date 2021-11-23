@@ -16,9 +16,9 @@
                             <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
                               Profesionales
                             </a>
-                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink" th:each="profesional : ${profesionales}">
+                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink" >
                                 <li><a class="dropdown-item" th:href="@{/admin}" >Todos</a></li>
-                                <li><a class="dropdown-item" th:href="@{/admin/filtrarXProfesional/__${profesional.id}__}" th:text="${profesional.apellido }+ ${ profesional.nombre}"></a></li>
+                                <li><a class="dropdown-item" th:href="@{/admin/filtrarXProfesional/__${profesional.id}__}" th:each="profesional : ${profesionales}" th:text="${profesional.apellido }+ ${ profesional.nombre}"></a></li>
                               
                             </ul>
                        </div>    
@@ -40,7 +40,7 @@
                                                   <th scope="col">Atención</th>
                                                   <th scope="col">Fecha Atención</th>
                                                   <th scope="col">Estado turno</th>
-                                                  <th scope="col">Acciones</th>
+                                                 <!-- <th scope="col">Acciones</th>-->
                                           </tr>
                                   </thead>
                                   <tbody th:each="turno : ${turnos}" th:if="${turnos}"> 
@@ -54,12 +54,12 @@
                                                   <td th:text="${turno.atencion.atencionPuntual}"></td>
                                                   <td th:text="${turno.atencion.fechaAtencion}"></td>
                                                   <td th:text="${turno.status}"></td>
-                                                  <td>
-                                                 <!--FLECHITA-->
+                                              <!--     <td>
+                                                
                                                   <a th:href="@{/admin/modificar-status/__${turno.id}__/cancelar}"><button type="button" class="btn btn-danger btn-sm" data-bs-toggle="tooltip" data-bs-placement="top" title="Cancelar Turno" ><i class="fas fa-minus"></i></button></a>
                                                   <a th:href="@{/profesional/historialAtencion/__${turno.mascota.id}__}"><button type="button" class="btn btn-dark btn-sm" data-bs-toggle="tooltip" data-bs-placement="top" title="Ver historial de atenciones"><i class="fas fa-clipboard" ></i></i></button></a>
                                                   
-                              </td> 
+                              </td> -->
                                           </tr> 
 
                                   </tbody>

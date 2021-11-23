@@ -149,4 +149,14 @@ public class ClienteServicio {
            throw  new ErrorServicio("Ocurrió un error");
        }
    }
+   
+//   public Cliente FindByQuery(String query) {
+//       String nombre;
+//        try{
+//            nombre = query;   
+//        } catch (Exception e){
+//            nombre= null;
+//        }
+//        return clienteRepositorio.findByQuery("%"+query+"%", nombre);
+//   }
 }
