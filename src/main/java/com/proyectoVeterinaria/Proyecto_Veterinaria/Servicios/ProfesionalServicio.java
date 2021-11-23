@@ -85,11 +85,10 @@ public class ProfesionalServicio {
         }
     }
     
-    public ArrayList<Profesional> listarProfesionales() {
+    public List<Profesional> listarProfesionales() {
         //listo todo los profesionales de la base de datos
-        ArrayList<Profesional> profesionales = new ArrayList(profesionalRepositorio.findAll());
-        
-        return profesionales;
+     return profesionalRepositorio.findAll();       
+       
     }
     public List<Turno> listarTurnoXprofesional(String id){
       
@@ -108,4 +107,8 @@ public class ProfesionalServicio {
            return lista;
         
      }
+    
+    public Optional<Profesional> buscarPorId(String id){
+        return  profesionalRepositorio.findById(id);
+    }
 }

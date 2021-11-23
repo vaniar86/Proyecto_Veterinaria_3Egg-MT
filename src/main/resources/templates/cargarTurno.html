@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="es-AR" xmlns:th="http://www.thymeleaf.org">
+  <head th:replace="/fragments/head :: head">
+</head>
+<body>
+  <header th:replace="/fragments/header :: header"></header>
+    <main>
+        <div class='container-fluid mt-5 contenedor' >
+            <div class='row col-md-12 mt-5'>
+                <h2 class='title p-5'>Cargar Turno </h2>
+            </div>
+              <div class="alert alert-success" role="alert" th:if="${message != null}" th:text="${message}"></div>
+               <div class="alert alert-danger" role="alert" th:if="${error != null}" th:text="${error}"></div>
+
+            <div class="d-flex justify-content-center">
+                <div class="card mb-3 col-md-10 shadow-lg p-3  bg-body rounded " >
+                    
+                    
+                    <div class="p-5">
+                        <form class="row g-3" th:action="@{/admin/cargarTurno}" method="POST">
+
+                            
+                             <input type="hidden"  name="turnoId" th:value="${turno.id}" >
+                            <div class="alert alert-danger" role="alert" th:if="${error != null}" th:text="${error}"></div>
+
+                          
+
+                            <div class="col-md-12 my-2">
+                                <label for="validationDefault02" class="form-check-label">Nombre Profesional</label>
+                                <input type="text"  class="form-control" id="exampleFormControlTextarea1" rows="3" name="nombre"  th:value="${turno.profesional.nombre}" required></input>
+                            </div>
+
+                            <div class="col-md-12 my-2">
+                                <label for="validationDefault03" class="form-check-label">Apellido</label>
+                                <input type="text"  class="form-control" id="exampleFormControlTextarea1" rows="3" name="apellido" th:value="${turno.profesional.apellido}" required></input>
+                            </div>    
+                            
+                             <div class="col-md-12 my-2">
+                                <label for="validationDefault03" class="form-check-label">Fecha Turno</label>
+                                <input type="text"  class="form-control" id="exampleFormControlTextarea1" rows="3" name="fecha" th:value="${turno.fecha}" required></input>
+                            </div>  
+                        </form>
+                        
+                         <form class="d-flex mt-3" th:action="@{/admin/clienteList}" method="GET">
+                                <input class="form-control me-2" type="search" placeholder="Buscar" aria-label="Search" name="query">
+                                <button class="btn btn-outline-info btn-sm" type="submit">Buscar Cliente</button>
+                          </form>
+                            
+                            
+                            <div class="col-md-12 my-2">
+                                  <label for="validationDefault04" class="form-check-label">Mascota</label>
+                             <select class="form-control" name="mascota"> 
+                                <option th:each="mascota: ${mascotas}" th:value="${mascota.id}" th:text="${mascota}"   ></option> 
+                             </select>              
+                         </div>
+ 
+
+                            <div class="col-12 p-md-4 text-center">
+                                <button class="btn btn-outline-dark btn-lg p-md-1"type="submit">Cargar atención</a></button>
+                            </div>
+                        </form>
+                    </div>
+                    
+                </div>                
+            </div>  
+     
+    </main>
+       <!-- Footer-->
+       <footer th:replace="/fragments/footer :: footer"></footer>
+    <script
+      src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"
+      integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js"
+      integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13"
+      crossorigin="anonymous"
+    ></script>
+  </body>
+</html>

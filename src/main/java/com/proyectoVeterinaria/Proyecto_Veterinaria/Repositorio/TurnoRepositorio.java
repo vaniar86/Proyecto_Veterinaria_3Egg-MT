@@ -22,7 +22,8 @@ public interface TurnoRepositorio extends JpaRepository<Turno, String> {
     devuelve los turnos de X profesional, descomentar solo cuando vaya a usarse
     @Query("SELECT c FROM Turno c WHERE c.profesional = :id")
     public List<Turno> buscarTurnosPorProfesional(@Param("profesional")String id);
-    buscarTurnosAsignados
+  buscarTodosLosTurnosDelProfesional
+    buscarTurnoDisponibles
      */
     
      @Query("Select t FROM Turno t WHERE t.mascota.id = :id")
@@ -39,6 +40,12 @@ public interface TurnoRepositorio extends JpaRepository<Turno, String> {
     
      @Query("Select t FROM Turno t WHERE t.profesional.id = :id AND t.status = 'DISPONIBLE'")
     public List<Turno> buscarTurnosDispDelProf (@Param ("id")String id);
+    
+      @Query("Select t FROM Turno t WHERE t.profesional.id = :id AND t.status != 'DISPONIBLE'")
+    public List<Turno> buscarTodosLosTurnosDelProfesional (@Param ("id")String id);
+    
+    @Query("Select t, p FROM Turno t INNER JOIN t.profesional p WHERE t.status = 'DISPONIBLE'")
+    public List<Turno> buscarTurnoDisponibles ();
     
  
     
