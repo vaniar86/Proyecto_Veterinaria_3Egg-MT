@@ -9,10 +9,9 @@
             <div class='row col-md-12'>
                 <h2 class='title'>Gestión de Turnos</h2>
             </div>
-              >
+              
                <div class="alert alert-success" role="alert" th:if="${message != null}" th:text="${message}"></div>
-               <div class="row d-flex justify-content-betweenjustify-content-around">
-                   <div class="col-md-10">
+               <div class="row d-flex justify-content-betweenjustify-content-around">                   
                        <div class="dropdown col-md-4 mx-4">
                             <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
                               Profesionales
@@ -22,22 +21,10 @@
                                 <li><a class="dropdown-item" th:href="@{/admin/filtrarXProfesional/__${profesional.id}__}" th:text="${profesional.apellido }+ ${ profesional.nombre}"></a></li>
                               
                             </ul>
-                          </div>
-                       
-                        
-                   
-                       <div class="dropdown col-md-4 mx-4">
-                            <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
-                              Turnos
-                            </a>
-                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink" th:each="status : ${statusTurno}">
-                                <li><a class="dropdown-item" th:href="@{/admin}" >Todos</a></li>
-                                <li><a class="dropdown-item" th:href="@{/admin/filtrarXTurnos}" th:text="${status}"></a></li>
-                              
-                            </ul>
-                        </div>
+                       </div>    
+                   <div class="dropdown col-md-4 mx-4">
+                       <a th:href="@{/admin/turnosDisponibles}"><button type="button" class="btn btn-secondary " ><i class="fas fa-clipboard-list" ></i>  Turnos Disponibles</button></a>
                    </div>
-                   
                </div>
                <div class="alert alert-danger mt-5" role="alert" th:if="${error != null}" th:text="${error}"></div>
                 <div class=' d-flex justify-content-center mb-2'  >

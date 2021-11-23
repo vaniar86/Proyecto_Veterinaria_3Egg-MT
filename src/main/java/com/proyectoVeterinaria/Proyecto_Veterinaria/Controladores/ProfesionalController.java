@@ -54,10 +54,12 @@ public class ProfesionalController {
             return "redirect:/login";
         }
          try {
-             Profesional profesional = profesionalServicio.BuscarProfesional(login.getMail());
-        
-
+             Profesional profesional = profesionalServicio.BuscarProfesional(login.getMail());           
+             
+                System.out.println(profesional);
+                
                 List<Turno>turnoXprofesional = turnoServicio.turnoXprofesional(profesional.getId());
+                System.out.println(turnoXprofesional);
                 
                 if(!turnoXprofesional.isEmpty()){
                     model.put("turnos", turnoXprofesional);
@@ -75,6 +77,7 @@ public class ProfesionalController {
     
     @GetMapping("/modificarAtencion/{id}")
    public String modificarAtencion (@PathVariable String id,HttpSession session,ModelMap model){
+        System.out.println("controlador de turnos");
        try {
            Usuario usuario = (Usuario) session.getAttribute("usuariosession");    
        
@@ -82,16 +85,20 @@ public class ProfesionalController {
             return "redirect:/login";
         }
         
+        
         Turno turno = turnoServicio.buscarTurnoPorId(id);
+        System.out.println(turno.getId() + "turnoID");
          model.put("turno", turno);
+         model.put("tipoAtencion", EnumTipoAtencion.values());
          model.put("atenciones", EnumAtencionPuntual.values());  
                
         
          return "atencionPuntual";
         
        } catch (Exception e) {
+           System.out.println(e.getMessage());
            model.put("error", "Ocurrio un error al cargar la pagina");
-                       return "redirect:/profesional";
+             return "redirect:/profesional";
 
        }
    }    

@@ -12,10 +12,10 @@ import org.springframework.stereotype.Repository;
 public interface TurnoRepositorio extends JpaRepository<Turno, String> {
 
     
-    @Query("SELECT c, m , a , d  FROM Turno c INNER JOIN c.mascota m INNER JOIN c.atencion a INNER JOIN m.cliente d WHERE c.profesional.id = :id")
+    @Query("SELECT c, m , d  FROM Turno c INNER JOIN c.mascota m  INNER JOIN m.cliente d WHERE c.profesional.id = :id")
     public List<Turno> buscarTurnosPorProfesional(@Param("id")String id);
     
-     @Query("SELECT c, m , a , d  FROM Turno c INNER JOIN c.mascota m INNER JOIN c.atencion a INNER JOIN m.cliente d WHERE c.id = :id")
+     @Query("SELECT c, m  FROM Turno c INNER JOIN c.mascota m  WHERE c.id = :id")
     public Turno buscarTurnoPorId(@Param("id")String id);
     
     /*
@@ -25,7 +25,7 @@ public interface TurnoRepositorio extends JpaRepository<Turno, String> {
     buscarTurnosAsignados
      */
     
-     @Query("Select t, a, p.nombre FROM Turno t  INNER JOIN t.atencion a INNER JOIN t.profesional p WHERE t.mascota.id = :id")
+     @Query("Select t FROM Turno t WHERE t.mascota.id = :id")
     public  List<Turno> buscarTurnosPorMascotas(@Param ("id")String id);
     
      @Query("Select t, a, p, DATE_FORMAT(a.fechaAtencion, '%d %M %Y') AS fechaT FROM Turno t INNER JOIN t.atencion a INNER JOIN t.profesional p WHERE t.mascota.id = :id AND t.status= 'ATENDIDO' ")
@@ -34,6 +34,11 @@ public interface TurnoRepositorio extends JpaRepository<Turno, String> {
      @Query("Select t, p, a FROM Turno t INNER JOIN t.atencion a INNER JOIN t.profesional p WHERE t.status != 'DISPONIBLE' ")
     public List<Turno> buscarTurnosAsignados();
     
+    @Query("Select t FROM Turno t WHERE t.profesional.id = :id AND t.status IN( 'ASIGNADO', 'AUSENTE')")
+    public List<Turno> buscarTurnosDelProfesional(@Param ("id")String id);
+    
+     @Query("Select t FROM Turno t WHERE t.profesional.id = :id AND t.status = 'DISPONIBLE'")
+    public List<Turno> buscarTurnosDispDelProf (@Param ("id")String id);
     
  
     

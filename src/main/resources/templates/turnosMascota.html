@@ -35,7 +35,6 @@
                       <tr>
                         
                         <th scope="col">Fecha</th>
-                        <th scope="col">Tipo Atención</th>
                         <th scope="col">Profesional</th>
                         <th scope="col">Estado</th>
                         <th scope="col">Opciones</th>
@@ -44,13 +43,13 @@
                     <tbody  th:each="turno : ${turnos}" >
                       <tr>                        
                         <td th:text="${turno.fecha}"></td>
-                        <td th:text="${turno.atencion.tipoAtencion}"></td>
                         <td th:text="${turno.profesional.nombre}"></td>
                         <td th:text="${turno.status}"></td>
-                        <td>
-                            <a th:href="@{/misAtenciones/modificarTurno/__${turno.id}__}/cancelar" class="btn btn-danger mx-2"><i class="far fa-trash-alt"></i></a>
-                            <a th:href="@{/misAtenciones/perfilMascota/__${mascotaId}__}" class="btn btn-success mx-2"><i class="fas fa-plus"></i></a>
-                        </td>
+                        
+                       <td>
+                            <a th:href="@{/misAtenciones/modificarTurno/__${turno.id}__/cancelar}" class="btn btn-danger mx-2"><i class="far fa-trash-alt"></i></a>
+                            <a th:href="@{/misAtenciones/perfilMascota/__${mascotaId}__}" class="btn btn-success mx-2"><i class="fas fa-plus"></i></a> 
+                        </td> 
                       </tr>
                       
                     </tbody>

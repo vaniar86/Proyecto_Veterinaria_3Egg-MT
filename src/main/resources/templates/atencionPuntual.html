@@ -26,7 +26,7 @@
                                                <p class="card-text  my-2" >Raza : <span th:text="${turno.mascota.raza}" ></span></p> 
                                                <p class="card-text  my-2" >Dueño : <span th:text="${turno.mascota.cliente.nombre}" ></span></p> 
                                                 <p class="card-text  my-2" >Fecha Turno  : <span  th:text="${turno.fecha}"></span></p> 
-                                                <p class="card-text  my-2" >Atención  : <span  th:text="${turno.atencion.atencionPuntual}"></span></p> 
+                                                 
                                                 <div class="col-md-4 justify-content-end mt-5">
                                                     <a th:href="@{/profesional/modificar-status/__${turno.id}__/atendido}"><button type="button" class="btn btn-primary" data-bs-toggle="tooltip" data-bs-placement="top" title="Marcar como atendido"><i class="fas fa-edit">Atendido</i></button></a> 
                                                 </div>
@@ -41,25 +41,25 @@
                     
                      <form class="row g-3" th:action="@{/profesional/cargarAtencion}" method="POST">
                          
-                         <input type="hidden"  name="atencionId" th:value="${turno.atencion.id}" >
+                         
                          <input type="hidden"  name="turnoId" th:value="${turno.id}" >
                         <div class="alert alert-danger" role="alert" th:if="${error != null}" th:text="${error}"></div>
 
                        <div class="col-md-12 my-2">
-                                <label for="validationDefault04" class="form-check-label">Atención puntual</label>
+                          <label for="validationDefault04" class="form-check-label">Atención puntual</label>
                              <select class="form-control" name="atencion"> 
-                                <option th:each="atencion: ${atenciones}" th:value="${atencion}" th:text="${atencion}" th:selected="${turno.atencion.atencionPuntual != null && atencion == turno.atencion.atencionPuntual}" ></option> 
+                                <option th:each="atencion: ${atenciones}" th:value="${atencion}" th:text="${atencion}"  ></option> 
                              </select>              
                          </div>
                         
                         <div class="col-md-12 my-2">
                             <label for="validationDefault02" class="form-check-label">Descripción</label>
-                            <textarea  class="form-control" id="exampleFormControlTextarea1" rows="3" name="descripcion" th:value="${turno.atencion.descripcion}"  required></textarea>
+                            <textarea  class="form-control" id="exampleFormControlTextarea1" rows="3" name="descripcion"   required></textarea>
                         </div>
 
                         <div class="col-md-12 my-2">
                             <label for="validationDefault03" class="form-check-label">Prescripción</label>
-                            <textarea  class="form-control" id="exampleFormControlTextarea1" rows="3" name="prescripcion" th:value="${turno.atencion.prescripcion}" required></textarea>
+                            <textarea  class="form-control" id="exampleFormControlTextarea1" rows="3" name="prescripcion"  required></textarea>
                         </div>     
                         
                      

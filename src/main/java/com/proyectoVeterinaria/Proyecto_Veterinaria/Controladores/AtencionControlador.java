@@ -98,7 +98,7 @@ public class AtencionControlador {
         
     }
 
-    @GetMapping("/modificarTurno/{id}/status")
+    @GetMapping("/modificarTurno/{id}/{status}")
     public String statusTurno(HttpSession session, ModelMap model, @PathVariable String id, @PathVariable String status) throws ErrorServicio {
        
         try {
@@ -106,7 +106,7 @@ public class AtencionControlador {
             turnoServicio.statusTurno(id, status);/*el string Status que se recibe de la vista puede estar mandando
            "cancelar, modificar u otra cosa entonces este metodo del servicio recibe 
            el idTurno y el string ese, y procesa, no hace falta varios metodos*/
-            return ("redirect:/turnosMascotas");
+            return ("redirect:/misAtenciones");
 
         } catch (Exception Error) {
             model.put("error", "No fue posible cancelar el turno");
@@ -119,7 +119,9 @@ public class AtencionControlador {
     public String turnosMascota(ModelMap model, @PathVariable String id ) throws Exception{
         try {
             Mascota mascota = mascotaServicio.buscarMascotaPorId(id);
-             List<Turno> turnos = turnoServicio.listarTurnosPorMascota(id);
+            
+             List<Turno> turnos = turnoServicio.listarTurnosPorMascota(mascota.getId());
+             
              model.put("nombre", mascota.getNombre());
              model.put("edad", mascota.getEdad());
              model.put("raza", mascota.getRaza());

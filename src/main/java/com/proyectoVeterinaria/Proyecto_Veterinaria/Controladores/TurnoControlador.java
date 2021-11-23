@@ -34,6 +34,17 @@ public class TurnoControlador {
     
     @Autowired
     private MascotaServicio mascotaServicio;
+    
+    
+    @GetMapping("") 
+    public String turno(ModelMap modelo){
+        //modelo.addAttribute("actProfe", 0);
+        //modelo.addAttribute("actTurno", 0);
+        //modelo.addAttribute("act", 3);
+        
+       
+        return "turno.html";
+    }
 
     @PostMapping("/crear-turno") 
     public String registrar(ModelMap modelo, @RequestParam Date fecha, @RequestParam EnumStatusTurno status, @RequestParam  Mascota mascota, @RequestParam Profesional profesional){

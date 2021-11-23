@@ -133,12 +133,13 @@ public class TurnoServicio {
     }
     
     public List<Turno> turnoXprofesional(String id){
-       List<Turno> turnos = new ArrayList(turnoRepositorio.buscarTurnosPorProfesional(id));   
+       return turnoRepositorio.buscarTurnosDelProfesional(id);
         
-       return turnos;
+      
     }
     
     public Turno buscarTurnoPorId(String id){
+        System.out.println(id);
         return turnoRepositorio.buscarTurnoPorId(id);
     }
     
@@ -154,28 +155,33 @@ public class TurnoServicio {
        
     }*/
     
+//    public List<Turno>listarTurnosDisponibles(){
+//        return turnoRepositorio.buscarTurnosDisponibles();
+//    }
+    
     public List<Turno> listarTurnoDisponiblesPorProfesional(String id){
         
-        List<Turno> turnosDelProfesional = turnoRepositorio.buscarTurnosPorProfesional(id);
-        
-        System.out.println(turnosDelProfesional.get(2).toString());
-        System.out.println(turnosDelProfesional.size());
-        List<Turno> turnosDisponiblesDelProfesional = new ArrayList<Turno>();
-        
-            for (int i = 0; i < turnosDelProfesional.size(); i++) {
-                System.out.println("vuelta " + i + " status " +turnosDelProfesional.get(i).getStatus());
-            if(turnosDelProfesional.get(i).getStatus() == EnumStatusTurno.DISPONIBLE){
-                
-                turnosDisponiblesDelProfesional.add(turnosDelProfesional.get(i));
-                
-            }
-            
-        
-        }
-        
-        System.out.println(turnosDisponiblesDelProfesional.size());
-        
-        return turnosDisponiblesDelProfesional;
+        return turnoRepositorio.buscarTurnosDispDelProf(id);
+//        List<Turno> turnosDelProfesional = turnoRepositorio.buscarTurnosPorProfesional(id);
+//        
+//        System.out.println(turnosDelProfesional.get(2).toString());
+//        System.out.println(turnosDelProfesional.size());
+//        List<Turno> turnosDisponiblesDelProfesional = new ArrayList<Turno>();
+//        
+//            for (int i = 0; i < turnosDelProfesional.size(); i++) {
+//                System.out.println("vuelta " + i + " status " +turnosDelProfesional.get(i).getStatus());
+//            if(turnosDelProfesional.get(i).getStatus() == EnumStatusTurno.DISPONIBLE){
+//                
+//                turnosDisponiblesDelProfesional.add(turnosDelProfesional.get(i));
+//                
+//            }
+//            
+//        
+//        }
+//        
+//        System.out.println(turnosDisponiblesDelProfesional.size());
+//        
+//        return turnosDisponiblesDelProfesional;
     }
     
     @Transactional

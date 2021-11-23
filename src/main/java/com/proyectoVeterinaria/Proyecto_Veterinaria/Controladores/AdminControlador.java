@@ -136,4 +136,21 @@ public class AdminControlador {
         }
         return ("redirect:/admin");
     }
+    
+//     @GetMapping("/turnosDisponibles")
+//    public String turnosDisponibles(HttpSession session, ModelMap model) throws ErrorServicio {
+//
+//        Usuario login = (Usuario) session.getAttribute("usuariosession");
+//
+//        if (login == null) {
+//            return "redirect:/login";
+//        }
+//
+//         try {
+//              List<Turno> turnos = turnoServicio.listarTurnosDisponibles();
+//                model.put("profesionales", profesionales);
+//        return "administrador";
+//         } catch (Exception e) {
+//         }
+//    }
 }

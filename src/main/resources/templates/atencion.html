@@ -10,7 +10,7 @@
                 <h2 class='title'>Mis Mascotas</h2>
             </div>
               <div class="alert alert-danger" role="alert" th:if="${error != null}" th:text="${error}"></div>
-                <div class="alert alert-success" role="alert" th:if="${message != null}" th:text="${message}"></div>
+              <div class="alert alert-success" role="alert" th:if="${message != null}" th:text="${message}"></div>
             <div th:if="${mascotas}">
                 <div class=' d-flex justify-content-center mb-2'  th:each="masc : ${mascotas}">
                      <div class="card mb-3 col-md-8 shadow-lg p-3  bg-body rounded cardContainer"   >

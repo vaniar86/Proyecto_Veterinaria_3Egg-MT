@@ -131,15 +131,15 @@ public class PortalControlador {
     
     /* =================================   T U R N O S ========================= */
 
-    @GetMapping("/turno") 
-    public String turno(ModelMap modelo){
-        //modelo.addAttribute("actProfe", 0);
-        //modelo.addAttribute("actTurno", 0);
-        //modelo.addAttribute("act", 3);
-        
-       
-        return "turno.html";
-    }
+//    @GetMapping("/turno") 
+//    public String turno(ModelMap modelo){
+//        //modelo.addAttribute("actProfe", 0);
+//        //modelo.addAttribute("actTurno", 0);
+//        //modelo.addAttribute("act", 3);
+//        
+//       
+//        return "turno.html";
+//    }
     
  
     
@@ -276,8 +276,10 @@ public class PortalControlador {
                         
 
                             List<Turno> turnosDisponiblesPorProfesional = turnoServicio.listarTurnoDisponiblesPorProfesional(profesionalSelec);           
-
+                            System.out.println("ingreso a la lista");
+                            System.out.println(turnosDisponiblesPorProfesional);
                             if(!turnosDisponiblesPorProfesional.isEmpty()){
+                                
                                 modelo.addAttribute("horarioTurno", turnosDisponiblesPorProfesional);
                             }else{
                                 modelo.put("message", "El profesional no tiene turnos disponibles");

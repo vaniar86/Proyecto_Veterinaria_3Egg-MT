@@ -99,7 +99,7 @@ public class ProfesionalServicio {
         System.out.println(idUsuario);
         return profesionalRepositorio.BuscarProfesional(idUsuario);
     }
-    
+      
     public List<Profesional> listarProfesionalPorRol(EnumRolProfesional rol){
        
            System.out.println(rol);
