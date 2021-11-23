@@ -38,8 +38,10 @@ public class TurnoControlador {
     
     @GetMapping("") 
     public String turno(ModelMap modelo){
-        //modelo.addAttribute("actProfe", 0);
-        //modelo.addAttribute("actTurno", 0);
+        
+        modelo.addAttribute("actAtencion", 0);
+        modelo.addAttribute("actProfe", 0);
+        modelo.addAttribute("actTurno", 0);
         //modelo.addAttribute("act", 3);
         
        

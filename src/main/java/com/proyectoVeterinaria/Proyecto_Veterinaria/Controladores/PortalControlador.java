@@ -330,18 +330,18 @@ public class PortalControlador {
         
         
          if(profesionalSelec == null || profesionalSelec.equals(Act)){
-                modelo.addAttribute("actTurno", 0);
+                //modelo.addAttribute("actTurno", 0);
                 System.out.println("op1");
             }else{
                 /*codigoidProfesional para cargar los turnos disponible y las mascotas*/
                 
-                modelo.addAttribute("actTurno", 3);
+                //modelo.addAttribute("actTurno", 3);
                 System.out.println("op2");
                 
                 
                 //System.out.println(profesionalSelec);
             }
     
-        return "turno.html";
+        return "inicio.html";
     }
 }

@@ -5,13 +5,21 @@
 <body>
   <header th:replace="/fragments/header :: header"></header>
   <main>
-      <h2> nuevo turno </h2>
-       <p th:text="${actProfe}">actProfe</p>
+      
+      <div class="alert alert-danger" role="alert" th:if="${error != null}" th:text="${error}"></div>
+              <div class="alert alert-success" role="alert" th:if="${message != null}" th:text="${message}"></div>
+    
+    <div class="card-body">          
+      <h2 class="card-title titleCard"> nuevo turno </h2>
+       <!--<p th:text="${actProfe}">actProfe</p>
        <p th:text="${actTurno}">actTurno</p>
-       <p th:text="${act}">act</p>
+       <p th:text="${act}">act</p> -->
        
        <!--  lee la atencion y carga los profesionales -->
+       
+       
       <form action="/nuevoTurnoATENCION" method="POST">
+          <div th:if="${actAtencion} == '0' ">
           <label> Tipo de Atencion </label>
           <select  class="form-select" aria-label="Default select example" name="tipoDeAtencion" >
             <option value="1">Atencion</option>
@@ -35,7 +43,8 @@
           
             <div class="form-group row">
                 
-                <select class="form-control form-control-sm col-md-6" name="profesionalSelec"> 
+                
+                <select class="form-control form-control-sm col-md-6" name="profesionalSelec">
                                 
                                 <option th:each="profesional: ${profesionalSelec}"
                                           th:value="${profesional.id}"
@@ -69,7 +78,7 @@
                 <button class="btn btn-primary" type="submit">Cargar Turno</button>
            </div>
       </form>
-          
+     </div>
   </main>
   <footer th:replace="/fragments/footer :: footer"></footer>
 
