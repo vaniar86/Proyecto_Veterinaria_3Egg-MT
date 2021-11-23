@@ -92,15 +92,14 @@ public class AdminControlador {
               model.put("turnos", turnos);
 //               model.put("profesionales", profesionales );
              }else{
-                System.out.println("lentro al else");
+                
 //                 model.put("profesionales", profesionales );
                 model.put("message", "No existen asigandos turnos para este profesional");
              }
              List<Profesional> profesionales = profesionalServicio.listarProfesionales();
-             System.out.println(profesionales.get(0).getNombre());
-             System.out.println(!turnos.isEmpty());
+           
              model.put("profesionales", profesionales );
-            System.out.println("llego hasta aca");
+            
             return "administrador";
         } catch (Exception e) {
             
@@ -110,6 +109,35 @@ public class AdminControlador {
         }
 
     }
+    @GetMapping("/filtrarDispXProfesional/{id}")
+    public String filtrarDispXProfesional(HttpSession session, ModelMap model, @PathVariable String id) throws ErrorServicio {
+            System.out.println(id);
+        try {            
+            List<Turno> turnos = turnoServicio.listarTurnoDisponiblesPorProfesional(id);     
+             
+            if(!turnos.isEmpty()){       
+              model.put("turnos", turnos);
+//               model.put("profesionales", profesionales );
+             }else{
+                
+//                 model.put("profesionales", profesionales );
+                model.put("message", "No existen asigandos turnos para este profesional");
+             }
+             List<Profesional> profesionales = profesionalServicio.listarProfesionales();
+           
+             model.put("profesionales", profesionales );
+            
+            return "turnosDisponibles";
+        } catch (Exception e) {
+            
+            model.put("error", "No es posible recuperar el listado de turnos de este profesional");
+            
+             return "redirect:/admin";
+        }
+
+    }
+    
+//    
 
     @GetMapping("/listar-Profesionales")
     public String listaProfesionales(HttpSession session, ModelMap model) throws ErrorServicio {
@@ -158,8 +186,11 @@ public class AdminControlador {
         }
 
          try {
+             List<Profesional> profesionales = profesionalServicio.listarProfesionales();
               List<Turno> turnos = turnoServicio.listarTurnosDisponibles();
                 model.put("turnos", turnos);
+                model.put("profesionales", profesionales );
+                
                 return "turnosDisponibles";
          } catch (Exception e) {
               model.put("error", "No es posible recuperar el listado de turnos de este profesional");
