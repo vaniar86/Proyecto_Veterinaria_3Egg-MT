@@ -71,16 +71,7 @@ public class PortalControlador {
     
     @GetMapping("/login") 
     public String login(@RequestParam(required = false) String error, @RequestParam(required = false) String logout, ModelMap modelo){
-    // public String login(HttpSession session, ModelMap modelo, @RequestParam(required=false) String error, @RequestParam(required=false) String logout) {
-       // System.out.println(" portal controlador  " + error);
-        //System.out.println(session.toString());
-        //System.out.println(session.getId());
-       //if(error != "" || error !=null){
-      /* if(error !=null){    
-           System.out.println("error 2 portasl controlador" + error);
-            modelo.put("error", "Nombre de usuario o clave Incorrectos");
-       }*/
-        
+           
        if (logout != null) {
             modelo.put("logout", "¡Se ha deslogueado correctamente de nuestro sitio web!");
         }

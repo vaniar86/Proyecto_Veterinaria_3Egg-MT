@@ -52,23 +52,32 @@ public class ClienteServicio {
             throw new ErrorServicio("Confirme su contraseña");
         }
                           
-
-        //seteo el cliente
-        Cliente cliente = new Cliente();
-        cliente.setNombre(nombre);
-        cliente.setApellido(apellido);
-        cliente.setDireccion(direccion);
-        cliente.setTelefono(telefono);
-
         
-        usuarioServicio.registrar(mail, password, password2, EnumRol.CLIENTE);
+         
+        Cliente verifyCliente = clienteRepositorio.findByMail(mail);
+        if(verifyCliente == null){
+            usuarioServicio.registrar(mail, password, password2, EnumRol.CLIENTE);
+            Cliente cliente = new Cliente();
+            cliente.setNombre(nombre);
+            cliente.setApellido(apellido);
+            cliente.setDireccion(direccion);
+            cliente.setTelefono(telefono);
+            
+            
+            //recupero el usuario de la db y seteo el usuario al cliente
+            Usuario usuario = usuarioRepositorio.findById(mail).get();
+            cliente.setIdUsuario(usuario);
+            
+              //creo el cliente
+            clienteRepositorio.save(cliente);
+        }else{
+            throw  new ErrorServicio ("Ya existe un usuario cargado con ese email");
+        }
         
-        //recupero el usuario de la db y seteo el usuario al cliente
-        Usuario usuario = usuarioRepositorio.findById(mail).get();
-        cliente.setIdUsuario(usuario);
+         
         
-        //creo el cliente
-        clienteRepositorio.save(cliente);
+        
+       
         
         //notificar por mail "bienvenido usuario" ????
     }
